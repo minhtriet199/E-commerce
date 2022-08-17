@@ -4,4 +4,6 @@
 <!-- AdminLTE App -->
 <script src="/assets/admin/dist/js/adminlte.min.js"></script>
 
+ <script src="/assets/admin/js/main.js"></script>
+
 @yield('footer')

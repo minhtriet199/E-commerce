@@ -11,5 +11,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="/assets/admin/dist/css/adminlte.min.css">
   <!-- Ckeditor -->
+  
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   @yield('head')
 
