@@ -23,7 +23,7 @@
                     <th>Tên</th>
                     <th>Trạng thái</th>
                     <th>Ngày cập nhật</th>
-                    <th>&nbsp;</th>
+                    <th style="width:120px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
