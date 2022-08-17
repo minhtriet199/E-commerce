@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Menu\CreateFormRequest;
+use App\Http\Requests\Menu\UpdateRequest;
 use App\Http\Services\Menu\MenuService;
 use App\Models\Menus;
 use Illuminate\Http\Request;
@@ -48,7 +49,7 @@ class MenusController extends Controller
             'menus' => $this->MenuService->get_cata()
         ]);
     }
-    public function update(Menus $menus, CreateFormRequest $request)
+    public function update(Menus $menus, UpdateRequest $request)
     {
         $this->MenuService->update($request, $menus);
 
