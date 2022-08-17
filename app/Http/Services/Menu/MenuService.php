@@ -2,7 +2,7 @@
 
 namespace App\Http\Services\Menu;
 use App\Models\Menus;
-use App\Http\Requests\Menu\CreateFormRequest;
+use App\Http\Requests\Menu\UpdateRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 
