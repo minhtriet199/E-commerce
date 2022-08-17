@@ -50,7 +50,7 @@ class MenuService
         $menus->slug = Str::slug($request->input('name'),'-');
         $menus->save();
         
-        Session::flash('success','Sửa danh mục thành công');
+        Session::flash('success','Cập nhật danh mục thành công');
         return true;
     }
     
