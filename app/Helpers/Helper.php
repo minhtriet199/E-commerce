@@ -13,7 +13,7 @@ class Helper{
                         <td>'. $menu->id .'</td>
                         <td>'. $char. $menu->name .'</td>
                         <td >'. self::active($menu->active) .'</td>
-                        <td>'. $menu->updated_at .'</td>
+                        <td>'. $menu->updated_at->format('d/m/y | H:i:s') .'</td>
                         <td>  
                             <a class="btn btn-primary btn-sm"  href="/admin/menus/edit/' . $menu->id . ' "><i class="fas fa-edit"></i></a>
                             <a class="btn btn-danger btn-sm" href="#" onclick="removeRow('.$menu->id.',\'/admin/menus/destroy\')"> <i class="fas fa-trash"></i> </a>
