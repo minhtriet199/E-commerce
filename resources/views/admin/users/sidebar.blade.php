@@ -32,19 +32,18 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Danh mục
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" style="display: none;">
               <li class="nav-item">
-                <a href="/admin/menus/list" class="nav-link">
+              <a href="/admin/menus/list" class="nav-link">
                   <p>Danh sách danh mục</p>
                 </a>
               </li>
@@ -53,10 +52,34 @@
                   <p>Thêm Danh mục</p>
                 </a>
               </li>
+            </ul>
           </li>
 
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Sản phẩm
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+              <a href="/admin/products/list" class="nav-link">
+                  <p>Danh sách sản phẩm</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/products/add" class="nav-link">
+                  <p>Thêm sản phẩm</p>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
+      
+      
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
