@@ -35,9 +35,9 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="nav-icon fas fa-solid fa-bars"></i>
               <p>
-                Danh mục
+                 Danh mục
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -57,7 +57,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="nav-icon fas fa-thin fa-folder"></i>
               <p>
                 Sản phẩm
                 <i class="fas fa-angle-left right"></i>
