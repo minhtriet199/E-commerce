@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function create()
     {
         return view('admin.products.add',[
-            'title' => 'Thêm danh mục mới',
+            'title' => 'Thêm sản phẩm mới',
         ]);
     }
 
@@ -41,7 +41,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->productServices->insert($request);
     }
 
     /**

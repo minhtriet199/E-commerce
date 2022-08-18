@@ -5,6 +5,7 @@ use \App\Http\Controllers\Admin\Users\LoginController;
 use \App\Http\Controllers\Admin\MainController;
 use \App\Http\Controllers\Admin\MenusController;
 use \App\Http\Controllers\Admin\ProductController;
+use \App\Http\Controllers\Admin\UploadController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
@@ -30,5 +31,7 @@ Route::middleware(['auth'])->group(function (){
             Route::get('add',[ProductController::class,'create']);
             Route::post('add',[ProductController::class,'store']);
         });
+
+        Route::post('upload/services',[UploadController::class,'store']);
     }); 
 });
