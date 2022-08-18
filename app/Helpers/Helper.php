@@ -3,7 +3,8 @@
 namespace App\Helpers;
 
 class Helper{
-    public static function menu($Menus, $parent_id = 0, $char = ''){
+    public static function menu($Menus, $parent_id = 0, $char = '')
+    {
         $html= '';
 
         foreach ($Menus as $key => $menu){
@@ -35,4 +36,6 @@ class Helper{
         : '<span class="btn btn-success btn-sm"> Hoạt động </span>';
 
     }
+
+
 }
