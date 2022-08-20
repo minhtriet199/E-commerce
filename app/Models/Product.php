@@ -14,14 +14,15 @@ class Product extends Model
     [
         'id',
         'name',
+        'slug',
         'description',
         'thumb',
         'content',
         'menu_id',
-        'active',
         'price',
         'price_sale',
-        'slug'
+        'active',
+        'amount',
     ];
     
     public function menu()
