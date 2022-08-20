@@ -40,7 +40,7 @@ $('#upload').change(function (){
             if(results.error === false){
                 $("#image_show").html('<a href="'+ results.url +'" target="_blank">' + '<img src="'+ results.url +'" width="100px"></a>');
 
-                $("#file").val(results.url);
+                $("#thumb").val(results.url);
             } else {
                 alert('Upload File lỗi');
             }

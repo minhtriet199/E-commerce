@@ -12,40 +12,43 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Tên sản phẩm</label>
-                    <input type="text" class="form-control" name="name" placeholder="Nhập tên sản phẩm">
+                    <input type="text" class="form-control" name="name" value="{!! old('name') !!}" placeholder="Nhập tên sản phẩm">
                 </div>
                 <div class="form-group">
                     <label>Giá</label>
-                    <input type="number" name="price" class="form-control" placeholder="Nhập giá">
+                    <input type="number" name="price" class="form-control" value="{!! old('price') !!}" placeholder="Nhập giá">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Số lượng</label>
-                    <input type="number" name="amount" class="form-control" placeholder="Nhập số lượng">
+                    <input type="number" name="amount" value="{!! old('amount') !!}" class="form-control" placeholder="Nhập số lượng">
                 </div>
                  
                 <div class="form-group">
                     <label>Giá giảm giá</label>
-                    <input type="number" name="price_sale" class="form-control" placeholder="Nhập giá" >
+                    <input type="number" name="price_sale" value="{!! old('price_sale') !!}" class="form-control" placeholder="Nhập giá" >
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Danh mục</label>
-            <select name="parent_id" class="custom-select rounded-0">
-                <option value="0">Danh mục</option>
+            <select name="menu_id" class="custom-select rounded-0">
+
+                @foreach( $Menus as $menu)
+                    <option value="{{ $menu -> id }}">{{$menu -> name }}</option>
+                @endforeach 
             </select>
         </div>
 
         <div class="form-group">
             <label for="exampleInputEmail1">Mô tả</label>
-            <textarea class="form-control" name="description" rows="3" placeholder="Nhập ..."></textarea>
+            <textarea class="form-control" name="description" rows="3" value="{!! old('description') !!}" placeholder="Nhập ..."></textarea>
         </div>
 
         <div class="form-group">
             <label for="exampleInputEmail1">Mô tả chi tiết</label>
-            <textarea class="form-control" rows="3" name="content" id="content" placeholder="Nhập nội dung .."></textarea>
+            <textarea class="form-control" rows="3" name="content" id="content" value="{!! old('content') !!}" placeholder="Nhập nội dung .."></textarea>
         </div>
         
         <div class="form-group">
@@ -55,7 +58,7 @@
                 <div id="image_show">
 
                 </div>
-                <input type="hidden" name="file" id="file">
+                <input type="hidden" name="thumb" id="thumb">
             </div>
         </div>
         <div class="form-group">

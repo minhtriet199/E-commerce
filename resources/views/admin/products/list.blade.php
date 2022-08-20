@@ -22,6 +22,7 @@
                     <th>ID</th>
                     <th>Tên</th>
                     <th>Danh Mục</th>
+                    <th>Số lượng</th>
                     <th>Giá gốc</th>
                     <th>Giá khuyến mãi</th>
                     <th>Trạng thái</th>
@@ -35,9 +36,9 @@
                         <td>{{ $product->id }} </td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->menu->name }}</td>
-                        <td>{{ $product->price }}</td>
-                        <td>{{ $product->price }}</td>
-                        <td>{{ $product->price_sale }}</td>
+                        <td>{{ $product->amount }}</td>
+                        <td>{!! \App\Helpers\Helper::currency_format($product->price) !!}</td>
+                        <td>{!! \App\Helpers\Helper::currency_format($product->price_sale) !!}</td>
                         <td>{!! \App\Helpers\Helper::active($product->active) !!}</td>
                         <td>{{ $product->updated_at }}</td>
                         <td>  

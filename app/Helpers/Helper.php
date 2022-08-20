@@ -29,12 +29,17 @@ class Helper{
 
         return $html;
     }
-
     public static function active($active = 0)
     {   
         return $active == 0 ? '<span class="btn btn-danger btn-sm"> Tắt </span>'
         : '<span class="btn btn-success btn-sm"> Hoạt động </span>';
 
+    }
+
+    public static function currency_format($number, $suffix = 'đ') {
+        if (!empty($number)) {
+            return number_format($number, 0, ',', '.') . "{$suffix}";
+        }
     }
 
 
