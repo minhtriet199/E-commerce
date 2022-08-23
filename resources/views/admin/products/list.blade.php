@@ -14,14 +14,13 @@
             </div>
         </div>
     </div>
-    <!-- /.card-header -->
     <div class="card-body table-responsive p-0">
-        <table class="table table-hover text-nowrap" >
+        <table class="table table-hover text-nowrap">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Ảnh</th>
                     <th>Tên</th>
-                    <th>Danh Mục</th>
+                    <th>Danh mục</th>
                     <th>Số lượng</th>
                     <th>Giá gốc</th>
                     <th>Giá khuyến mãi</th>
@@ -33,7 +32,7 @@
             <tbody>
                 @foreach($products as $key => $product)
                     <tr>
-                        <td>{{ $product->id }} </td>
+                        <td><img src="{{ $product->thumb }}" class="admin-thumb"></td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->menu->name }}</td>
                         <td>{{ $product->amount }}</td>
