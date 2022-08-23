@@ -16,7 +16,7 @@ class ProductAdminService
     public function get()
     {
         return Product::orderby('id')
-            ->with('menu')
+            ->with('menus')
             ->paginate(15);
     }
 
@@ -63,6 +63,32 @@ class ProductAdminService
             return false;
         }
         return true;
+    }
+
+    public function update($request, $product){
+        $isValidPrice =$this->isValidPrice($request);
+        if($isValidPrice === false) return false;
+
+
+        try{
+            $product->fill($request->input());
+            $product->save();
+            Session::flash('success', 'Cập nhật thành công');
+        }
+        catch(\Exception $err){
+            Session::flash('error','Có lỗi');
+            \Log::info($err->getMessage());
+            return false;
+        }
+        return true;
+    }
+    public function delete($request){
+        $product = Product::where('id' , $request->input('id'))->first();
+        if($product){
+            $product -> delete();
+            return true;
+        }
+        return false;
     }
 }
 
