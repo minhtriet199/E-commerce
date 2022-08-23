@@ -34,7 +34,7 @@
                     <tr>
                         <td><img src="{{ $product->thumb }}" class="admin-thumb"></td>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->menu->name }}</td>
+                        <td>{{ $product->menus->name }}</td>
                         <td>{{ $product->amount }}</td>
                         <td>{!! \App\Helpers\Helper::currency_format($product->price) !!}</td>
                         <td>{!! \App\Helpers\Helper::currency_format($product->price_sale) !!}</td>

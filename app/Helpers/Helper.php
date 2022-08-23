@@ -31,7 +31,7 @@ class Helper{
     }
     public static function active($active = 0)
     {   
-        return $active == 0 ? '<span class="btn btn-danger btn-sm"> Tắt </span>'
+        return $active == 0 ? '<span class="btn btn-danger btn-sm"> Ngưng hoạt động </span>'
         : '<span class="btn btn-success btn-sm"> Hoạt động </span>';
 
     }

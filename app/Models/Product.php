@@ -25,7 +25,7 @@ class Product extends Model
         'amount',
     ];
     
-    public function menu()
+    public function menus()
     {
         return $this->hasOne(Menus::class,'id', 'menu_id' );
     }
