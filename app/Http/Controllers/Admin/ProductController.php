@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Product\ProductAdminService;
+use App\Http\Requests\Product\ProductRequest;
 use App\Http\Services\Menu\MenuService;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -35,11 +36,12 @@ class ProductController extends Controller
             'products' => $this->productService->getMenu()
         ]);
     }
-    public function store(productRequest $request)
+    public function store(ProductRequest $request)
     {
-        $this->productService->insert($request);
-
-        return redirect()->back()->withInput();
+        $result = $this->productService->insert($request);
+        
+        if($result) return redirect('admin/products/list');
+        else return redirect()->back()->withInput();
     }
 
     public function show(Product $product)

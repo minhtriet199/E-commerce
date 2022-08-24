@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="/admin" class="brand-link">
       <img src="/assets/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">Triet store</span>
     </a>
 
     <!-- Sidebar -->
@@ -57,7 +57,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-thin fa-folder"></i>
+              <i class="nav-icon fas fa-regular fa-tshirt"></i>
               <p>
                 Sản phẩm
                 <i class="fas fa-angle-left right"></i>
@@ -72,6 +72,28 @@
               <li class="nav-item">
                 <a href="/admin/products/add" class="nav-link">
                   <p>Thêm sản phẩm</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-images"></i>
+              <p>
+                 Slider
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+              <a href="/admin/sliders/list" class="nav-link">
+                  <p>Danh sách Slider</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/sliders/add" class="nav-link">
+                  <p>Thêm Slider</p>
                 </a>
               </li>
             </ul>
