@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\Users\LoginController;
-use \App\Http\Controllers\Admin\MainController;
+use \App\Http\Controllers\Admin\AdminMainController;
 use \App\Http\Controllers\Admin\MenusController;
 use \App\Http\Controllers\Admin\ProductController;
 use \App\Http\Controllers\Admin\UploadController;
 use \App\Http\Controllers\Admin\SliderController;
+use \App\Http\Controllers\MainController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
@@ -14,8 +15,8 @@ Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
 
 Route::middleware(['auth'])->group(function (){
     Route::prefix('admin')->group(function(){
-        Route::get( '/',[MainController::class, 'index'] )->name('admin');
-        Route::get( 'main',[MainController::class, 'index'] )->name('admin');
+        Route::get( '/',[AdminMainController::class, 'index'] )->name('admin');
+        Route::get( 'main',[AdminMainController::class, 'index'] )->name('admin');
        
         Route::prefix('menus')->group(function(){
             Route::get('list',[MenusController::class,'index']);
@@ -47,6 +48,7 @@ Route::middleware(['auth'])->group(function (){
             Route::post('edit/{slider}',[SliderController::class,'update']);
             Route::DELETE('destroy',[SliderController::class,'destroy']);
         });
-
     }); 
 });
+
+Route::get('/',[MainController::class,'index']);
