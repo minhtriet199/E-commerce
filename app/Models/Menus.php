@@ -15,8 +15,9 @@ class Menus extends Model
         'name',
         'parent_id',
         'description',
+        'slug',
         'content',
         'active',
-        'slug'
+        
     ];
 }

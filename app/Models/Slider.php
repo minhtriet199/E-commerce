@@ -15,6 +15,7 @@ class Slider extends Model
         'name',
         'url',
         'thumb',
+        'description',
         'sort_by',
         'active',
     ];
