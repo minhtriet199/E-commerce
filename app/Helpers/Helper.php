@@ -42,5 +42,25 @@ class Helper{
         }
     }
 
+    public static function menus($Menus, $parent_id = 0) :string
+    {
+        $html = '';
+        foreach ($Menus as $key => $menu) {
+            if ($menu->parent_id == $parent_id) {
+                $html .= '
+                    <li>
+                        <a href="/category/' . $menu->id . '-' . $menu-> slug . '.html">
+                            ' . $menu->name . '
+                        </a>';
+
+                unset($Menus[$key]);
+
+
+                $html .= '</li>';
+            }
+        }
+
+        return $html;
+    }
 
 }

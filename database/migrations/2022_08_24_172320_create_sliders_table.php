@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('url',255)->nullable();
             $table->string('thumb',255);
             $table->integer('sort_by');
+            $table->string('description',255);
             $table->integer('active');
             $table->timestamps();
         });

@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Thứ tự</label>
-            <input type="text" name="sort_by" class="form-control" value="{!! old('sort_by') !!}" placeholder="Nhập thứ tự">
+            <input type="number" name="sort_by" class="form-control" value="{!! old('sort_by') !!}" placeholder="Nhập thứ tự">
         </div>
 
         <div class="form-group">
@@ -26,6 +26,11 @@
                 </div>
                 <input type="hidden" name="thumb" id="thumb">
             </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="exampleInputEmail1">Mô tả chi tiết</label>
+            <textarea class="form-control" rows="3" name="description" id="content" placeholder="Nhập nội dung ..">{!! old('description') !!}</textarea>
         </div>
 
         <div class="form-group">
