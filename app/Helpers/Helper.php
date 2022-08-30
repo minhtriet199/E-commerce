@@ -36,20 +36,19 @@ class Helper{
 
     }
 
-    public static function currency_format($number, $suffix = 'đ') {
+    public static function currency_format($number, $suffix = 'Đồng') {
         if (!empty($number)) {
-            return number_format($number, 0, ',', '.') . "{$suffix}";
+            return number_format($number, 0, ',', '.') . " {$suffix}";
         }
     }
 
-    public static function menus($Menus, $parent_id = 0) :string
+    public static function menus($Menus ) 
     {
         $html = '';
         foreach ($Menus as $key => $menu) {
-            if ($menu->parent_id == $parent_id) {
                 $html .= '
                     <li>
-                        <a href="/category/' . $menu->id . '-' . $menu-> slug . '.html">
+                        <a href="/shop/' . $menu->id . '-' . $menu-> slug. '.html">
                             ' . $menu->name . '
                         </a>';
 
@@ -57,10 +56,40 @@ class Helper{
 
 
                 $html .= '</li>';
-            }
         }
 
         return $html;
     }
 
+    public static function price($Product,$price =0,$price_sale=0)
+    {
+        $html= '';
+        if($price_sale != 0) {
+            $html .='
+                <h7 style="text-decoration:line-through;">'. self::currency_format($Product ->price).'</h7>
+                <h4 style="color:red; padding-top:5px">'. self::currency_format($Product ->price_sale).'</h4>
+            ';
+            return $html;
+        }
+        if($price !=0 ) {
+            $html .='
+                <h4>'. self::currency_format($Product ->price).'</h4>
+            ';
+            return $html;
+        }
+        return '<a href="">lien he</a>';
+    }
+    
+    public static function Shophelp($menus)
+    {
+        $html = '';
+        foreach ($menus as $key => $menu) {
+            $html .='
+                <a href="/shop/'.$menu-> slug. '.html">
+                    ' . $menu->name . '
+                </a>';
+        }
+        return $html;
+    }
+    
 }

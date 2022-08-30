@@ -19,7 +19,7 @@ class ProductAdminService
     {
         return Product::orderby('id')
             ->with('menus')
-            ->paginate(15);
+            ->paginate(9);
     }
 
     protected function isValidPrice($request)

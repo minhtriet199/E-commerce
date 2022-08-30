@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Menu;
 use App\Models\Menus;
+use App\Models\Product;
 use App\Http\Requests\Menu\UpdateRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
@@ -16,6 +17,20 @@ class MenuService
             $query->orderby('id');
         })
         ->get();
+    }
+    public function get()
+    {
+        return Menus::select('name', 'id','slug')
+            ->where('parent_id', 0)
+            ->orderbyDesc('id')
+            ->get();
+    }
+    public function getChild()
+    {
+        return Menus::select('name', 'id','slug')
+            ->where('parent_id','>', 0)
+            ->orderbyDesc('id')
+            ->get();
     }
     public function create($request)
     {
@@ -63,6 +78,26 @@ class MenuService
             return Menus::where('id',$id)->orWhere('parent_id',$id)->delete(); 
         }
         return false;
+    }
+
+    public function getSlug($slug)
+    {
+        return Menus::where('slug',$slug)->firstOrFail();
+    }
+
+    public function getProduct($menu, $request)
+    {
+        $query = $menu->products()
+            ->select('id', 'name','slug' , 'thumb','price', 'price_sale')
+            ->where('active', 1);
+        if($request->input('price')){
+            $query->orderBy('price',$request->input('price'));
+            $query->orderBy('price_sale',$request->input('price'));
+        }
+        return $query
+            ->orderByDesc('id')
+            ->paginate(8);
+      
     }
 }
 

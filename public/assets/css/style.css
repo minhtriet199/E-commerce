@@ -959,7 +959,8 @@ ol {
 }
 
 .product__item:hover .product__item__pic .product__hover {
-	right: 20px;
+	right: 230px;
+	top:100px;
 	opacity: 1;
 }
 
@@ -978,7 +979,7 @@ ol {
 }
 
 .product__item__pic {
-	height: 260px;
+	height: 370px;
 	position: relative;
 	background-position: center center;
 }
@@ -993,17 +994,20 @@ ol {
 	padding: 4px 15px 2px;
 	background: #ffffff;
 	position: absolute;
+	text-align: center;
 	left: 0;
 	top: 20px;
+	width: 200px;
+	border: 1px black solid;
 }
 
 .product__item__pic .product__hover {
 	position: absolute;
-	right: -200px;
-	top: 20px;
-	-webkit-transition: all, 0.8s;
-	-o-transition: all, 0.8s;
-	transition: all, 0.8s;
+	right: -100px;
+	top: 100px;
+	-webkit-transition: all, 0.3s;
+	-o-transition: all, 0.3s;
+	transition: all, 0.3s;
 }
 
 .product__item__pic .product__hover li {
@@ -1016,6 +1020,7 @@ ol {
 	opacity: 1;
 	visibility: visible;
 }
+
 
 .product__item__pic .product__hover li span {
 	color: #ffffff;
@@ -3371,7 +3376,7 @@ ol {
 
 @media only screen and (min-width: 1200px) {
 	.container {
-		max-width: 1170px;
+		max-width: 1200px;
 	}
 }
 
@@ -3865,4 +3870,29 @@ ol {
 }
 .contact-list a:hover{
 	color: #CC6D4D;
+}
+.button-more a{
+	margin: auto;
+	display: inline-block;
+	outline: 0;
+	cursor: pointer;
+	border: 2px solid #000;
+	border-radius: 3px;
+	color: #fff;
+	background: #000;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 28px;
+	padding: 12px 20px;
+	text-align:center;
+	transition-duration: .15s;
+	transition-property: all;
+	transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+.button-more a:hover{
+	color: #000;
+	background: rgb(255, 218, 87);
+}
+.hidden{
+	display: none;
 }
