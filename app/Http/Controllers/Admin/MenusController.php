@@ -38,7 +38,7 @@ class MenusController extends Controller
     {
         $result = $this->MenuService->create($request);
 
-        return redirect()->back();
+        return redirect('/admin/menus/list');
     }
 
     public function show(Menus $menus)

@@ -15,6 +15,6 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        View::composer('home',CateComposer::class);
+        View::composer('main',CateComposer::class);
     }
 }

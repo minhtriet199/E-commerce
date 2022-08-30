@@ -30,7 +30,7 @@
             <tbody>
                 @foreach($sliders as $key => $slider)
                     <tr>
-                        <td><a href="{{ $slider->thumb }}"><img src="{{ $slider->thumb }}" class="admin-thumb"></a></td>
+                        <td><a href="{{ $slider->thumb }}"><img src="{{ $slider->thumb }}" width="200px"></a></td>
                         <td>{{ $slider->name }}</td>
                         <td>{{ $slider->url }}</td>
                         <td>{{ $slider->sort_by }}</td>
@@ -39,7 +39,7 @@
                             <a class="btn btn-primary btn-sm"  href="/admin/sliders/edit/{{ $slider->id }}"><i class="fas fa-edit"></i></a>
                             <a class="btn btn-danger btn-sm" href="#" onclick="removeRow({{ $slider->id }} ,'/admin/sliders/destroy')"> <i class="fas fa-trash"></i> </a>
                         </td>
-                    </tr>';
+                    </tr>
                 @endforeach
             </tbody>
         </table>

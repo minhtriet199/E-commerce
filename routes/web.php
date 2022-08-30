@@ -8,6 +8,7 @@ use \App\Http\Controllers\Admin\ProductController;
 use \App\Http\Controllers\Admin\UploadController;
 use \App\Http\Controllers\Admin\SliderController;
 use \App\Http\Controllers\MainController;
+use \App\Http\Controllers\MenuController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
@@ -52,3 +53,7 @@ Route::middleware(['auth'])->group(function (){
 });
 
 Route::get('/',[MainController::class,'index']);
+Route::post('/services/load-product',[MainController::class,'loadProduct']);
+ 
+Route::get('shop/{slug}.html', [MenuController::class,'index']);
+Route::get('shop',[MenuController::class,'show']);

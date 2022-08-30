@@ -16,7 +16,7 @@ class CateComposer
 
     public function compose(View $view)
     {
-        $menus = Menus::select('id', 'name', 'parent_id','slug')->where('parent_id', 0)->orderByDesc('id')->get();
+        $menus = Menus::select('id', 'name', 'parent_id','slug')->where('parent_id','>', 1)->orderBy('id')->get();
         $view->with('menus', $menus);
     }
 }

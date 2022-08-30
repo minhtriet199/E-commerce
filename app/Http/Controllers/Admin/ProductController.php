@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Product\ProductAdminService;
 use App\Http\Requests\Product\ProductRequest;
-use App\Http\Services\Menu\MenuService;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,17 +13,16 @@ class ProductController extends Controller
 {
     protected $productService;
 
-    public function __construct(ProductAdminService $productService, MenuService $MenuService)
+    public function __construct(ProductAdminService $productService)
     {
         $this->productService = $productService;
-        $this->MenuService = $MenuService;    
     }
 
     public function index()
     {
         return view('admin.products.list',[
             'title' => 'Danh sách sản phẩm',
-            'products' => $this->productService->get()
+            'products' => $this->productService->get()  
         ]);
     }
 
@@ -50,7 +48,6 @@ class ProductController extends Controller
             'title' => 'Sửa tên sản phẩm',
             'product' => $product,
             'menus' => $this->productService->getMenu()
-            
         ]);
     }
 
