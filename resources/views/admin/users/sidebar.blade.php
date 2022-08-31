@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/admin" class="brand-link">
-      <img src="/assets/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Triet store</span>
+      <img src="assets/img/fav.png" alt="AdminLTE Logo" class="brand-image " style="opacity: .8">
+      <span class="brand-text font-weight-light">Low-Key</span>
     </a>
 
     <!-- Sidebar -->
@@ -13,7 +13,7 @@
           <img src="/assets/admin/dist/img/avatar6.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="/admin" class="d-block">Admin</a>
+          <a href="{{ url('/logout')}}" class="d-block">Đăng xuất</a>
         </div>
       </div>
 

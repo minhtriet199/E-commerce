@@ -9,10 +9,11 @@ use \App\Http\Controllers\Admin\UploadController;
 use \App\Http\Controllers\Admin\SliderController;
 use \App\Http\Controllers\MainController;
 use \App\Http\Controllers\MenuController;
+use \App\Http\Controllers\ProductsController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
-
+Route::get('/logout',[AdminMainController::class,'logout'])->name('admin');
 
 Route::middleware(['auth'])->group(function (){
     Route::prefix('admin')->group(function(){
@@ -57,3 +58,5 @@ Route::post('/services/load-product',[MainController::class,'loadProduct']);
  
 Route::get('shop/{slug}.html', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);
+
+Route::get('product/{slug}.html',[ProductsController::class,'index']);

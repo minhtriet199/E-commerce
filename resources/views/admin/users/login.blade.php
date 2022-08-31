@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-@include('admin.users.header')
+@include('admin.users.head')
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -46,17 +46,6 @@
         </div>
         @csrf
       </form>
-
-      <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Đăng nhập facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Đăng nhập google
-        </a>
-      </div>
-      <!-- /.social-auth-links -->
 
       <p class="mb-1">
         <a href="forgot-password.html">Quên mật khẩu</a>

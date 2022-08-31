@@ -46,18 +46,13 @@ class Helper{
     {
         $html = '';
         foreach ($Menus as $key => $menu) {
-                $html .= '
-                    <li>
-                        <a href="/shop/' . $menu->id . '-' . $menu-> slug. '.html">
+                $html .= ' 
+                        <a href="/shop/'. $menu-> slug. '.html">
                             ' . $menu->name . '
                         </a>';
-
                 unset($Menus[$key]);
-
-
-                $html .= '</li>';
+                $html .= '';
         }
-
         return $html;
     }
 
@@ -80,16 +75,23 @@ class Helper{
         return '<a href="">lien he</a>';
     }
     
-    public static function Shophelp($menus)
+    public static function priceDetail($Product,$price =0,$price_sale=0)
     {
-        $html = '';
-        foreach ($menus as $key => $menu) {
+        $html= '';
+        if($price_sale != 0) {
             $html .='
-                <a href="/shop/'.$menu-> slug. '.html">
-                    ' . $menu->name . '
-                </a>';
+                <h3>'. self::currency_format($Product ->price_sale).' <span> '.self::currency_format($Product-> price).'</span></h3>
+            ';
+            return $html;
         }
-        return $html;
+        if($price !=0 ) {
+            $html .='
+                <h3>'.self::currency_format($Product -> price).'</span></h3>
+            ';
+            return $html;
+        }
+        return '<a href="">lien he</a>';
     }
+
     
 }

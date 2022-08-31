@@ -11,9 +11,11 @@
                 <nav class="header__menu mobile-menu">
                     <ul>
                         <li><a href="/">Trang chủ</a></li>
-                        <li><a href="shop">Cửa hàng</a>
+                        <li><a href="{{ url('/shop')}}">Cửa hàng</a>
                             <ul class="dropdown">
-                                {!! $menusHtml !!}
+                                <li>
+                                    {!! $menusHtml !!}
+                                </li>
                             </ul>
                         </li>
                         <li><a href="./blog.html">Giới thiệu</a></li>

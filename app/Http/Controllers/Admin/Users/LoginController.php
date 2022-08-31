@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\facades\Auth;
 
 class LoginController extends Controller
-{
+{ 
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => ['getLogout', 'getRegister']]);
+    }
     public function index()
     {
         return view('admin.users.login', [
@@ -25,7 +29,7 @@ class LoginController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input( 'password'),
             'level' => 1
-        ],$request->input(key: 'remember'))) {
+        ],$request->input('remember'))) {
             return redirect()->route('admin');
         }
         Session()->flash( 'error','Email hoặc password không đúng');
