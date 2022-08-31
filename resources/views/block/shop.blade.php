@@ -37,7 +37,7 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__tags">
                                                 <a href="{{ url('/shop')}}">Tất cả</a>
-                                                {!! \App\Helpers\Helper::Shophelp($menus) !!}
+                                                {!! \App\Helpers\Helper::menus($menus) !!}
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                     <div class="row">
                         @foreach($products as $product)
                             <div class="col-lg-4 col-md-6 col-sm-6">
-                                <a href="#">
+                                <a href="/product/{{$product->slug}}.html">
                                     <div class="product__item">
                                             <div class="product__item__pic set-bg" data-setbg="{{$product->thumb}}" >
                                     

@@ -21,7 +21,9 @@
 				<div class="footer__widget">
 					<h6>Cửa hàng</h6>
 					<ul>
-						{!! $menusHtml !!}
+						<li>
+							{!! $menusHtml !!}
+						</li>
 					</ul>
 				</div>
 			</div>

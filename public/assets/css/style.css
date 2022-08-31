@@ -35,6 +35,7 @@ body {
 	height: 100%;
 	font-family: "Nunito Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
+	overflow: overlay;
 }
 
 h1,
@@ -3895,4 +3896,45 @@ ol {
 }
 .hidden{
 	display: none;
+}
+.quantity-btn::-webkit-outer-spin-button,
+::-webkit-inner-spin-button{
+	-webkit-appearance: none;
+  	margin: 0;
+}
+
+#myBtn {
+	display: none;
+	position: fixed;
+	bottom: 100px;
+	right: 100px;
+	z-index: 99;
+	font-size: 40px;
+	border: black 1px solid;
+	outline: none;
+	background-color:white;
+	color: black;
+	cursor: pointer;
+	padding: 5px 10px;
+	border-radius: 30px;
+}
+
+#myBtn:hover {
+	background-color: none;
+}
+
+::-webkit-scrollbar {
+	width: 6px;
+	background: transparent;
+}
+::-webkit-scrollbar-track {
+	background: transparent; 
+}
+::-webkit-scrollbar-thumb {
+	background: #888; 
+	border-radius: 10px;
+
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #555; 
 }

@@ -19,4 +19,19 @@ class ProductService
             ->limit(self::LIMIT)
             ->get();
     }
+    public function show($slug)
+    {
+        return Product::where('slug',$slug)
+            ->with('menus')
+            ->firstOrFail();
+    }
+    public function more($slug)
+    {
+        $product = Product::where('slug',$slug)->first();
+        $products=Product::inRandomOrder()
+        ->where('menu_id','!=',$product->menu_id)
+        ->limit(4)
+        ->get();
+        return $products;
+    }
 }

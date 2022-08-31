@@ -8,6 +8,8 @@
 
 <body > 
 
+<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
+
 	@include('block.header')
 
 	
