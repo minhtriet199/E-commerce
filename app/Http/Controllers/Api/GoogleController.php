@@ -14,10 +14,6 @@ class GoogleController extends Controller
     public function loginGoogle()
     {
         return Socialite::driver('google')
-        ->with(
-            ['client_id' => '821766446579-ssdtda0pq4lq5te1fo9h6ekt2p45ng19.apps.googleusercontent.com'],
-            ['client_secret' => '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'],
-            ['redirect' => 'http://localhost:8000/login/google/callback'])
         ->redirect();
     }
 
