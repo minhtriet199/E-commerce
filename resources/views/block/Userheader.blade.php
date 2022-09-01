@@ -1,5 +1,4 @@
 <header class="header">
-    
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-3">
@@ -24,12 +23,19 @@
                 </nav>
             </div>
             <div class="col-lg-3 col-md-3">
-                <div class="header__nav__option">
-                    <a href=" {{ url('user/login') }} "><i class="fa fa-solid fa-user"></i></a>
-                    <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-shopping-cart"></i></a>
-                    <div class="price">$0.00</div>
+                <div class="header__menu mobile-menu">
+                    <ul>
+                        <li>
+                            <a href=" {{ url('user/account/profile') }} "><i class="fa fa-solid fa-user"></i></a>
+                            <ul class="dropdown" style="color:white; text-align:center;">
+                                <li><a href="{{ url('/user/account/profile/')}}">Tài khoản của tôi</a></li>
+                                <li ><a href="{{ url('/logout') }}">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" class="search-switch"><i class="fa fa-search"></i></a></li>
+                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>

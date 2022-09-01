@@ -68,11 +68,10 @@
                                 </div>
                             </div>
 
-
                             <div class="product__details__cart__option">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="number" value="1" class="quanity-btn">
+                                        <input type="number" value="1" class="quanity-btn" name="num_product">
                                     </div>
                                 </div>
                                 <a href="#" class="primary-btn">Thêm vào giỏ hàng</a>
@@ -83,6 +82,7 @@
                             <div class="product__details__last__option">
                                 <img src="/assets/img/shop-details/details-payment.png" alt="">
                             </div>
+                            
                         </div>
                     </div>
                 </div>
