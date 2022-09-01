@@ -10,6 +10,7 @@ use \App\Http\Controllers\Admin\SliderController;
 use \App\Http\Controllers\MainController;
 use \App\Http\Controllers\MenuController;
 use \App\Http\Controllers\ProductsController;
+use \App\Http\Controllers\UserController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
@@ -38,9 +39,7 @@ Route::middleware(['auth'])->group(function (){
             Route::post('edit/{product}',[ProductController::class,'update']);
             Route::DELETE('destroy',[ProductController::class,'destroy']);
         });
-
         Route::post('upload/services',[UploadController::class,'store']);
-
         Route::prefix('sliders')->group(function(){
             Route::get('list',[SliderController::class,'index']);
 
@@ -56,6 +55,26 @@ Route::middleware(['auth'])->group(function (){
 Route::get('/',[MainController::class,'index']);
 Route::post('/services/load-product',[MainController::class,'loadProduct']);
  
+Route::get('user/login',[UserController::class,'login']);
+Route::post('user/login/store',[UserController::class,'store']);
+Route::get('/logout',[UserController::class,'logout']);
+
+
+
+//Đăng nhập google
+Route::get('login/google', [\App\Http\Controllers\Api\GoogleController::class, 'loginGoogle']);
+Route::get('login/google/callback', [\App\Http\Controllers\Api\GoogleController::class, 'loginCallback']);
+//hết google
+
+Route::middleware(['auth'])->group(function (){
+    Route::prefix('user')->group(function(){
+        Route::prefix('account')->group(function(){
+            Route::get('profile',[UserController::class,'index']);
+        });
+    });
+});
+
+
 Route::get('shop/{slug}.html', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);
 

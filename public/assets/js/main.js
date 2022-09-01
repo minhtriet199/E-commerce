@@ -242,9 +242,7 @@ function loadMore(){
     })
 }
 
-var mybutton = document.getElementById("myBtn");
-
-// When the user scrolls down 20px from the top of the document, show the button
+mybutton = document.getElementById("myBtn");
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
@@ -254,9 +252,16 @@ function scrollFunction() {
     mybutton.style.display = "none";
   }
 }
-
-// When the user clicks on the button, scroll to the top of the document
 function topFunction() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
+}
+
+document.getElementById("btn-user").addEventListener("keypress", userInput);
+function Required(){
+    var userInput1 =document.getElementById('input-formu').value;
+    var userInput2 =document.getElementById('input-formp').value;
+    var btnUser = document.getElementById('btn-user');
+    
+    if(userInput1,userInput2 != "") btnUser.removeAttribute("disabled");
 }
