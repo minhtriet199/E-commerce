@@ -54,7 +54,7 @@ class UserController extends Controller
     }
 
     public function update(Request $request){
-        $User_attribute = User_attribute::find($request->id);
+        $User_attribute = User_attribute::find($request->user_id);
         $User_attribute->update($request->input());
         return response()->json($User_attribute);
     }
