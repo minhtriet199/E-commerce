@@ -13,7 +13,6 @@ class User_attribute extends Model
         'id',
         'name',
         'user_id',
-        'name',
         'address',
         'city',
         'phone',

@@ -7,6 +7,7 @@ use Illuminate\Support\facades\Auth;
 use App\Http\Services\User\UserService;
 use App\Models\User;
 use App\Models\User_attribute;
+use App\Http\Requests\User\UserRequest;
 
 
 class UserController extends Controller
@@ -57,5 +58,11 @@ class UserController extends Controller
         $User_attribute = User_attribute::find($request->user_id);
         $User_attribute->update($request->input());
         return response()->json($User_attribute);
+    }
+
+    public function updatepass(Request $request){
+        $User = User::find($request->id);
+        $User->update($request->input());
+        return response()->json($User);
     }
 }

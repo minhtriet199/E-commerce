@@ -33,14 +33,15 @@
 
 
                                 <form id="update">
-                                    <div class="row">
+                                    <p id="user-alert"></p>
+                                    <div class="row"> 
                                         <div class="col-lg-6 ">
                                             <p>Họ tên</p>
                                             <input type="text" name="name" value="{{ $users->profile->name}}">
                                         </div>
                                         <div class="col-lg-6 ">
                                             <p>Số điện thoại</p>
-                                            <input type="text" name="phone" value="{{ $users->profile->phone}}">
+                                            <input type="number" name="phone" value="{{ $users->profile->phone}}">
                                         </div>
                                     </div>
                                     <p>Địa chỉ</p>
@@ -57,8 +58,32 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="payment" role="tabpanel" >dsad</div>
-                    <div class="tab-pane fade" id="change-pass" role="tabpanel" >dsadas</div>
+                    <div class="tab-pane fade" id="payment" role="tabpanel" >ds</div>
+                    <div class="tab-pane fade" id="change-pass" role="tabpanel" >
+                    <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                        <div class="account-table">
+                            <h4>Đổi mật khẩu</h4>
+                            <div class="account-table-content">
+
+
+                                <form id="update-password">
+                                    <p id="user-alert-password"></p>
+                                    <p>Mật khẩu hiện tại</p>
+                                    <input type="text" name="password" value="">
+                                    <p>Mật khẩu mới</p>
+                                    <input type="text" name="new_pass" value="">
+                                    <p>Xác nhận mật khẩu mới</p>
+                                    <input type="text" name="confirm_pass" value="">
+
+                                    <input type="hidden" name="id" value="{{$users->id}}" data-id="{{$users->id}}">
+                                    <button type="button" onclick="updatePass()" id="btn-update-user">Cập nhật</button>
+                                    @csrf
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="tab-pane fade" id="order" role="tabpanel">...</div>
                     <div class="tab-pane fade" id="voucher" role="tabpanel" >...</div>
                 </div>
