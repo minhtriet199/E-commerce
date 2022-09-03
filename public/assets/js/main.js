@@ -279,10 +279,8 @@ function update(){
         const city =$('city[name="city"]').val();
 
         $.ajax({
-            processData: false,
-            contentType: false,
             type: 'POST',
-            dataType:"JSON",
+            dataType:'JSON',
             url:'profile/update',
             data:{
                 id:id,

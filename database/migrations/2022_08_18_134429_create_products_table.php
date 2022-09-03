@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('thumb');
             $table->longtext('content');
             $table->unsignedBigInteger('menu_id');
+            $table->integer('amount');
             $table->integer('price');
             $table->integer('price_sale');
             $table->integer('active');
