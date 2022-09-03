@@ -57,25 +57,24 @@ Route::post('/services/load-product',[MainController::class,'loadProduct']);
  
 Route::get('user/login',[UserController::class,'login']);
 Route::post('user/login/store',[UserController::class,'store']);
-Route::get('/logout',[UserController::class,'logout']);
-
-
-
+Route::get('/logouts',[UserController::class,'logouts']);
 //Đăng nhập google
 Route::get('login/google', [\App\Http\Controllers\Api\GoogleController::class, 'loginGoogle']);
 Route::get('login/google/callback', [\App\Http\Controllers\Api\GoogleController::class, 'loginCallback']);
 //hết google
 
+Route::get('shop/{slug}.html', [MenuController::class,'index']);
+Route::get('shop',[MenuController::class,'show']);
+Route::get('product/{slug}.html',[ProductsController::class,'index']);
+
+
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){
         Route::prefix('account')->group(function(){
             Route::get('profile',[UserController::class,'index']);
+            Route::post('profile/update',[UserController::class,'update']);
         });
     });
 });
 
 
-Route::get('shop/{slug}.html', [MenuController::class,'index']);
-Route::get('shop',[MenuController::class,'show']);
-
-Route::get('product/{slug}.html',[ProductsController::class,'index']);
