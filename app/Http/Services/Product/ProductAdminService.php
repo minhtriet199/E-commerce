@@ -11,7 +11,7 @@ class ProductAdminService
 {
     public function getMenu()
     {
-        return Menus::where('parent_id','>',1)
+        return Menus::where('parent_id','>',0)
         ->where('active',1)
         ->get();
     }

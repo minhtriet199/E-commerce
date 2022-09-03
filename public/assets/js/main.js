@@ -271,34 +271,63 @@ function Required(){
 
 
 function update(){
-        const id = $('input[name="id"]').val();
-        const user_id =$('input[name="user_id"]').val();
-        const name = $('input[name="name"]').val();
-        const phone =$('phone[name="phone"]').val();
-        const address =$('address[name="address"]').val();
-        const city =$('city[name="city"]').val();
+    const user_id =$('input[name="user_id"]').val();
+    const name = $('input[name="name"]').val();
+    const phone =$('input[name="phone"]').val();
+    const address =$('input[name="address"]').val();
+    const city =$('input[name="city"]').val();
 
-        $.ajax({
-            type: 'POST',
-            dataType:'JSON',
-            url:'profile/update',
-            data:{
-                id:id,
-                user_id:user_id,
-                name:name,
-                phone:phone,
-                address:address,
-                city:city,
-                _token: $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(response){
-                if(response.error !==false){
-                    alert('shit')
-                }
-                else{
-                    alert('no')
-                }
+    $.ajax({
+        type: 'POST',
+        dataType:'JSON',
+        url:'profile/update',
+        data:{
+            user_id:user_id,
+            name:name,
+            phone:phone,
+            address:address,
+            city:city,
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            if(response.error !==false){
+                $('#user-alert').html("Cập nhật thành công");
+                $('#user-alert').css('color','green')
             }
-        });
+            else{
+                $('#user-alert').html("Cập nhật Thất bại");
+                $('#user-alert').css('color','red')
+            }
+        }
+    });
+}
+    
+
+
+function updatePass(){
+    const id = $('input[name="id"]').val();
+    const new_pass = $('input[name="new_pass"]').val();
+    const cryptpass = CryptoJS.AES.encrypt(new_pass);
+
+    $.ajax({
+        type: 'POST',
+        dataType:'JSON',
+        url:'profile/update-password',
+        data:{
+            id:id,
+            password:new_pass,
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            if(response.error !==false){
+                $('#user-alert-password').html("Cập nhật thành công");
+                $('#user-alert-password').css('color','green')
+            }
+            else{
+                $('#user-alert-password').html("Cập nhật Thất bại");
+                $('#user-alert-password').css('color','red')
+            }
+        }
+    });
 }
     

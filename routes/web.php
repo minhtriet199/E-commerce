@@ -73,6 +73,7 @@ Route::middleware(['auth'])->group(function (){
         Route::prefix('account')->group(function(){
             Route::get('profile',[UserController::class,'index']);
             Route::post('profile/update',[UserController::class,'update']);
+            Route::post('profile/update-password',[UserController::class,'updatepass']);
         });
     });
 });
