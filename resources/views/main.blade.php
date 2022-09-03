@@ -1,4 +1,6 @@
 
+<button  onclick="autoTop()" id="btnScrolltop" class="btnScrolltop" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
+	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +10,6 @@
 
 <body > 
 
-	<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
-	
 	@if(Auth::check()) @include('block.Userheader')
 	@else @include('block.header')
 	@endif

@@ -3903,8 +3903,7 @@ ol {
   	margin: 0;
 }
 
-#myBtn {
-	display: none;
+#btnScrolltop{
 	position: fixed;
 	bottom: 100px;
 	right: 100px;
@@ -3952,3 +3951,34 @@ ol {
 .form-user a{color: black;}
 .form-user a:hover{ color: black;}
 .btn-blocks{padding: 10px 0px;color:white;}
+
+.custom-nav-pills a{
+	padding: 15px 10px;
+	font-weight: bold;
+}
+
+.account-table{padding: 35px;	border: 1px solid #d8d8d8; font-size: 16px;}
+.account-table h4{
+	border-bottom: 2px dashed #d8d8d8;
+	padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+.account-table p{margin: 10px 0px;}
+.account-table input{
+	padding: 10px 15px;
+	border: 1px solid #d8d8d8;
+	width: 100%;
+	transition: .5s;
+}
+.account-table input:focus{border: 1px solid #E98C81;}
+#btn-update-user{
+	width: 150px;
+	margin: 20px 0px; padding: 10px;
+	font-size: 20px; font-weight: bold;
+	border: none; border-radius: 30px;
+	background-color: #E98C81;
+	color: white;
+}
+#btn-update-user:hover{
+	background-color: #e74f3e;
+}

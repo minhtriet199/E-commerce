@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class GoogleController extends Controller
 {
@@ -23,8 +24,8 @@ class GoogleController extends Controller
         $findUser = User::where('email', $googleUser->email)->first();
         
         if($findUser){
-            Auth::login($findUser);
-            return redirect('/');
+            Auth::login($findUser, true);
+            return redirect(url('/'));
         }
         $user = User::updateOrCreate([
             'google_id' => $googleUser->id,
@@ -33,10 +34,10 @@ class GoogleController extends Controller
             'email' => $googleUser->email,
             'google_token' => $googleUser->token,
             'google_refresh_token' => $googleUser->refreshToken,
-            'password'=> '123',
+            'password'=> Hash::make('dungcodocchidaudau'),
         ]);
      
-        Auth::login($user);
+        Auth::login($user, true);
      
         return redirect('/');
         

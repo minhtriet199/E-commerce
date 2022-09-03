@@ -242,8 +242,8 @@ function loadMore(){
     })
 }
 
-mybutton = document.getElementById("myBtn");
-window.onscroll = function() {scrollFunction()};
+var mybutton = document.getElementById("btnScrollTop");
+document.body.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -252,7 +252,8 @@ function scrollFunction() {
     mybutton.style.display = "none";
   }
 }
-function topFunction() {
+
+function autoTop() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
@@ -265,3 +266,41 @@ function Required(){
     
     if(userInput1,userInput2 != "") btnUser.removeAttribute("disabled");
 }
+
+
+
+
+function update(){
+        const id = $('input[name="id"]').val();
+        const user_id =$('input[name="user_id"]').val();
+        const name = $('input[name="name"]').val();
+        const phone =$('phone[name="phone"]').val();
+        const address =$('address[name="address"]').val();
+        const city =$('city[name="city"]').val();
+
+        $.ajax({
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            dataType:"JSON",
+            url:'profile/update',
+            data:{
+                id:id,
+                user_id:user_id,
+                name:name,
+                phone:phone,
+                address:address,
+                city:city,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(response){
+                if(response.error !==false){
+                    alert('shit')
+                }
+                else{
+                    alert('no')
+                }
+            }
+        });
+}
+    

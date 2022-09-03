@@ -18,10 +18,4 @@ class User_attribute extends Model
         'city',
         'phone',
     ];
-    
-    public function users()
-    {
-        return $this->hasOne(User_attribute::class,'id', 'user_id' );
-    }
-
 }
