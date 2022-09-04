@@ -6,32 +6,32 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Menu\CreateFormRequest;
 use App\Http\Requests\Menu\UpdateRequest;
 use App\Http\Services\Menu\MenuService;
+use Carbon\Carbon;
 use App\Models\Menus;
 use Illuminate\Http\Request;
-use \Illuminate\Http\JsonResponse;
+use Illuminate\Http\JsonResponse;
 
 class MenusController extends Controller
 {
     protected $MenuService;
+    public function __construct(MenuService $MenuService)
+    {
+        $this->MenuService = $MenuService;    
+    }
 
     public function index()
     {
         return view('admin.menus.list',[
             'title' => 'Danh sách danh mục',
-            'menus' => $this->MenuService->get_cata()
+            'Menus' => $this->MenuService->get()
         ]);
-    }
-
-    public function __construct(MenuService $MenuService)
-    {
-        $this->MenuService = $MenuService;    
     }
 
     public function create()
     {
         return view('admin.menus.add',[
             'title' => 'Thêm danh mục mới',
-            'Menus' => $this->MenuService->get_cata(0)
+            'Menus' => $this->MenuService->get()
         ]);
     }
     public function store(CreateFormRequest $request)
@@ -46,7 +46,6 @@ class MenusController extends Controller
         return view('admin.menus.edit',[
             'title' => 'Chỉnh sửa danh mục : ' . $menus->name,
             'Menus' => $menus,
-            'menus' => $this->MenuService->get_cata()
         ]);
     }
     public function update(Menus $menus, UpdateRequest $request)

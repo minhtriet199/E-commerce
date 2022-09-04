@@ -27,7 +27,18 @@
                 </tr>
             </thead>
             <tbody>
-                {!! \App\Helpers\Helper::menu($menus) !!}
+                @foreach($Menus as $menu)
+                    <tr>
+                        <td>{{$menu->id}} </td>
+                        <td>{{$menu->name}}</td>
+                        <td >{!! \App\Helpers\Helper::active($menu->active) !!}</td>
+                        <td>{{ $menu->updated_at->format('d/m/y | H:i') }}</td>
+                        <td>  
+                            <a class="btn btn-primary btn-sm"  href="/admin/menus/edit/{{ $menu->id }} "><i class="fas fa-edit"></i></a>
+                            <a class="btn btn-danger btn-sm" href="#" onclick="removeRow({{ $menu->id }},'/admin/menus/destroy')"> <i class="fas fa-trash"></i> </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -13,7 +13,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,20 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>'required',
+            'email'=>'required|unique:Users',
+            'password'=>'required',
+            'password-confirm' => 'required',
+        ];
+    }
+    public function messages() : array 
+    {
+        return [
+            'name.required' => 'Chưa nhập họ tên',
+            'email.required' => 'Chưa nhập email',
+            'email.unique' => 'Email bị trùng',
+            'password.required' =>'Chưa nhập mật khẩu',
+            'password-confirm.required' => 'Chưa xác nhận mật khẩu',
         ];
     }
 }

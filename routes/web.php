@@ -54,14 +54,18 @@ Route::middleware(['auth'])->group(function (){
 
 Route::get('/',[MainController::class,'index']);
 Route::post('/services/load-product',[MainController::class,'loadProduct']);
- 
+
+Route::get('user/signup',[UserController::class,'signup']);
+Route::post('user/signup/create',[UserController::class,'create']);
+
 Route::get('user/login',[UserController::class,'login']);
 Route::post('user/login/store',[UserController::class,'store']);
-Route::get('/logouts',[UserController::class,'logouts']);
+
 //Đăng nhập google
 Route::get('login/google', [\App\Http\Controllers\Api\GoogleController::class, 'loginGoogle']);
 Route::get('login/google/callback', [\App\Http\Controllers\Api\GoogleController::class, 'loginCallback']);
 //hết google
+Route::get('/logouts',[UserController::class,'logouts']);
 
 Route::get('shop/{slug}.html', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);

@@ -11,9 +11,7 @@ class ProductAdminService
 {
     public function getMenu()
     {
-        return Menus::where('parent_id','>',0)
-        ->where('active',1)
-        ->get();
+        return Menus::where('active',1) ->get();
     }
     public function get()
     {
@@ -46,15 +44,15 @@ class ProductAdminService
         try{
             $request->except('_token');
             Product::create([
-                'name' =>(string) $request->input('name'),
-                'menu_id' =>(int) $request->input('menu_id'),
-                'price' =>(int) $request->input('price'),
-                'price_sale' =>(int) $request->input('price_sale'),
-                'amount' =>(int) $request->input('amount'),
-                'thumb' =>(string) $request->input('thumb'),
-                'description' =>(string) $request->input('description'),
-                'content' =>(string) $request->input('content'),
-                'active' =>(int) $request->input('active'),
+                'name' => $request->input('name'),
+                'menu_id' =>$request->input('menu_id'),
+                'price' => $request->input('price'),
+                'price_sale' =>$request->input('price_sale'),
+                'amount' => $request->input('amount'),
+                'thumb' => $request->input('thumb'),
+                'description' => $request->input('description'),
+                'content' =>$request->input('content'),
+                'active' => $request->input('active'),
                 'slug' =>Str::slug($request->input('name'),'-')
             ]);
 

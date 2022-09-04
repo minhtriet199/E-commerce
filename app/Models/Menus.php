@@ -15,11 +15,10 @@ class Menus extends Model
     [
         'id',
         'name',
-        'parent_id',
-        'description',
         'slug',
         'content',
         'active',
+        'updated_at'
         
     ];
 

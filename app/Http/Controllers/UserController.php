@@ -14,6 +14,7 @@ class UserController extends Controller
 {
 
     protected $userServices;
+
     public function __construct(UserService $userServices){
         $this ->userServices = $userServices;
     }
@@ -25,9 +26,20 @@ class UserController extends Controller
             'users' => $this->userServices->get()
         ]);
     }
-    
-    public function login()
-    {
+
+    public function signup(){
+        return view('user.signup',[
+            'title' => 'Đăng ký'
+        ]);
+    }
+
+    public function create(UserRequest $request){
+        $result = $this->userServices->insert($request);
+        if($result) return redirect('/user/login')->withInput();
+        else return redirect()->back()->withInput();
+    }
+
+    public function login(){
         return view('user.login',[
             'title' => 'Đăng nhập'
         ]);
