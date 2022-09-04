@@ -38,9 +38,9 @@ class GoogleController extends Controller
                 'google_refresh_token' => $googleUser->refreshToken,
                 'password'=> Hash::make('dungcodocchidaudau'),
             ]);
-            $profile = User_attribute::create([
-                'user_id'=>$user->id,
-                'name' => $googleUser->name,
+            User_attribute::create([
+                'id' => $user->id,
+                'user_id' => $user->id,
             ]);
         }
      

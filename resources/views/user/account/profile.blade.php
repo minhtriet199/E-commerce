@@ -48,8 +48,7 @@
                                     <input type="text" name="address" value="{{ $users->profile->address}}">
                                     <p>Thành phố</p>
                                     <input type="text" name="city" value="{{ $users->profile->city}}">
-                                    <input type="hidden" name="user_id" value="{{$users->id}}" data-id="{{$users->id}}">
-                                    <input type="hidden" name="id" value="{{$users->profile->id}}" data-id="{{$users->profile->id}}">
+                                    <input type="hidden" name="user_id" value="{{$users->profile->id}}" data-id="{{$users->profile->id}}">
                                     <button type="button" onclick="update()" id="btn-update-user">Cập nhật</button>
                                     @csrf
                                 </form>
@@ -60,12 +59,9 @@
                     </div>
                     <div class="tab-pane fade" id="payment" role="tabpanel" >ds</div>
                     <div class="tab-pane fade" id="change-pass" role="tabpanel" >
-                    <div class="tab-pane fade show active" id="profile" role="tabpanel">
                         <div class="account-table">
                             <h4>Đổi mật khẩu</h4>
                             <div class="account-table-content">
-
-
                                 <form id="update-password">
                                     <p id="user-alert-password"></p>
                                     <p>Mật khẩu hiện tại</p>
@@ -79,8 +75,6 @@
                                     <button type="button" onclick="updatePass()" id="btn-update-user">Cập nhật</button>
                                     @csrf
                                 </form>
-
-
                             </div>
                         </div>
                     </div>

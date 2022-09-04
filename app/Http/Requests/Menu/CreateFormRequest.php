@@ -25,8 +25,6 @@ class CreateFormRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:menuses',
-            'description' => 'required',
-            'content' => 'required',
             'active' => 'required','in:0,1'
         ];
     }
@@ -36,8 +34,6 @@ class CreateFormRequest extends FormRequest
         return [
             'name.required' => 'Vui lòng nhập tên danh mục',
             'name.unique' =>  'Danh mục đã tồn tại',
-            'description.required' => 'Vui lòng nhập mô tả',
-            'content.required' => 'Vui lòng nhập mô tả chi tiết',
         ];
     }
 }

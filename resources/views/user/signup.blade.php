@@ -5,17 +5,19 @@
 <section>
     <div class="container">
         <div class="form-user">
-            <form action="{{ url('/user/login/store') }}" onkeypress="Required()" method="POST" >
-                <h2>Đăng nhập</h2>
+            <form id="validate-signup" action="{{ url('/user/signup/create') }}" onkeypress="Required()" method="POST" >
+                <h2>Đăng ký</h2>
                 @include('user.alert')
+                <input type="text" name="name" placeholder="Họ và tên" id="input-formu" value="{!! old('name') !!}">
                 <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Email" id="input-formu" value="{!! old('email') !!}">
-                <input type="text" name="password" placeholder="Mật khẩu" id="input-formp">
-                <input type="submit" value="Đăng nhập" id="btn-user" disabled>
+                <input type="password" name="password" placeholder="Mật khẩu" id="input-formp">
+                <input type="password" name="password-confirm" placeholder="Nhập lại mật khẩu" id="input-formp">
+                <input type="submit" value="Đăng ký" id="btn-user" disabled>
                 @csrf
             </form>
             <div class="row">
                     <h5 class="col-8" style="text-align:left;"><a href="">Quên Mật khẩu</a></h5>
-                    <h5 class="col-4" style="text-align:right;"><a href="{{ url('user/signup')}}">Đăng ký</a></h5>
+                    <h5 class="col-4" style="text-align:right;"><a href="{{ url('user/login')}}">Đăng nhập</a></h5>
             </div>
             <hr>
             <div class="row">
@@ -25,5 +27,6 @@
         </div>
     </div>
 </section>
+
 
 @endsection

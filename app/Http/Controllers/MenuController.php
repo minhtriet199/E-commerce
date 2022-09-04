@@ -24,13 +24,13 @@ class MenuController extends Controller
             'title' => $menu->name,
             'products' =>$products,
             'menu' =>$menu,
-            'menus' => $this->menuService->getChild()
+            'menus' => $this->menuService->get()
         ]);
     }
     public function show(){
         return view('block.shop',[
             'title' =>'Cửa hàng',
-            'menus'=>$this->menuService->getChild(),
+            'menus'=>$this->menuService->get(),
             'products' =>$this->productService->get()
         ]);
     }

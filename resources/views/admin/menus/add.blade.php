@@ -1,9 +1,5 @@
 @extends('admin.users.main')
 
-@section('head')
-    <script src="/ckeditor/ckeditor.js"></script>
-@endsection
-
 @section('content')
 
 <form action="" method="POST">
@@ -11,28 +7,6 @@
         <div class="form-group">
             <label for="exampleInputEmail1">Tên danh mục</label>
             <input type="text" class="form-control" id="exampleInputEmail1" name="name" placeholder="Nhập danh mục">
-        </div>
-
-        <div class="form-group">
-            <label for="exampleInputPassword1">Danh mục cha</label>
-            <select name="parent_id" class="custom-select rounded-0">
-                <option value="0">Danh mục cha</option>
-
-                @foreach( $Menus as $menu)
-                    <option value="{{ $menu -> id }}">{{$menu -> name }}</option>
-                @endforeach 
-
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="exampleInputEmail1">Mô tả</label>
-            <textarea class="form-control" name="description" rows="3" placeholder="Nhập ..."></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="exampleInputEmail1">Mô tả chi tiết</label>
-            <textarea class="form-control" rows="3" name="content" id="content" placeholder="Nhập nội dung .."></textarea>
         </div>
 
         <div class="form-group">
@@ -54,10 +28,4 @@
     </div>
     @csrf
 </form>
-@endsection
-
-@section('footer')
-    <script>
-        CKEDITOR.replace('content');
-    </script>
 @endsection
