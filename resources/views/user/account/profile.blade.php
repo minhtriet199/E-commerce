@@ -1,8 +1,8 @@
 @extends('main')
 
 @section('content')
-
-<section>
+    
+<section class="profile-container">
     <div class="container">
         <div class="row" style="margin:100px 0px">
             <div class="col-lg-3 col-md-4">
@@ -24,7 +24,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-8">
+            <div class="col-lg-9 col-md-8" style="height=900px;">
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="profile" role="tabpanel">
                         <div class="account-table">

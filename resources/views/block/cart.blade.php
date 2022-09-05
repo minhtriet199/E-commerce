@@ -32,27 +32,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="img/shopping-cart/cart-2.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Diagonal Textured Cap</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="number" value="1" class="quanity-btn" name="product-qty">
-                                        </div>
-                                        <input type="hidden" value="7" name="id">
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 32.50</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
+                             @php $total = 0 @endphp
+                                @if(session('carts'))
+                                    @foreach(session('carts') as $product_id => $details)
+                                        @php $total += $details['price'] * $details['quantity']  @endphp
+                                        <tr data-id="{{ $product_id }}">
+                                            <td class="product__cart__item">
+                                                <div class="product__cart__item__pic">
+                                                    <img src="{{ $details['thumb'] }}" width="80px">
+                                                </div>
+                                                <div class="product__cart__item__text">
+                                                    <h6 style="padding-top:10px;">{{ $details['name'] }}</h6>
+                                                    <h5>{!! \App\Helpers\Helper::currency_format($details['price']) !!} </h5>
+                                                </div>
+                                            </td>
+                                            <td class="quantity__item">
+                                                <div class="quantity">
+                                                    <div class="pro-qty-2" data-th="Quantity">
+                                                        <input type="number" value="{{ $details['quantity'] }}" class="quantity quantity-btn" name="product_qty" > 
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="cart__price"> {!! \App\Helpers\Helper::currency_format($details['price'] * $details['quantity']) !!} </td>
+                                            <td class="cart__close"><button class="remove-from-cart" style="border-radius:45px"><i class="fa fa-close"></i></button></td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                         </tbody>
                     </table>
                 </div>
@@ -69,8 +74,8 @@
                 <div class="cart__total">
                     <h6>Tổng tiền</h6>
                     <ul>
-                        <li>Tạm tính <span>$ 169.50</span></li>
-                        <li>Tổng tiền<span>$ 169.50</span></li>
+                        <li>Tạm tính <span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
+                        <li>Tổng tiền<span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
                     </ul>
                     <a href="#" class="primary-btn">THANH TOÁN</a>
                 </div>

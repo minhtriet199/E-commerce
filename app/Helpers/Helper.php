@@ -10,7 +10,7 @@ class Helper{
 
     }
 
-    public static function currency_format($number, $suffix = 'Đồng') {
+    public static function currency_format($number, $suffix = 'đ') {
         if (!empty($number)) {
             return number_format($number, 0, ',', '.') . " {$suffix}";
         }
@@ -21,7 +21,7 @@ class Helper{
         $html = '';
         foreach ($Menus as $key => $menu) {
                 $html .= ' 
-                        <a href="/shop/'. $menu-> slug. '.html">
+                        <a href="/shop/'. $menu-> slug. '">
                             ' . $menu->name . '
                         </a>';
                 unset($Menus[$key]);

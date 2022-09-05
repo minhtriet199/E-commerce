@@ -178,7 +178,7 @@
         }
         $button.parent().find('input').val(newVal);
     });
-
+    
     var proQty = $('.pro-qty-2');
     proQty.append('<span class="fa fa-angle-down inc qtybtn"></span>');
     proQty.prepend('<span class="fa fa-angle-up dec qtybtn"></span>');
@@ -197,7 +197,7 @@
         }
         $button.parent().find('input').val(newVal);
     });
-
+    
     /*------------------
         Achieve Counter
     --------------------*/
@@ -300,6 +300,7 @@ $(document).ready(function() {
         const product_name = $('input[name="product_name"]').val();
         const product_price = $('input[name="product_price"]').val();
         const product_quantity = $('input[name="product_quantity"]').val();
+        const product_thumb = $('input[name="product_thumb"]').val();
         $.ajax({
             type:'POST',
             dataType:'JSON',
@@ -309,11 +310,49 @@ $(document).ready(function() {
                 product_price:product_price,
                 product_quantity:product_quantity,
                 product_name:product_name,
+                product_thumb:product_thumb,
             },
             success:function(data){
             }
 
         });
     });
+});
 
+$(document).ready(function(){
+    
+    $(".quantity-btn").change(function (e) {
+        e.preventDefault();
+        var ele = $(this);
+        const qty = $('input[name="product_qty"]').val();
+    
+        $.ajax({
+            url: '/update-cart',
+            method: "patch",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'), 
+                id: ele.parents("tr").attr("data-id"), 
+                quantity: qty
+            },
+            success: function (response) {
+                window.location.reload();
+            }
+        });
+    });
+
+    $(".remove-from-cart").click(function (e) {
+        e.preventDefault();
+        var ele = $(this);
+        $.ajax({
+            url: '/remove-cart',
+            method: "DELETE",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'), 
+                id: ele.parents("tr").attr("data-id"), 
+            },
+            success: function (response) {
+                window.location.reload();
+            }
+        });
+    });
 });

@@ -68,12 +68,14 @@ Route::get('login/google/callback', [App\Http\Controllers\Api\GoogleController::
 //hết google
 Route::get('/logouts',[UserController::class,'logouts']);
 
-Route::get('shop/{slug}.html', [MenuController::class,'index']);
+Route::get('shop/{slug}', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);
-Route::get('product/{slug}.html',[ProductsController::class,'index']);
+Route::get('product/{slug}',[ProductsController::class,'index']);
 
-Route::post('/add-cart',[CartController::class,'insert']);
-Route::get('/view-cart',[CartController::class,'index']);
+Route::post('add-cart',[CartController::class,'insert']);
+Route::get('view-cart',[CartController::class,'index']);
+Route::patch('update-cart', [CartController::class, 'update']);
+Route::delete('remove-cart', [CartController::class, 'remove']);
 
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){
