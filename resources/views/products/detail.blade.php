@@ -69,12 +69,18 @@
                             </div>
 
                             <div class="product__details__cart__option">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="number" value="1" class="quanity-btn" name="num_product">
+                                <form action="/add-cart" method="POST">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="number" value="1" class="quanity-btn" name="product_quantity">
+                                        </div>
+                                        <input type="hidden" value="{{ $products -> id}}" name="product_id">
+                                        <input type="hidden" value="{{ $products -> name}}" name="product_name">
+                                        {!! \App\Helpers\Helper::formprice($products,$products->price,$products->price_sale) !!}
                                     </div>
-                                </div>
-                                <a href="#" class="primary-btn">Thêm vào giỏ hàng</a>
+                                    <input type="button" class="primary-btn" value="Thêm vào giỏ hàng" id="btn-cart">
+                                    @csrf
+                                </form>
                             </div>
                             <div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> Thêm vào danh sách ước</a>

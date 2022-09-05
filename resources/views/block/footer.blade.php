@@ -1,5 +1,6 @@
 
 <!-- Footer Section Begin -->
+
 <footer class="footer">
 	<div class="container">
 		<div class="row">

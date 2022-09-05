@@ -1,16 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Admin\Users\LoginController;
-use \App\Http\Controllers\Admin\AdminMainController;
-use \App\Http\Controllers\Admin\MenusController;
-use \App\Http\Controllers\Admin\ProductController;
-use \App\Http\Controllers\Admin\UploadController;
-use \App\Http\Controllers\Admin\SliderController;
-use \App\Http\Controllers\MainController;
-use \App\Http\Controllers\MenuController;
-use \App\Http\Controllers\ProductsController;
-use \App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\Users\LoginController;
+use App\Http\Controllers\Admin\AdminMainController;
+use App\Http\Controllers\Admin\MenusController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
@@ -62,8 +63,8 @@ Route::get('user/login',[UserController::class,'login']);
 Route::post('user/login/store',[UserController::class,'store']);
 
 //Đăng nhập google
-Route::get('login/google', [\App\Http\Controllers\Api\GoogleController::class, 'loginGoogle']);
-Route::get('login/google/callback', [\App\Http\Controllers\Api\GoogleController::class, 'loginCallback']);
+Route::get('login/google', [App\Http\Controllers\Api\GoogleController::class, 'loginGoogle']);
+Route::get('login/google/callback', [App\Http\Controllers\Api\GoogleController::class, 'loginCallback']);
 //hết google
 Route::get('/logouts',[UserController::class,'logouts']);
 
@@ -71,6 +72,8 @@ Route::get('shop/{slug}.html', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);
 Route::get('product/{slug}.html',[ProductsController::class,'index']);
 
+Route::post('/add-cart',[CartController::class,'insert']);
+Route::get('/view-cart',[CartController::class,'index']);
 
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){

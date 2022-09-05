@@ -3905,8 +3905,8 @@ ol {
 
 #btnScrolltop{
 	position: fixed;
-	bottom: 100px;
-	right: 100px;
+	bottom: 50px;
+	right: 50px;
 	z-index: 99;
 	font-size: 40px;
 	border: black 1px solid;

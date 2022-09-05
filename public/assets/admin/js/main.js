@@ -24,6 +24,10 @@ function removeRow(id,url)
     }
 }
 
+function autoTop() {
+    document.body.scrollTop = 0; 
+document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
 
 $('#upload').change(function (){ 
     const form = new FormData();

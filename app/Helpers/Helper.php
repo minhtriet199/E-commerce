@@ -48,7 +48,25 @@ class Helper{
         }
         return '<a href="">lien he</a>';
     }
+
+
+    public static function formprice($Product,$price =0,$price_sale=0){
+        $html ='';
+        if($price_sale != 0) {
+            $html .='
+                <input type="hidden" value="'.$Product -> price_sale.'" name="product_price">
+            ';
+            return $html;
+        }
+        if($price !=0 ) {
+            $html .='
+                <input type="hidden" value=" '.$Product -> price.' " name="product_price">
+            ';
+            return $html;
+        }
+    }
     
+
     public static function priceDetail($Product,$price =0,$price_sale=0)
     {
         $html= '';

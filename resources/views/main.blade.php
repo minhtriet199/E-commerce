@@ -1,5 +1,5 @@
 
-<button  onclick="autoTop()" id="btnScrolltop" class="btnScrolltop" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
+<button  onclick="autoTop()" id="btnScrolltop" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
 	
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,7 @@
 	@if(Auth::check()) @include('block.Userheader')
 	@else @include('block.header')
 	@endif
-
+	<button  onclick="autoTop()" id="btnScrolltop" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
 	
 	@yield('content')
 
@@ -21,3 +21,4 @@
 
 </body>
 </html>
+

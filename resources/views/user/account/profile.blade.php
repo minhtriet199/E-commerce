@@ -49,7 +49,7 @@
                                     <p>Thành phố</p>
                                     <input type="text" name="city" value="{{ $users->profile->city}}">
                                     <input type="hidden" name="user_id" value="{{$users->profile->id}}" data-id="{{$users->profile->id}}">
-                                    <button type="button" onclick="update()" id="btn-update-user">Cập nhật</button>
+                                    <button type="button"  id="btn-update-user">Cập nhật</button>
                                     @csrf
                                 </form>
 
