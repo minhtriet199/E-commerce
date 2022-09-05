@@ -10,7 +10,7 @@
 						<div class="col-xl-5 col-lg-7 col-md-8">
 							<div class="hero__text">
 								<h1>{{ $slider -> name }}</h1>
-								<a href="#" class="primary-btn">Mua hàng <span class="arrow_right"></span></a>
+								<a href="/shop" class="primary-btn">Mua hàng <span class="arrow_right"></span></a>
 							</div>
 						</div>
 					</div>

@@ -76,6 +76,7 @@
                                         </div>
                                         <input type="hidden" value="{{ $products -> id}}" name="product_id">
                                         <input type="hidden" value="{{ $products -> name}}" name="product_name">
+                                        <input type="hidden" value="{{ $products -> thumb}}" name="product_thumb">
                                         {!! \App\Helpers\Helper::formprice($products,$products->price,$products->price_sale) !!}
                                     </div>
                                     <input type="button" class="primary-btn" value="Thêm vào giỏ hàng" id="btn-cart">
@@ -148,7 +149,7 @@
             @foreach($more as $more)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                     <div class="product__item">
-                        <a href="/product/{{$more ->slug}}.html">
+                        <a href="/product/{{$more ->slug}}">
                             <div class="product__item__pic set-bg" data-setbg="{{$more ->thumb}}" style="background-image: url('{{$more ->thumb}} ')">
                                 <ul class="product__hover">
                                     <span class="label" class="product__hover"><h6>{{$more -> name}}</h6></span>
