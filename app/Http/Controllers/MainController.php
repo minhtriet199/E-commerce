@@ -26,7 +26,6 @@ class MainController extends Controller
             'title' => 'Lowkey | Shop bán quần áo',
             'sliders' => $this->sliderService->get(),
             'products' => $this->product->get(),
-            'menus' => $this->menus->get()
         ]);
     }
     public function loadProduct(Request $request)

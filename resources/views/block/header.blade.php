@@ -29,7 +29,7 @@
                         <li><a href=" {{ url('user/login') }} "><i class="fa fa-solid fa-user"></i></a></li>
                         <li><a href="#" class="search-switch"><i class="fa fa-search"></i></a></li>
                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                        <li><a href="{{url('/view-cart')}}"><i class="fa fa-shopping-cart"></i></a></li>
                     </ul>
                 </div>
             </div>

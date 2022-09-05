@@ -8,7 +8,7 @@
                     <div class="breadcrumb__text">
                         <h4>Cửa hàng</h4>
                         <div class="breadcrumb__links">
-                            <a href="/">Trang chủ</a>
+                            <a href="/">Cửa hàng</a>
                             <span>Shop</span>
                         </div>
                     </div>

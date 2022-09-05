@@ -10,6 +10,7 @@ use App\Models\User_attribute;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class GoogleController extends Controller
 {
@@ -36,7 +37,7 @@ class GoogleController extends Controller
                 'email' => $googleUser->email,
                 'google_token' => $googleUser->token,
                 'google_refresh_token' => $googleUser->refreshToken,
-                'password'=> Hash::make('dungcodocchidaudau'),
+                'password'=> Hash::make(Str::random(11)),
             ]);
             User_attribute::create([
                 'id' => $user->id,

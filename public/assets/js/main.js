@@ -180,12 +180,12 @@
     });
 
     var proQty = $('.pro-qty-2');
-    proQty.prepend('<span class="fa fa-angle-left dec qtybtn"></span>');
-    proQty.append('<span class="fa fa-angle-right inc qtybtn"></span>');
+    proQty.append('<span class="fa fa-angle-down inc qtybtn"></span>');
+    proQty.prepend('<span class="fa fa-angle-up dec qtybtn"></span>');
     proQty.on('click', '.qtybtn', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
-        if ($button.hasClass('inc')) {
+        if ($button.hasClass('dec')) {
             var newVal = parseFloat(oldValue) + 1;
         } else {
             // Don't allow decrementing below zero
@@ -242,92 +242,78 @@ function loadMore(){
     })
 }
 
-var mybutton = document.getElementById("btnScrollTop");
-document.body.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    mybutton.style.display = "block";
-  } else {
-    mybutton.style.display = "none";
-  }
-}
-
 function autoTop() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
 
-document.getElementById("btn-user").addEventListener("keypress", userInput);
 function Required(){
     var userInput1 =document.getElementById('input-formu').value;
     var userInput2 =document.getElementById('input-formp').value;
     var btnUser = document.getElementById('btn-user');
     
-    if(userInput1,userInput2 != "") btnUser.removeAttribute("disabled");
+    if(userInput1&&userInput2 != "") btnUser.removeAttribute("disabled");
 }
 
 
+$(document).ready(function() {
+    //update user ajax
+    $('#btn-update-user').click(function(e){
+        const user_id =$('input[name="user_id"]').val();
+        const name = $('input[name="name"]').val();
+        const phone =$('input[name="phone"]').val();
+        const address =$('input[name="address"]').val();
+        const city =$('input[name="city"]').val();
 
-
-function update(){
-    const user_id =$('input[name="user_id"]').val();
-    const name = $('input[name="name"]').val();
-    const phone =$('input[name="phone"]').val();
-    const address =$('input[name="address"]').val();
-    const city =$('input[name="city"]').val();
-
-    $.ajax({
-        type: 'POST',
-        dataType:'JSON',
-        url:'profile/update',
-        data:{
-            user_id:user_id,
-            name:name,
-            phone:phone,
-            address:address,
-            city:city,
-            _token: $('meta[name="csrf-token"]').attr('content')
-        },
-        success:function(response){
-            if(response.error !==false){
-                $('#user-alert').html("Cập nhật thành công");
-                $('#user-alert').css('color','green')
+        $.ajax({
+            type: 'POST',
+            dataType:'JSON',
+            url:'profile/update',
+            data:{
+                user_id:user_id,
+                name:name,
+                phone:phone,
+                address:address,
+                city:city,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(response){
+                if(response.error !==false){
+                    $('#user-alert').html("Cập nhật thành công");
+                    $('#user-alert').css('color','green')
+                }
+                else{
+                    $('#user-alert').html("Cập nhật Thất bại");
+                    $('#user-alert').css('color','red')
+                }
             }
-            else{
-                $('#user-alert').html("Cập nhật Thất bại");
-                $('#user-alert').css('color','red')
-            }
-        }
+        });
     });
-}
-    
+});
 
 
-function updatePass(){
-    const id = $('input[name="id"]').val();
-    const new_pass = $('input[name="new_pass"]').val();
-    const cryptpass = CryptoJS.AES.encrypt(new_pass);
+$(document).ready(function() {
 
-    $.ajax({
-        type: 'POST',
-        dataType:'JSON',
-        url:'profile/update-password',
-        data:{
-            id:id,
-            password:new_pass,
-            _token: $('meta[name="csrf-token"]').attr('content')
-        },
-        success:function(response){
-            if(response.error !==false){
-                $('#user-alert-password').html("Cập nhật thành công");
-                $('#user-alert-password').css('color','green')
+    //them gio hang ajax
+    $('#btn-cart').click(function(e){
+        const product_id = $('input[name="product_id"]').val();
+        const product_name = $('input[name="product_name"]').val();
+        const product_price = $('input[name="product_price"]').val();
+        const product_quantity = $('input[name="product_quantity"]').val();
+        $.ajax({
+            type:'POST',
+            dataType:'JSON',
+            url:'/add-cart',
+            data:{
+                product_id : product_id,
+                product_price:product_price,
+                product_quantity:product_quantity,
+                product_name:product_name,
+            },
+            success:function(data){
             }
-            else{
-                $('#user-alert-password').html("Cập nhật Thất bại");
-                $('#user-alert-password').css('color','red')
-            }
-        }
+
+        });
     });
-}
-    
+
+});
