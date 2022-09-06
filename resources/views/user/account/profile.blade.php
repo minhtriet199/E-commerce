@@ -46,8 +46,16 @@
                                     </div>
                                     <p>Địa chỉ</p>
                                     <input type="text" name="address" value="{{ $users->profile->address}}">
-                                    <p>Thành phố</p>
-                                    <input type="text" name="city" value="{{ $users->profile->city}}">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <p>Thành phố</p>
+                                            <input type="text" name="city" value="{{ $users->profile->city}}">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <p>Quận</p>
+                                            <input type="text" name="city" value="{{ $users->profile->city}}">
+                                        </div>
+                                    </div>
                                     <input type="hidden" name="user_id" value="{{$users->profile->id}}" data-id="{{$users->profile->id}}">
                                     <button type="button"  id="btn-update-user">Cập nhật</button>
                                     @csrf

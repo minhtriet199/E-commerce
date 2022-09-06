@@ -51,3 +51,51 @@ $('#upload').change(function (){
         }
     });
 });
+
+$(document).ready(function(){
+    $('.add-delivery').click(function(){
+        var city = $('.city').val();
+        var district = $('.district').val();
+        var fee =$('input[name="fee"]').val();
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+                
+            url: '/admin/insert-delivery' ,
+            method: 'POST',
+            data:{
+                city:city,
+                district:district,
+                fee:fee,
+                _token:_token,
+            },
+            success:function(data){
+                alert('succes');
+            }
+        });
+    });
+
+    $('.choose').change(function(){
+        var action = $(this).attr('id');
+        var city_id = $(this).val();
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        var result = '';
+
+        if(action == 'city') {
+            result='district';
+        }
+
+        $.ajax({
+            url: '/admin/select-delivery' ,
+            method: 'POST',
+            data:{
+                action:action,
+                city_id:city_id,
+                _token:_token
+            },
+            success:function(data){
+                $('#'+result).html(data);
+            }
+        });
+   });
+
+});

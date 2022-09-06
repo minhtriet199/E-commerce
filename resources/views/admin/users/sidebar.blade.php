@@ -98,6 +98,51 @@
               </li>
             </ul>
           </li>
+          
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-images"></i>
+              <p>
+                 Đơn hàng
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+              <a href="/admin/sliders/list" class="nav-link">
+                  <p>Danh sách đơn hàng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/order/shipping" class="nav-link">
+                  <p>Xem đơn hàng</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-images"></i>
+              <p>
+                Shipping
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+              <a href="/admin/shipping-list" class="nav-link">
+                  <p>Danh sách Vận chuyển</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/shipping" class="nav-link">
+                  <p>Vận chuyển</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
         </ul>
       </nav>
       
