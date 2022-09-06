@@ -77,7 +77,7 @@
                         <li>Tạm tính <span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
                         <li>Tổng tiền<span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
                     </ul>
-                    <a href="#" class="primary-btn">THANH TOÁN</a>
+                    <a href="{{ url('/checkout') }}" class="primary-btn">THANH TOÁN</a>
                 </div>
             </div>
         </div>

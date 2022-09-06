@@ -18,9 +18,7 @@ class UserService
         return User::where('id',$id)
             ->with('profile')
             ->firstOrFail();
-       
     }
-
     protected function isValidatePassword($request){
         if($request->input('password-confirm') != $request->input('password')
         ){

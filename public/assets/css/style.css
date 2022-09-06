@@ -775,7 +775,7 @@ ol {
 }
 
 .categories__text h2 {
-	color: #b7b7b7;
+	color: black;
 	line-height: 72px;
 	font-size: 34px;
 }
@@ -924,7 +924,7 @@ ol {
 }
 
 .filter__controls li {
-	color: #b7b7b7;
+	color: black;
 	font-size: 24px;
 	font-weight: 700;
 	list-style: none;
@@ -956,7 +956,7 @@ ol {
 }
 
 .product__item.sale .product__item__text .rating i:nth-last-child(1) {
-	color: #b7b7b7;
+	color: black;
 }
 
 .product__item:hover .product__item__pic .product__hover {
@@ -1095,7 +1095,7 @@ ol {
 
 .product__item__text .rating i {
 	font-size: 14px;
-	color: #b7b7b7;
+	color: black;
 	margin-right: -5px;
 }
 
@@ -1174,34 +1174,34 @@ ol {
 .shop__sidebar__search form input {
 	width: 100%;
 	font-size: 15px;
-	color: #b7b7b7;
+	color: black;
 	padding-left: 20px;
 	border: 1px solid #e5e5e5;
 	height: 42px;
 }
 
 .shop__sidebar__search form input::-webkit-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .shop__sidebar__search form input::-moz-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .shop__sidebar__search form input:-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .shop__sidebar__search form input::-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .shop__sidebar__search form input::placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .shop__sidebar__search form button {
-	color: #b7b7b7;
+	color: black;
 	font-size: 15px;
 	border: none;
 	background: transparent;
@@ -1261,7 +1261,7 @@ ol {
 .shop__sidebar__categories ul li a,
 .shop__sidebar__price ul li a,
 .shop__sidebar__brand ul li a {
-	color: #b7b7b7;
+	color: black;
 	font-size: 15px;
 	line-height: 32px;
 	-webkit-transition: all, 0.3s;
@@ -1591,7 +1591,7 @@ ol {
 
 .product__details__breadcrumb span {
 	font-size: 15px;
-	color: #b7b7b7;
+	color: black;
 	display: inline-block;
 }
 
@@ -1650,7 +1650,7 @@ ol {
 }
 
 .product__details__text h3 span {
-	color: #b7b7b7;
+	color: black;
 	font-size: 20px;
 	font-weight: 400;
 	margin-left: 10px;
@@ -1861,7 +1861,7 @@ ol {
 
 .product__details__last__option ul li span {
 	font-weight: 400;
-	color: #b7b7b7;
+	color: black;
 }
 
 .product__details__tab {
@@ -1885,7 +1885,7 @@ ol {
 
 .product__details__tab .nav-tabs .nav-item .nav-link {
 	font-size: 20px;
-	color: #b7b7b7;
+	color: black;
 	padding: 0;
 	border: none;
 	font-weight: 700;
@@ -1965,7 +1965,7 @@ ol {
 }
 
 .footer__about p {
-	color: #b7b7b7;
+	color: black;
 	margin-bottom: 30px;
 }
 
@@ -1988,12 +1988,12 @@ ol {
 }
 
 .footer__widget ul li a {
-	color: #b7b7b7;
+	color: black;
 	font-size: 15px;
 }
 
 .footer__widget .footer__newslatter p {
-	color: #b7b7b7;
+	color: black;
 }
 
 .footer__widget .footer__newslatter form {
@@ -2031,7 +2031,7 @@ ol {
 }
 
 .footer__widget .footer__newslatter form button {
-	color: #b7b7b7;
+	color: black;
 	font-size: 16px;
 	position: absolute;
 	right: 5px;
@@ -2048,7 +2048,7 @@ ol {
 }
 
 .footer__copyright__text p {
-	color: #b7b7b7;
+	color: black;
 	margin-bottom: 0;
 }
 
@@ -2093,7 +2093,7 @@ ol {
 
 .breadcrumb__links span {
 	font-size: 15px;
-	color: #b7b7b7;
+	color: black;
 	display: inline-block;
 }
 
@@ -2205,7 +2205,7 @@ ol {
 }
 
 .testimonial__author__text p {
-	color: #b7b7b7;
+	color: black;
 	margin-bottom: 0 !important;
 	padding-top: 0;
 }
@@ -2288,7 +2288,7 @@ ol {
 .team__item span {
 	font-size: 15px;
 	display: block;
-	color: #b7b7b7;
+	color: black;
 }
 
 /*---------------------
@@ -2452,7 +2452,7 @@ ol {
 
 .cart__discount form input {
 	font-size: 14px;
-	color: #b7b7b7;
+	color: black;
 	height: 50px;
 	width: 100%;
 	border: 1px solid #e1e1e1;
@@ -2460,23 +2460,23 @@ ol {
 }
 
 .cart__discount form input::-webkit-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .cart__discount form input::-moz-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .cart__discount form input:-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .cart__discount form input::-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .cart__discount form input::placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .cart__discount form button {
@@ -2578,29 +2578,29 @@ ol {
 	width: 100%;
 	border: 1px solid #e1e1e1;
 	font-size: 14px;
-	color: #b7b7b7;
+	color: black;
 	padding-left: 20px;
 	margin-bottom: 20px;
 }
 
 .checkout__input input::-webkit-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .checkout__input input::-moz-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .checkout__input input:-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .checkout__input input::-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .checkout__input input::placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .checkout__input__checkbox label {
@@ -3152,7 +3152,7 @@ ol {
 }
 
 .blog__details__btns__item p {
-	color: #b7b7b7;
+	color: black;
 	margin-bottom: 10px;
 }
 
@@ -3183,7 +3183,7 @@ ol {
 	border: 1px solid #e1e1e1;
 	padding-left: 20px;
 	font-size: 15px;
-	color: #b7b7b7;
+	color: black;
 	margin-bottom: 30px;
 	-webkit-transition: all, 0.3s;
 	-o-transition: all, 0.3s;
@@ -3191,23 +3191,23 @@ ol {
 }
 
 .blog__details__comment form input::-webkit-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form input::-moz-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form input:-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form input::-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form input::placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form input:focus {
@@ -3221,7 +3221,7 @@ ol {
 	padding-left: 20px;
 	padding-top: 12px;
 	font-size: 15px;
-	color: #b7b7b7;
+	color: black;
 	margin-bottom: 24px;
 	resize: none;
 	-webkit-transition: all, 0.3s;
@@ -3230,23 +3230,23 @@ ol {
 }
 
 .blog__details__comment form textarea::-webkit-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form textarea::-moz-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form textarea:-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form textarea::-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form textarea::placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .blog__details__comment form textarea:focus {
@@ -3316,28 +3316,28 @@ ol {
 	border: 1px solid #e1e1e1;
 	padding-left: 20px;
 	font-size: 15px;
-	color: #b7b7b7;
+	color: black;
 	margin-bottom: 30px;
 }
 
 .contact__form input::-webkit-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form input::-moz-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form input:-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form input::-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form input::placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form textarea {
@@ -3347,29 +3347,29 @@ ol {
 	padding-left: 20px;
 	padding-top: 12px;
 	font-size: 15px;
-	color: #b7b7b7;
+	color: black;
 	margin-bottom: 24px;
 	resize: none;
 }
 
 .contact__form textarea::-webkit-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form textarea::-moz-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form textarea:-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form textarea::-ms-input-placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form textarea::placeholder {
-	color: #b7b7b7;
+	color: black;
 }
 
 .contact__form button {

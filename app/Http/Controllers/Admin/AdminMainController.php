@@ -19,4 +19,6 @@ class AdminMainController extends Controller
         Auth::logout();
         return redirect('admin/users/login');
     }
+    
+
 }

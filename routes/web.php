@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\MenusController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductsController;
@@ -21,7 +22,13 @@ Route::middleware(['auth'])->group(function (){
     Route::prefix('admin')->group(function(){
         Route::get( '/',[AdminMainController::class, 'index'] )->name('admin');
         Route::get( 'main',[AdminMainController::class, 'index'] )->name('admin');
+
+        Route::get('shipping',[OrderController::class,'shippinglist']);
+        Route::post('/select-delivery',[OrderController::class,'select_delivery']);
+        Route::post('/insert-delivery',[OrderController::class,'insert_delivery']);
+        Route::get('/shipping-list',[OrderController::class,'show_delivery']);
        
+
         Route::prefix('menus')->group(function(){
             Route::get('list',[MenusController::class,'index']);
 
@@ -50,6 +57,11 @@ Route::middleware(['auth'])->group(function (){
             Route::post('edit/{slider}',[SliderController::class,'update']);
             Route::DELETE('destroy',[SliderController::class,'destroy']);
         });
+
+        Route::prefix('order')->group(function(){
+            
+
+        });
     }); 
 });
 
@@ -72,10 +84,12 @@ Route::get('shop/{slug}', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);
 Route::get('product/{slug}',[ProductsController::class,'index']);
 
+
 Route::post('add-cart',[CartController::class,'insert']);
 Route::get('view-cart',[CartController::class,'index']);
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
+Route::get('checkout',[CartController::class,'checkout']);
 
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){
