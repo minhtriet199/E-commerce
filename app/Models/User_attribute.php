@@ -14,6 +14,7 @@ class User_attribute extends Model
         'name',
         'user_id',
         'address',
+        'district',
         'city',
         'phone',
     ];

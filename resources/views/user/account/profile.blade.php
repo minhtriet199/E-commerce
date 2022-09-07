@@ -16,6 +16,9 @@
                     <a class="nav-link" data-toggle="pill" href="#change-pass" role="tab"  aria-selected="false">
                         <i class="fa fa-lock"></i> Đổi mật khẩu
                     </a>
+                    @if(Auth::user()->level > 0)
+                        <a href="/admin/" class="nav-link"> <i class="fa fa-solid fa-key"></i> Trang admin</a>
+                    @endif
                     <a class="nav-link" data-toggle="pill" href="#order" role="tab" aria-selected="false">
                         <i class="fa fa-shopping-cart"></i> Đơn hàng
                     </a>
@@ -32,7 +35,7 @@
                             <div class="account-table-content">
 
 
-                                <form id="update">
+                                <form id="update" method="POST">
                                     <p id="user-alert"></p>
                                     <div class="row"> 
                                         <div class="col-lg-6 ">
@@ -49,11 +52,18 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <p>Thành phố</p>
-                                            <input type="text" name="city" value="{{ $users->profile->city}}">
+                                            <select name="city" id="city" class="custom-select rounded-0 choose city">
+                                                <option value="0"> {{ $users->profile->city}}</option>
+                                                @foreach($citys as $city)
+                                                    <option value="{{ $city->id}}"> {{ $city->name}} </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-lg-6">
-                                            <p>Quận</p>
-                                            <input type="text" name="city" value="{{ $users->profile->city}}">
+                                            <p>Quận,Huyện</p>
+                                            <select  name="district_id" id="district" class="custom-select rounded-0 district">
+                                                <option value="0"> {{ $users->profile->district}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <input type="hidden" name="user_id" value="{{$users->profile->id}}" data-id="{{$users->profile->id}}">

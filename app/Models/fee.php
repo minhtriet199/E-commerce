@@ -21,10 +21,10 @@ class fee extends Model
 
     public function city()
     {
-        return $this->belongto(Cities::class,'id', 'city_id' );
+        return $this->belongsto(Cities::class,'city_id', 'id' );
     }
     public function district()
     {
-        return $this->belongto(District::class,'id', 'district_id' );
+        return $this->belongsto(District::class,'district_id', 'id' );
     }
 }

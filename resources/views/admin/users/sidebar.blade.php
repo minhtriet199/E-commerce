@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/admin" class="brand-link">
-      <img src="assets/img/fav.png" alt="AdminLTE Logo" class="brand-image " style="opacity: .8">
+      <img src="{{ url('assets/admin/img/mini-logo.png')}}" class="brand-image " style="opacity: .8">
       <span class="brand-text font-weight-light">Low-Key</span>
     </a>
 
@@ -10,7 +10,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="/assets/admin/dist/img/avatar6.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ url('/assets/admin/dist/img/avatar6.jpg')}} " class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="{{ url('/logout')}}" class="d-block">Đăng xuất</a>
@@ -98,12 +98,12 @@
               </li>
             </ul>
           </li>
-          
+           
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-solid fa-images"></i>
+              <i class="fa fa-solid fa-shopping-cart"> </i>
               <p>
-                 Đơn hàng
+                  Đơn hàng
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -122,26 +122,16 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-solid fa-images"></i>
-              <p>
-                Shipping
-                <i class="fas fa-angle-left right"></i>
-              </p>
+            <a href="/admin/shipping" class="nav-link">
+              <i class="fa fa-truck"></i><p> Giá giao hàng</p>
             </a>
-            <ul class="nav nav-treeview" style="display: none;">
-              <li class="nav-item">
-              <a href="/admin/shipping-list" class="nav-link">
-                  <p>Danh sách Vận chuyển</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/shipping" class="nav-link">
-                  <p>Vận chuyển</p>
-                </a>
-              </li>
-            </ul>
           </li>
+          <li class="nav-item">
+            <a href="/admin/voucher/list" class="nav-link">
+              <i class="fa fa-truck"></i><p> Voucher</p>
+            </a>
+          </li>
+          
 
         </ul>
       </nav>
