@@ -2,12 +2,12 @@
 
 @section('content')
 
-<form action="" method="POST">
+<form method="POST" id="form">
     <div class="card-body">
         <div class="form-group">
             <label >Thành phố</label>
-            <select name="menu_id" class="custom-select rounded-0 choose city"  id="city">
-                <option value=""> Chọn thành phố</option>
+            <select name="city_id" class="custom-select rounded-0 choose city"  id="city">
+                <option> Chọn thành phố</option>
                 @foreach($citys as $city)
                     <option value="{{ $city->id}}"> {{ $city->name}} </option>
                 @endforeach
@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label >Quận,Huyện</label>
-            <select  name="district" id="district" class="custom-select rounded-0 choose district">
+            <select  name="district_id" id="district" class="custom-select rounded-0 choose district">
                 <option>---Chọn quận huyện---</option>
             </select>
         </div>

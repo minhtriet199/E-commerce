@@ -24,14 +24,18 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <p>Quận<span>*</span></p>
-                                        <input type="text">
+                                        <p>Thành phố<span>*</span></p>
+                                        <select name="city" id="city" class="custom-select rounded-0 choose city">
+                                            <option value="0"> {{ $users->profile->city}}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <p>Thành phố<span>*</span></p>
-                                        <input type="text" value="{{ $users->profile->city}}">
+                                        <p>Quận<span>*</span></p>
+                                        <select  name="district_id" id="district" class="custom-select rounded-0 district">
+                                            <option value="0"> {{ $users->profile->district}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

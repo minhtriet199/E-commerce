@@ -62,66 +62,32 @@ class CartController extends Controller
         return response()->json($data);
         
     }
-    /*
-    public function userCart(Request $request){
-        $product_id = $request->input('product_id');
-        $product_name = $request->input('product_name');
-        $product_price = $request->input('product_price');
-        $product_quantity =$request->input('product_quantity');
-        $product_thumb = $request->input('product_thumb');
 
+    public function userStore(){
         if(Auth::check()){
-            //Tìm cart có tồn tại chưa
-            $findCart = Cart::where('user_id',Auth::id())->first();
-
-            if($findCart){
-                //Nếu tồn tại kiểm tra trong cart_item có sản phẩm chưa để update số lượng
-                $exists =  Cart_item::where('product_id',$product_id)->first();  
-                if($exsits){
-
-                }
-                //Nếu cart_item chưa tồn tại thì thêm vào
-                else{
-                    //Kiểm tra session có tồn tại để thêm từ session vào
-                    if(Session::has('carts')){
-                        foreach (Session::get('carts') as $product_id=>$cart){
-                            
-                        }
-                    }
-                }
-            }
-            else{
-                $Cart = Cart::create([
-                    'user_id' => Auth::id(),
-                    'user_name' => Auth::user()->name,
-                ]);
-                if(Session::has('carts')){
-                    foreach (Session::get('carts') as $product_id=>$carts){
-                        Cart_item::create([
-                            'cart_id' => $Cart->id,
-                            'product_id' => $carts['product_id'],
-                            'name' => $cart['name'],
-                            'thumb' => $cart['thumb'],
-                            'quantity' => $cart['quantity'],
-                            'price' => $cart['price'],
-                        ]);
-                    }
-                }
-                else{
-                    Cart_item::create([
+            $Cart = Cart::updateOrCreate([
+                'user_id' => Auth::id(),
+                'user_name' => Auth::user()->name,
+            ]);
+            if(Session::has('carts')){
+                foreach(Session::get('carts') as $product_id => $details){
+                    Cart_item::updateOrCreate([
                         'cart_id' => $Cart->id,
-                        'product_id' => $product_id,
-                        'name' => $product_name,
-                        'thumb' => $product_thumb,
-                        'quantity' => $product_quantity,
-                        'price' => $product_price,
+                        'product_id' => $details['product_id'],
+                        'name' => $details['name'],
+                        'thumb' => $details['thumb'],
+                        'quantity' => $details['quantity'],
+                        'price' => $details['price'],
                     ]);
                 }
             }
-            
         }
+
+        return view('block.cart',[
+            'title'=> 'Giỏ hàng'
+        ]);
     }
-    */
+
     public function update(Request $request)
     {
         if($request->id && $request->quantity){

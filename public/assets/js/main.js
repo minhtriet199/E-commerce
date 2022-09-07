@@ -100,7 +100,7 @@
     /*--------------------------
         Select
     ----------------------------*/
-    $("select").niceSelect();
+   
 
     /*-------------------
 		Radio Btn
@@ -263,7 +263,8 @@ $(document).ready(function() {
         const name = $('input[name="name"]').val();
         const phone =$('input[name="phone"]').val();
         const address =$('input[name="address"]').val();
-        const city =$('input[name="city"]').val();
+        const city =$('#city :selected').text();
+        const district =$('#district :selected').text();
 
         $.ajax({
             type: 'POST',
@@ -275,6 +276,7 @@ $(document).ready(function() {
                 phone:phone,
                 address:address,
                 city:city,
+                district,district,
                 _token: $('meta[name="csrf-token"]').attr('content')
             },
             success:function(response){
@@ -355,4 +357,29 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('.choose').change(function(){
+        var action = $(this).attr('id');
+        var city_id = $(this).val();
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        var result = '';
+
+        if(action == 'city') {
+            result='district';
+        }
+
+        $.ajax({
+            url: '/select-delivery' ,
+            method: 'POST',
+            data:{
+                action:action,
+                city_id:city_id,
+                _token:_token
+            },
+            success:function(data){
+                $('#district').html(data);
+            }
+        });
+   });
+   
 });

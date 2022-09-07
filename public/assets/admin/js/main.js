@@ -69,7 +69,7 @@ $(document).ready(function(){
                 _token:_token,
             },
             success:function(data){
-                alert('succes');
+                alert('Thanh cong')
             }
         });
     });
@@ -98,4 +98,44 @@ $(document).ready(function(){
         });
    });
 
+
+   $('.fee_edit').blur(function(){
+        var id = $(this).data('id');
+        var fee = $(this).text();
+        
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: '/admin/update-fee',
+            type: 'POST',
+            data:{
+                id :id,
+                fee:fee,
+                _token:_token,
+            },
+            success: function(data){
+                alert('thanh cong');
+                $("#table-fee").load(location.href + " #table-fee");
+            }
+        });
+   });
+
+   $('.discount-edit').blur(function(){
+    var id = $(this).data('id');
+    var discount = $(this).text();
+    
+    var _token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        url: '/admin/voucher/edit',
+        type: 'POST',
+        data:{
+            id :id,
+            discount:discount,
+            _token:_token,
+        },
+        success: function(data){
+            alert('thanh cong');
+            $("#table-fee").load(location.href + " #table-fee");
+        }
+    });
+});
 });

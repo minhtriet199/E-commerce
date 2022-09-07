@@ -3,6 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
+        <a href="/admin/create" type="submit" class="btn btn-primary" style="float:left">Thêm</a>
         <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 300px;">
                 <input type="text" name="table_search" class="form-control float-right" placeholder="Tìm kiếm...  " style="font-size:15px;">
@@ -14,26 +15,21 @@
             </div>
         </div>
     </div>
-    <div class="card-body table-responsive p-0">
-        <table class="table table-hover text-nowrap">
+    <div class="card-body table-responsive p-0" id="table-fee">
+        <table class="table table-hover text-nowrap" >
             <thead>
                 <tr>
                     <th>Thành phố</th>
                     <th>Quận</th>
                     <th>Giá</th>
-                    <th style="width:120px">&nbsp;</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach($cities as $key => $city)
+            <tbody >
+                @foreach($fees as $key => $fee)
                     <tr>
-                        <td>{{ $city->city->name }}</td>
-                        <td>{{ $city->district->name }}</td>
-                        <td>{!! \App\Helpers\Helper::currency_format($city->fee) !!}</td>
-                        <td>  
-                            <a class="btn btn-primary btn-sm"  href="/admin/citys/edit/{{ $city->id }}"><i class="fas fa-edit"></i></a>
-                            <a class="btn btn-danger btn-sm" href="#" onclick="removeRow({{ $city->id }} ,'/admin/citys/destroy')"> <i class="fas fa-trash"></i> </a>
-                        </td>
+                        <td>{{ $fee->city->name }}</td>
+                        <td>{{ $fee->district->name }}</td>
+                        <td contenteditable="true" data-id="{{ $fee->id }}" class="fee_edit">{{ number_format($fee->fee,0,',','.') }}</td>
                     </tr>
                 @endforeach
             </tbody>

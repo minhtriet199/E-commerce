@@ -7,6 +7,8 @@ use Illuminate\Support\facades\Auth;
 use App\Http\Services\User\UserService;
 use App\Models\User;
 use App\Models\User_attribute;
+use App\Models\Cities;
+use App\Models\District;
 use App\Http\Requests\User\UserRequest;
 
 
@@ -20,10 +22,12 @@ class UserController extends Controller
     }
 
     public function index(){
+        $city = Cities::all();
         return view('user.account.profile',
         [
             'title'=> 'Tài khoản',
-            'users' => $this->userServices->get()
+            'users' => $this->userServices->get(),
+            'citys' => $city,
         ]);
     }
 
@@ -77,4 +81,6 @@ class UserController extends Controller
         $User->update($request->input());
         return response()->json($User);
     }
+
+
 }
