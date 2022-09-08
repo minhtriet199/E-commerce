@@ -109,7 +109,9 @@ Route::middleware(['auth'])->group(function (){
             Route::post('profile/update',[UserController::class,'update']);
             Route::post('profile/update-password',[UserController::class,'updatepass']);
         });
+        Route::get('view-cart',[CartController::class,'user_cart']);
         Route::get('cart',[CartController::class,'userStore']);
+
     });
 });
 

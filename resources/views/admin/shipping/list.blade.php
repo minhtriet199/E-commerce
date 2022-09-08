@@ -26,7 +26,7 @@
             </thead>
             <tbody >
                 @foreach($fees as $key => $fee)
-                    <tr>
+                    <tr id="fee{{ $fee->id }}">
                         <td>{{ $fee->city->name }}</td>
                         <td>{{ $fee->district->name }}</td>
                         <td contenteditable="true" data-id="{{ $fee->id }}" class="fee_edit">{{ number_format($fee->fee,0,',','.') }}</td>

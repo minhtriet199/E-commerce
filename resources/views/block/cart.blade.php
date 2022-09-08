@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="shopping__cart__table">
-                    <table>
+                    <table id="table-product">
                         <thead>
                             <tr>
                                 <th>Sản phẩm</th>
@@ -31,12 +31,12 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="price">
                              @php $total = 0 @endphp
                                 @if(session('carts'))
                                     @foreach(session('carts') as $product_id => $details)
                                         @php $total += $details['price'] * $details['quantity']  @endphp
-                                        <tr data-id="{{ $product_id }}">
+                                        <tr data-id="{{ $product_id }}" id="product{{ $product_id }}" >
                                             <td class="product__cart__item">
                                                 <div class="product__cart__item__pic">
                                                     <img src="{{ $details['thumb'] }}" width="80px">
@@ -53,7 +53,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="cart__price"> {!! \App\Helpers\Helper::currency_format($details['price'] * $details['quantity']) !!} </td>
+                                            <td class="cart__price" > {!! \App\Helpers\Helper::currency_format($details['price'] * $details['quantity']) !!} </td>
                                             <td class="cart__close"><button class="remove-from-cart" style="border-radius:45px"><i class="fa fa-close"></i></button></td>
                                         </tr>
                                     @endforeach
@@ -73,7 +73,7 @@
                 </div>
                 <div class="cart__total">
                     <h6>Tổng tiền</h6>
-                    <ul>
+                    <ul id="cast">
                         <li>Tạm tính <span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
                         <li>Tổng tiền<span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
                     </ul>

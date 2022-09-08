@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
@@ -14,6 +16,12 @@ use Illuminate\Support\Str;
 
 class GoogleController extends Controller
 {
+
+    protected $userController;
+    public function __construct(UserController $userController){
+        $this->userController = $userController;
+    }
+
     public function loginGoogle()
     {
         return Socialite::driver('google')
@@ -44,10 +52,11 @@ class GoogleController extends Controller
                 'user_id' => $user->id,
             ]);
         }
-     
+        
         Auth::login($user);
-     
+
         return redirect('/');
         
     }
+    
 }
