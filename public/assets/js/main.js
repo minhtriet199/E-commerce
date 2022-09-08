@@ -328,18 +328,38 @@ $(document).ready(function(){
         e.preventDefault();
         var ele = $(this);
         const qty = $('input[name="product_qty"]').val();
-    
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        
         $.ajax({
             url: '/update-cart',
             method: "patch",
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'), 
                 id: ele.parents("tr").attr("data-id"), 
-                quantity: qty
+                quantity: qty,
+                _token:_token,
             },
             success: function (response) {
                window.location.reload();
                 $("#cast").load(location.href + " #cast");
+            }
+        });
+    });
+
+    $(".u-quantity-btn").change(function (e) {
+        const qty = $('input[name="product_quantity"]').val();
+
+        $.ajax({
+            url: 'update-carts',
+            method: 'patch',
+            dataType:'JSON',
+            data: {
+                id: $(this).parents("tr").attr("data-id"), 
+                quantity: qty,
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success:function(data) {
+                location.reload();
             }
         });
     });
@@ -362,6 +382,23 @@ $(document).ready(function(){
         });
     });
 
+    $(".u-remove-from-cart").click(function (e) {
+        e.preventDefault();
+        var ele = $(this);
+        var id = ele.parents("tr").attr("data-id");
+        $.ajax({
+            url: 'destroy',
+            method: "DELETE",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'), 
+                id: id, 
+            },
+            success: function (response) {
+                $('#product'+id).remove();
+                $("#cast").load(location.href + " #cast");
+            }
+        });
+    });
     
     $('.choose').change(function(){
         var action = $(this).attr('id');
@@ -385,6 +422,25 @@ $(document).ready(function(){
                 $('#district').html(data);
             }
         });
+   });
+   
+   $('#voucher-btn').click(function(e){
+        e.preventDefault();
+        const voucher_code = $('input[name="voucher_code"]').val();
+        const _token = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: '/use-voucher',
+            method: 'get',
+            dataType:'json',
+            data: {
+                _token:_token,
+                voucher_code:voucher_code,
+            },
+            success: function(data){
+            }
+        })
+
    });
    
 });

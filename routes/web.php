@@ -100,7 +100,9 @@ Route::post('add-cart',[CartController::class,'insert']);
 Route::get('view-cart',[CartController::class,'index']);
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
+Route::get('use-voucher',[CartController::class,'use_voucher']);
 Route::get('checkout',[CartController::class,'checkout']);
+Route::post('checkout',[CartController::class,'place_order']);
 
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){
@@ -111,7 +113,8 @@ Route::middleware(['auth'])->group(function (){
         });
         Route::get('view-cart',[CartController::class,'user_cart']);
         Route::get('cart',[CartController::class,'userStore']);
-
+        Route::patch('update-carts',[CartController::class,'cart_update']);
+        Route::delete('destroy',[CartController::class,'destroy']);
     });
 });
 

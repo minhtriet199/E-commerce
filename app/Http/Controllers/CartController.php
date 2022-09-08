@@ -10,6 +10,9 @@ use App\Http\Controllers\MainController;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Cart_item;
+use App\Models\Voucher;
+use App\Models\Order;
+use App\Models\Order_detail;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -24,15 +27,11 @@ class CartController extends Controller
         $this->userServices =$userServices;
         $this->mainServices =$mainController;
     }
+   
+
     public function index(){
         return view('block.cart',[
             'title'=> 'Giỏ hàng'
-        ]);
-    }
-    public function user_cart(){
-        return view('user.cart',[
-            'title' => 'Giỏ hàng',
-            'carts' => $this->cartServices->get(),
         ]);
     }
 
@@ -129,11 +128,48 @@ class CartController extends Controller
         }
     }
 
+    public function user_cart(){
+        return view('user.cart',[
+            'title' => 'Giỏ hàng',
+            'carts' => $this->cartServices->get(),
+        ]);
+    }
+
+    public function cart_update(Request $request){
+        $data = $request->all();
+        $cart_item = cart_item::where('product_id',$data['id'])
+            ->update(['fee' => $cart_item['cart_item']]);
+    }
+
+    public function destroy(Request $request){
+        if($request->id) {
+            $carts = cart_item::where('product_id' , $request->input('id'))->first();
+            if($carts){
+                $carts -> delete();
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public function use_voucher(Request $request){
+        $data = $request->all();
+        $voucher  = Voucher::where('voucher_code',$data['voucher_code'])->first();
+        if($voucher){
+           
+        }
+        else{
+           
+        }
+    }
+
     public function checkout(){    
         if(Auth::check()){
             return view('block.user-checkout',[
                 'title' => 'Checkout',
                 'users' => $this->userServices->get(),
+                'carts' => $this->cartServices->get(),
+                'cartid' => $this->cartServices->getCart(),
             ]);
         }
         else{
@@ -141,6 +177,32 @@ class CartController extends Controller
                 'title' =>'checkout',
             ]);
         }
+    }
+
+    public function place_order(Request $request){
+        $data = $request->all();
+        $address = $data['address'] . " ".$data['district_id'] ." ". $data['city'];
+        $carts = Cart_item::where('cart_id',$data['cart_id'])->get();
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'status' => 0,
+            'total' => $data['total'],
+            'username' => $data['user_name'],
+            'email' => $data['email'],
+            'address' => $address,
+            'phone'=>$data['phone'],
+        ]);
+        foreach($carts as $cart){
+            order_detail::create([
+                'order_id' => $order->id,
+                'product_id' => $cart['product_id'],
+                'quantity'=> $cart['quantity'],
+                'price' => $cart['price'],
+            ]);
+        }
+        Cart::where('user_id',Auth::id())->delete();
+        Session::flush('carts');
+        return redirect('/');
     }
 
     public function userStore(){
