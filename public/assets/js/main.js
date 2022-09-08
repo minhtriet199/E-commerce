@@ -319,6 +319,7 @@ $(document).ready(function() {
 
         });
     });
+
 });
 
 $(document).ready(function(){
@@ -337,7 +338,8 @@ $(document).ready(function(){
                 quantity: qty
             },
             success: function (response) {
-                window.location.reload();
+               window.location.reload();
+                $("#cast").load(location.href + " #cast");
             }
         });
     });
@@ -345,19 +347,22 @@ $(document).ready(function(){
     $(".remove-from-cart").click(function (e) {
         e.preventDefault();
         var ele = $(this);
+        var id = ele.parents("tr").attr("data-id");
         $.ajax({
             url: '/remove-cart',
             method: "DELETE",
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'), 
-                id: ele.parents("tr").attr("data-id"), 
+                id: id, 
             },
             success: function (response) {
-                window.location.reload();
+                $('#product'+id).remove();
+                $("#cast").load(location.href + " #cast");
             }
         });
     });
 
+    
     $('.choose').change(function(){
         var action = $(this).attr('id');
         var city_id = $(this).val();

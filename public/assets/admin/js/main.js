@@ -114,28 +114,28 @@ $(document).ready(function(){
             },
             success: function(data){
                 alert('thanh cong');
-                $("#table-fee").load(location.href + " #table-fee");
+                location.reload();
             }
         });
    });
 
    $('.discount-edit').blur(function(){
-    var id = $(this).data('id');
-    var discount = $(this).text();
-    
-    var _token = $('meta[name="csrf-token"]').attr('content');
-    $.ajax({
-        url: '/admin/voucher/edit',
-        type: 'POST',
-        data:{
-            id :id,
-            discount:discount,
-            _token:_token,
-        },
-        success: function(data){
-            alert('thanh cong');
-            $("#table-fee").load(location.href + " #table-fee");
-        }
+        var id = $(this).data('id');
+        var discount = $(this).text();
+        
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: '/admin/voucher/edit',
+            type: 'POST',
+            data:{
+                id :id,
+                discount:discount,
+                _token:_token,
+            },
+            success: function(data){
+                alert('thanh cong');
+                $("#table-fee").load(location.href + " #table-fee");
+            }
+        });
     });
-});
 });

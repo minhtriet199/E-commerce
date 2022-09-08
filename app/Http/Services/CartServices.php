@@ -2,13 +2,17 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Support\Arr;
 use App\Models\Cart;
 use App\Models\Cart_item;
-
+use Illuminate\Support\facades\Auth;
 
 class CartServices{
-    public function insert($request){
-        
+
+    public function get(){
+        return Cart::where('user_id',Auth::id())
+            ->with('cart_items')
+            ->get();   
+
     }
+
 }

@@ -69,6 +69,7 @@
                             </div>
 
                             <div class="product__details__cart__option">
+
                                 <form action="/add-cart" method="POST">
                                     <div class="quantity">
                                         <div class="pro-qty">

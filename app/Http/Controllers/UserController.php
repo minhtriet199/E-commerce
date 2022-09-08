@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 use App\Http\Services\User\UserService;
 use App\Models\User;
 use App\Models\User_attribute;
@@ -12,12 +14,13 @@ use App\Models\District;
 use App\Http\Requests\User\UserRequest;
 
 
+
 class UserController extends Controller
 {
 
     protected $userServices;
 
-    public function __construct(UserService $userServices){
+    public function __construct(UserService $userServices,){
         $this ->userServices = $userServices;
     }
 
@@ -67,6 +70,7 @@ class UserController extends Controller
     public function logouts()
     {   
         Auth::logout();
+        Session::flush();
         return redirect(url('/'));
     }
 
@@ -81,6 +85,5 @@ class UserController extends Controller
         $User->update($request->input());
         return response()->json($User);
     }
-
 
 }
