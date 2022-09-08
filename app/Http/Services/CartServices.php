@@ -12,7 +12,10 @@ class CartServices{
         return Cart::where('user_id',Auth::id())
             ->with('cart_items')
             ->get();   
-
+    }
+    public function getCart(){
+        return Cart::where('user_id',Auth::id())
+        ->first();   
     }
 
 }

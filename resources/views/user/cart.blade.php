@@ -33,7 +33,6 @@
                         <tbody id="price">
                             @php $total =0 @endphp
                             @foreach($carts as $key => $cart)
-                                
                                 @foreach($cart->cart_items as $cart)
                                 @php $total += $cart->price * $cart->quantity  @endphp
                                 <tr data-id="{{ $cart->product_id }}" id="product{{ $cart->product_id }}" >
@@ -49,12 +48,12 @@
                                     <td class="quantity__item">
                                         <div class="quantity">
                                             <div class="pro-qty-2" data-th="Quantity">
-                                                <input type="number" value="{{ $cart->quantity }}" class="quantity quantity-btn" name="product_qty" > 
+                                                <input type="number" value="{{ $cart->quantity }}" class="quantity u-quantity-btn" name="product_quantity" > 
                                             </div>
                                         </div>
                                     </td>
                                     <td class="cart__price" > {!! \App\Helpers\Helper::currency_format($cart->price * $cart->quantity) !!} </td>
-                                    <td class="cart__close"><button class="remove-from-cart" style="border-radius:45px"><i class="fa fa-close"></i></button></td>
+                                    <td class="cart__close"><button class="u-remove-from-cart" style="border-radius:45px"><i class="fa fa-close"></i></button></td>
                                 </tr>
                                 @endforeach
                             @endforeach
@@ -66,15 +65,17 @@
             <div class="col-lg-4">
                 <div class="cart__discount">
                     <h6>Mã giảm giá</h6>
-                    <form action="#">
-                        <input type="text" placeholder="Coupon code">
-                        <button type="submit">Xác nhận</button>
+                    <form>
+                        <input type="text" name="voucher_code" placeholder="Coupon code">
+                        <button type="button" id="voucher-btn">Xác nhận</button>
+                        @csrf
                     </form>
                 </div>
                 <div class="cart__total">
                     <h6>Tổng tiền</h6>
                     <ul id="cast">
                         <li>Tạm tính <span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
+                        <li id="Sales">Giảm giá <span></span></li>
                         <li>Tổng tiền<span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
                     </ul>
                     <a href="{{ url('/checkout') }}" class="primary-btn">THANH TOÁN</a>
