@@ -4,7 +4,7 @@
 
 <section>
     <div class="container">
-        <div class="form-user">
+        <div class="mid-table">
             <form id="validate-signup" action="{{ url('/user/signup/create') }}" onkeypress="Required()" method="POST" >
                 <h2>Đăng ký</h2>
                 @include('user.alert')

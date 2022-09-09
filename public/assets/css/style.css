@@ -3928,14 +3928,14 @@ ol {
 ::-webkit-scrollbar-thumb {background: #888; border-radius: 10px;}
 ::-webkit-scrollbar-thumb:hover {background: #555; }
 
-.form-user{
+.mid-table{
 	width: 100%;
 	max-width: 600px;
 	margin:90px auto;
 	padding: 50px 30px;
 	text-align: center;
 }
-.form-user input{
+.mid-table input{
 	width: 100%;
 	margin: 15px 0px;
 	padding: 15px ; 
@@ -3943,8 +3943,8 @@ ol {
 	background-color: #ededed;
 	transition: 0.5s;
 }
-.form-user input:focus{background-color: white;}
-.form-user input[type=submit]{
+.mid-table input:focus{background-color: white;}
+.mid-table input[type=submit]{
 	width: 30%;
 	margin-bottom: 20px;
 	font-size: 20px;
@@ -3952,8 +3952,8 @@ ol {
 	background-color: black;
 	color: white;
 }
-.form-user a{color: black;}
-.form-user a:hover{ color: black;}
+.mid-table a{color: black;}
+.mid-table a:hover{ color: black;}
 .btn-blocks{padding: 10px 0px;color:white;}
 
 .custom-nav-pills a{
@@ -3989,3 +3989,10 @@ ol {
 .profile-container{
 	min-height: 700px;
 }
+
+.finish{
+	border: 1px black solid;
+	border-radius:30px;
+}
+.finish span{color:red}
+.finish label{color:#4a4a4a;}

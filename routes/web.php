@@ -14,6 +14,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
@@ -101,8 +102,12 @@ Route::get('view-cart',[CartController::class,'index']);
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
 Route::get('use-voucher',[CartController::class,'use_voucher']);
+
 Route::get('checkout',[CartController::class,'checkout']);
+Route::post('select-delivery',[ShippingController::class,'select_delivery']);
 Route::post('checkout',[CartController::class,'place_order']);
+
+Route::get('finish',[OrderController::class,'show']);
 
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){

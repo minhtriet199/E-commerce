@@ -4,7 +4,7 @@
 
 <section>
     <div class="container">
-        <div class="form-user">
+        <div class="mid-table">
             <form action="{{ url('/user/login/store') }}" onkeypress="Required()" method="POST" >
                 <h2>Đăng nhập</h2>
                 

@@ -6,7 +6,7 @@
         <div class="container">
             <div class="checkout__form">
                 @include('user.alert')
-                <form action="" method="post">
+                <form method="post">
                     <div class="row">
                         <div class="col-lg-8 col-md-6" >
                             <h6 class="checkout__title">Thanh toán</h6>
@@ -26,9 +26,18 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Thành phố<span>*</span></p>
-                                        <select name="city" id="city" class="custom-select rounded-0 choose city">
-                                            <option value="{{ $users->profile->city}}"> {{ $users->profile->city}}</option>
-                                        </select>
+                                            <select name="city" id="city" class="custom-select rounded-0 choose city">
+                                            @if( empty( $users->profile->city ))
+                                                <option> Chọn thành phố</option>
+                                                @foreach($citys as $city)
+                                                    <option value="{{ $city->name}}"> {{ $city->name}} </option>
+                                                @endforeach
+                                                
+                                            @else
+                                                <option value="{{ $users->profile->city}}"> {{ $users->profile->city}}</option>
+                                            @endif
+                                            </select>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -42,7 +51,7 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Số điện thoại<span>*</span></p>
-                                <input type="text" value="0{{ $users->profile->phone}}" name="phone">
+                                <input type="number" value="0{{ $users->profile->phone}}" name="phone">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">

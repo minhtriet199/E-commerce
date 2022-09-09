@@ -13,8 +13,10 @@ class order_detail extends Model
     [
         'id',
         'order_id',
-        'product_id',
+        'product_name',
+        'thumb',
         'quantity',
         'price',       
     ];
+
 }

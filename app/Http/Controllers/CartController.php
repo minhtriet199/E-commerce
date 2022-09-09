@@ -13,6 +13,8 @@ use App\Models\Cart_item;
 use App\Models\Voucher;
 use App\Models\Order;
 use App\Models\Order_detail;
+use App\Models\Cities;
+use App\Models\District;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -68,6 +70,40 @@ class CartController extends Controller
             ]);
         }
 
+    }
+
+    public function userStore(){
+        if(Auth::check()){
+            $Cart = Cart::updateOrCreate([
+                'user_id' => Auth::id(),
+                'user_name' => Auth::user()->name,
+            ]);
+            if(Session::has('carts')){
+                foreach(Session::get('carts') as $product_id => $details){
+                    if(Cart_item::where('product_id',$details['product_id'])->first()){
+                        Cart_item::where('product_id',$details['product_id'])
+                            ->update([
+                                'cart_id' => $Cart->id,
+                                'product_id' => $details['product_id'],
+                                'name' => $details['name'],
+                                'thumb' => $details['thumb'],
+                                'quantity' => $details['quantity'],
+                                'price' => $details['price'],
+                            ]);
+                    }
+                    else{
+                        Cart_item::Create([
+                            'cart_id' => $Cart->id,
+                            'product_id' => $details['product_id'],
+                            'name' => $details['name'],
+                            'thumb' => $details['thumb'],
+                            'quantity' => $details['quantity'],
+                            'price' => $details['price'],
+                        ]);
+                    }
+                }
+            }
+        }
     }
 
     public function insert(Request $request){
@@ -163,26 +199,32 @@ class CartController extends Controller
         }
     }
 
-    public function checkout(){    
-        if(Auth::check()){
-            return view('block.user-checkout',[
-                'title' => 'Checkout',
-                'users' => $this->userServices->get(),
-                'carts' => $this->cartServices->get(),
-                'cartid' => $this->cartServices->getCart(),
-            ]);
+    public function checkout(){  
+
+        if(Session::has('carts')){
+            if(Auth::check()){
+                return view('block.user-checkout',[
+                    'title' => 'Checkout',
+                    'users' => $this->userServices->get(),
+                    'carts' => $this->cartServices->get(),
+                    'cartid' => $this->cartServices->getCart(),
+                    'citys' => Cities::all(),
+                ]);
+            }
+            else{
+                return view('block.checkout',[
+                    'title' =>'checkout',
+                    'citys' => Cities::all(),
+                ]);
+            }
         }
-        else{
-            return view('block.checkout',[
-                'title' =>'checkout',
-            ]);
-        }
+        else return redirect()->back();
+        
     }
 
     public function place_order(Request $request){
         $data = $request->all();
         $address = $data['address'] . " ".$data['district_id'] ." ". $data['city'];
-        $carts = Cart_item::where('cart_id',$data['cart_id'])->get();
         $order = Order::create([
             'user_id' => Auth::id(),
             'status' => 0,
@@ -192,50 +234,34 @@ class CartController extends Controller
             'address' => $address,
             'phone'=>$data['phone'],
         ]);
-        foreach($carts as $cart){
-            order_detail::create([
-                'order_id' => $order->id,
-                'product_id' => $cart['product_id'],
-                'quantity'=> $cart['quantity'],
-                'price' => $cart['price'],
-            ]);
-        }
-        Cart::where('user_id',Auth::id())->delete();
-        Session::flush('carts');
-        return redirect('/');
-    }
-
-    public function userStore(){
         if(Auth::check()){
-            $Cart = Cart::updateOrCreate([
-                'user_id' => Auth::id(),
-                'user_name' => Auth::user()->name,
-            ]);
-            if(Session::has('carts')){
-                foreach(Session::get('carts') as $product_id => $details){
-                    if(Cart_item::where('product_id',$details['product_id'])->first()){
-                        Cart_item::where('product_id',$details['product_id'])
-                            ->update([
-                                'cart_id' => $Cart->id,
-                                'product_id' => $details['product_id'],
-                                'name' => $details['name'],
-                                'thumb' => $details['thumb'],
-                                'quantity' => $details['quantity'],
-                                'price' => $details['price'],
-                            ]);
-                    }
-                    else{
-                        Cart_item::Create([
-                            'cart_id' => $Cart->id,
-                            'product_id' => $details['product_id'],
-                            'name' => $details['name'],
-                            'thumb' => $details['thumb'],
-                            'quantity' => $details['quantity'],
-                            'price' => $details['price'],
-                        ]);
-                    }
-                }
+            $carts = Cart_item::where('cart_id',$data['cart_id'])->get();
+            foreach($carts as $cart){
+                order_detail::create([
+                    'order_id' => $order->id,
+                    'product_name' => $cart['name'],
+                    'thumb' => $cart['thumb'],
+                    'quantity'=> $cart['quantity'],
+                    'price' => $cart['price'],
+                ]);
+            }
+            Cart::where('user_id',Auth::id())->delete();
+        }
+        else{
+            foreach(Session::get('carts') as $product_id => $cart){
+                order_detail::create([
+                    'order_id' => $order->id,
+                    'product_name' => $cart['name'],
+                    'thumb' => $cart['thumb'],
+                    'quantity'=> $cart['quantity'],
+                    'price' => $cart['price'],
+                ]);
             }
         }
+        
+        
+        Session::flush('carts');
+        Session::put('order',$order->id);
+        return redirect('/finish');
     }
 }
