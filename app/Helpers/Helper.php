@@ -36,13 +36,13 @@ class Helper{
         if($price_sale != 0) {
             $html .='
                 <h7 style="text-decoration:line-through;">'. self::currency_format($Product ->price).'</h7>
-                <h4 style="color:red; padding-top:5px">'. self::currency_format($Product ->price_sale).'</h4>
+                <h5 style="color:red; padding-top:5px">'. self::currency_format($Product ->price_sale).'</h5>
             ';
             return $html;
         }
         if($price !=0 ) {
             $html .='
-                <h4>'. self::currency_format($Product ->price).'</h4>
+                <h5>'. self::currency_format($Product ->price).'</h5>
             ';
             return $html;
         }
@@ -85,5 +85,17 @@ class Helper{
         return '<a href="">lien he</a>';
     }
 
+    public static function orderStatus($status =0){
+        $html= '';
+        if($status == 0) {
+            $html .='<h5 class="order-status">Đang chờ xác nhận</h5>';
+            return $html;
+        }
+        if($status ==1 ) {
+            $html .='<h5 class="order-status">Đang vận chuyển</h5>';
+            return $html;
+        }
+        return '<h5 class="order-status">Giao hàng thành công</h5>';
+    }
     
 }
