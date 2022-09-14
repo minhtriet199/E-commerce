@@ -17,4 +17,8 @@ class Voucher extends Model
         'expire_date',
         'active'
     ];
+
+    protected $casts = [
+        'expire_date' => 'datetime',
+     ];
 }

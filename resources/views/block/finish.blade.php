@@ -7,17 +7,20 @@
         <div class="mid-table finish">
             <h4><i class="fa fa-check" style="color:#55FF2E;margin-bottom:50px;"></i> Mã đơn hàng của bạn là: <span>{{ session('order') }}</span></h4>
             <div class="user_info">
-                <div class="row" style="margin-bottom:10px">
-                    <div class="col-lg-7" style="text-align:left;">
-                        <h3> Thông tin người nhận</h3>
-                        <h5>{{ $order->email }}</h5>
-                        <h5>{{ $order->username}}</h5>
-                        <p>{{ $order->address}}</p>
-                        <p>{{ $order->phone}}</p>
+                <div  style="text-align:left; margin-bottom:20px" >
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h4> Thông tin người nhận</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            {!! \App\Helpers\Helper::orderStatus($order->status) !!}
+                        </div>
                     </div>
-                    <div class="col-lg-5">
-                        <h5>Tình trạng đơn hàng</h5>
-                    </div>
+                    <hr>
+                    <h5><strong>{{ $order->email }}</strong></h5>
+                    <h5>{{ $order->username}}</h5>
+                    <h6>{{ $order->address}}</h6>
+                    <h6>0{{ $order->phone}}</h6>
                 </div>
             </div>
             <div class="shopping__cart__table">

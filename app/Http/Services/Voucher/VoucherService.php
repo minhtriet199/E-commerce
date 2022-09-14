@@ -29,4 +29,7 @@ class VoucherService
         }
         return true;
    }
+   public function get(){
+        return Voucher::where('active',1)->get();
+   }
 }

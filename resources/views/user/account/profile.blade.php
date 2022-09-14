@@ -10,21 +10,18 @@
                     <a class="nav-link active" data-toggle="pill" href="#profile" role="tab" aria-selected="true">
                         <i class="fa fa-solid fa-user"></i> Hồ sơ
                     </a>
-                    <a class="nav-link"  data-toggle="pill" href="#payment" role="tab" aria-selected="false">
-                        <i class="fa fa-credit-card"></i> Liên kết ngân hàng
-                    </a>
                     <a class="nav-link" data-toggle="pill" href="#change-pass" role="tab"  aria-selected="false">
                         <i class="fa fa-lock"></i> Đổi mật khẩu
                     </a>
-                    @if(Auth::user()->level > 0)
-                        <a href="/admin/" class="nav-link"> <i class="fa fa-solid fa-key"></i> Trang admin</a>
-                    @endif
                     <a class="nav-link" data-toggle="pill" href="#order" role="tab" aria-selected="false">
                         <i class="fa fa-shopping-cart"></i> Đơn hàng
                     </a>
                     <a class="nav-link" data-toggle="pill" href="#voucher" role="tab" aria-selected="false">
                     <i class="fa fa-ticket"></i> Kho voucher
                     </a>
+                    @if(Auth::user()->level > 0)
+                        <a href="/admin/" class="nav-link"> <i class="fa fa-solid fa-key"></i> Trang admin</a>
+                    @endif
                 </div>
             </div>
             <div class="col-lg-9 col-md-8" style="height=900px;">
@@ -33,8 +30,6 @@
                         <div class="account-table">
                             <h4>Hồ sơ</h4>
                             <div class="account-table-content">
-
-
                                 <form id="update" method="POST">
                                     <p id="user-alert"></p>
                                     <div class="row"> 
@@ -75,29 +70,69 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="payment" role="tabpanel" >ds</div>
                     <div class="tab-pane fade" id="change-pass" role="tabpanel" >
                         <div class="account-table">
                             <h4>Đổi mật khẩu</h4>
                             <div class="account-table-content">
                                 <form id="update-password">
                                     <p id="user-alert-password"></p>
-                                    <p>Mật khẩu hiện tại</p>
+                                    <p>Nhập email</p>
                                     <input type="text" name="password" value="">
-                                    <p>Mật khẩu mới</p>
-                                    <input type="text" name="new_pass" value="">
-                                    <p>Xác nhận mật khẩu mới</p>
-                                    <input type="text" name="confirm_pass" value="">
-
-                                    <input type="hidden" name="id" value="{{$users->id}}" data-id="{{$users->id}}">
                                     <button type="button" onclick="updatePass()" id="btn-update-user">Cập nhật</button>
                                     @csrf
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="order" role="tabpanel">...</div>
-                    <div class="tab-pane fade" id="voucher" role="tabpanel" >...</div>
+                    <div class="tab-pane fade" id="order" role="tabpanel">
+                        <div class="account-table-2" >
+                            <div class="account-table-content">
+                                <h3 style="margin-bottom:20px">Danh sách đơn hàng</h3>
+                                @foreach($orders as $order)
+                                    <div class="order-card" >
+                                        <div class="head row" > 
+                                            <div class="col-lg-9">{!! \App\Helpers\Helper::orderStatus($order->status) !!}</div>
+                                            <span class="col-lg-3">Tổng tiền: <label class="total-order">{{ number_format($order->total,0,',','.') }} đ</label></span>
+                                        </div>
+                                        <hr>
+                                        @foreach($order->order_details as $detail)
+                                            <div class="body row">
+                                                <img src="{{ $detail->thumb}}" class="col-lg-2" style="with:100px">
+                                                <span class="col-lg-8">x{{$detail->quantity}} <h3>{{$detail->product_name}}</h3></span>
+                                                <span class="col-lg-2">{{ number_format($detail->price,0,',','.') }} đ</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="voucher" role="tabpanel" >
+                        <div class="account-table">
+                            <h4 >Kho voucher</h4>
+                            <div class="account-table-content">
+                                <table id="table-product">
+                                    <thead>
+                                        <tr>
+                                            <td>Mã giảm giá</td>
+                                            <td>Giá giảm</td>
+                                            <td>Ngày hết hạn</td>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        @foreach($vouchers as $voucher)
+                                            <tr>
+                                                <td>{{ $voucher->voucher_code }}</td>
+                                                <td>{{ number_format($voucher->discount,0,',','.') }} đ</td>
+                                                <td>{{ $voucher->expire_date->format('d/m/y')}}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

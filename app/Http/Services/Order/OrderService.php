@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use Illuminate\Support\facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class OrderService
@@ -23,5 +24,10 @@ class OrderService
         ->get();  
     }
 
+    public function order(){
+        return order::where('user_id',Auth::id())
+            ->with('order_details')
+            ->get();
+    }
 }
 

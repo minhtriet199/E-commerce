@@ -7,10 +7,13 @@ use Illuminate\Support\facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 use App\Http\Services\User\UserService;
+use App\Http\Services\Order\OrderService;
+use App\Http\Services\Voucher\VoucherService;
 use App\Models\User;
 use App\Models\User_attribute;
 use App\Models\Cities;
 use App\Models\District;
+use App\Models\Cart;
 use App\Http\Requests\User\UserRequest;
 
 
@@ -20,8 +23,10 @@ class UserController extends Controller
 
     protected $userServices;
 
-    public function __construct(UserService $userServices,){
+    public function __construct(UserService $userServices,OrderService $orderService,VoucherService $voucherService){
         $this ->userServices = $userServices;
+        $this ->orderService =$orderService;
+        $this ->voucherService = $voucherService;
     }
 
     public function index(){
@@ -31,6 +36,8 @@ class UserController extends Controller
             'title'=> 'Tài khoản',
             'users' => $this->userServices->get(),
             'citys' => $city,
+            'orders' => $this->orderService->order(),
+            'vouchers' => $this->voucherService->get(),
         ]);
     }
 
