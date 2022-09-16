@@ -24,9 +24,10 @@ class OrderService
         ->get();  
     }
 
-    public function order(){
+    public function get(){
         return order::where('user_id',Auth::id())
             ->with('order_details')
+            ->orderBy('id','desc')
             ->get();
     }
 }

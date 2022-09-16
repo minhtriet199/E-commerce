@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Services\Order\OrderService;
 
+
 class OrderController extends Controller
 {
 
@@ -14,11 +15,7 @@ class OrderController extends Controller
         $this->orderService = $orderService;
     }
 
-    public function index()
-    {
-        //
-    }
-
+   
 
     public function show(){
         return view('block.finish',[

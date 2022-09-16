@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+
+
 use App\Http\Services\CartServices;
 use App\Http\Services\User\UserService;
 use App\Http\Controllers\MainController;
+use App\Mail\OrderMail;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\Cart;
 use App\Models\Cart_item;
 use App\Models\Voucher;
@@ -15,8 +22,7 @@ use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Cities;
 use App\Models\District;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
+
 use Session;
 
 class CartController extends Controller
@@ -222,9 +228,14 @@ class CartController extends Controller
         
     }
 
+    public function sendOrderMail($order){
+        Mail::to($order->email)->send(new OrderMail($order));
+    }
+
     public function place_order(Request $request){
         $data = $request->all();
         $address = $data['address'] . " ".$data['district_id'] ." ". $data['city'];
+        $user = User::where('email', $data['email'])->firstOrFail();
         $order = Order::create([
             'user_id' => Auth::id(),
             'status' => 0,
@@ -237,7 +248,7 @@ class CartController extends Controller
         if(Auth::check()){
             $carts = Cart_item::where('cart_id',$data['cart_id'])->get();
             foreach($carts as $cart){
-                order_detail::create([
+                $detail = order_detail::create([
                     'order_id' => $order->id,
                     'product_name' => $cart['name'],
                     'thumb' => $cart['thumb'],
@@ -249,7 +260,7 @@ class CartController extends Controller
         }
         else{
             foreach(Session::get('carts') as $product_id => $cart){
-                order_detail::create([
+                $detail = order_detail::create([
                     'order_id' => $order->id,
                     'product_name' => $cart['name'],
                     'thumb' => $cart['thumb'],
@@ -258,9 +269,9 @@ class CartController extends Controller
                 ]);
             }
         }
-        
-        
-        Session::flush('carts');
+        $this->sendOrderMail($order);
+
+        Session::forget('carts');
         Session::put('order',$order->id);
         return redirect('/finish');
     }

@@ -24,6 +24,7 @@ use App\Http\Requests\Password\PasswordRequest;
 use App\Notifications\ResetPassword;
 
 
+
 class UserController extends Controller
 {
 
@@ -42,7 +43,7 @@ class UserController extends Controller
             'title'=> 'Tài khoản',
             'users' => $this->userServices->get(),
             'citys' => $city,
-            'orders' => $this->orderService->order(),
+            'orders' => $this->orderService->get(),
             'vouchers' => $this->voucherService->get(),
         ]);
     }
