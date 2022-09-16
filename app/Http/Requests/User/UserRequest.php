@@ -26,8 +26,8 @@ class UserRequest extends FormRequest
         return [
             'name'=>'required',
             'email'=>'required|unique:Users',
-            'password'=>'required',
-            'password-confirm' => 'required',
+            'password'=>'required|confirmed',
+            'password_confirmation' => 'required',
         ];
     }
     public function messages() : array 
@@ -37,7 +37,7 @@ class UserRequest extends FormRequest
             'email.required' => 'Chưa nhập email',
             'email.unique' => 'Email bị trùng',
             'password.required' =>'Chưa nhập mật khẩu',
-            'password-confirm.required' => 'Chưa xác nhận mật khẩu',
+            'password_confirmation.required' => 'Chưa xác nhận mật khẩu',
         ];
     }
 }

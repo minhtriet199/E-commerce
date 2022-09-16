@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 use App\Http\Services\User\UserService;
 use App\Http\Services\Order\OrderService;
@@ -14,8 +16,12 @@ use App\Models\User_attribute;
 use App\Models\Cities;
 use App\Models\District;
 use App\Models\Cart;
-use App\Http\Requests\User\UserRequest;
+use App\Models\Password_reset;
+use Carbon\Carbon;
 
+use App\Http\Requests\User\UserRequest;
+use App\Http\Requests\Password\PasswordRequest;
+use App\Notifications\ResetPassword;
 
 
 class UserController extends Controller
@@ -74,8 +80,55 @@ class UserController extends Controller
         Session()->flash( 'error','Email hoặc password không đúng');
         return redirect()->back();
     }
-    public function logouts()
-    {   
+
+    // Quên mật khẩu
+    public function reset(){
+        return view('user.reset',[
+            'title' => 'Quên mật khẩu'
+        ]);
+    }
+
+    public function sendResetLink(Request $request){
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ],[
+            'email.required' => 'Chưa nhập email',
+            'email.exists' => 'Email này không tồn tại trong hệ thống' 
+        ]);
+
+        $user = User::where('email', $request->email)->firstOrFail();
+        $password = Password_reset::updateOrCreate([
+            'email' => $user->email,
+            'token' => Str::random(60),
+        ]);
+        if($password){
+            $user->notify(new ResetPassword($password->token));
+        }
+        Session()->flash( 'success','Hãy kiểm tra email của bạn');
+        return redirect()->back();
+
+    }
+
+    //Đổi pass 
+    public function passwordForm($token){
+        return view('user.change_password',[
+            'title' => 'Tạo mật khẩu mới',
+        ])->with(['token'=>$token]);
+    }
+
+    public function change_pass(PasswordRequest $request){
+        $data = $request->all();
+        $passwordReset = Password_reset::where('token',$data['token'])->firstOrFail();
+        $user = User::where('email',$passwordReset->email)->firstOrFail();
+        $user->update(['password' => Hash::make($data['password']) ]);
+        $passwordReset->delete();
+
+        Session()->flash( 'success','Đổi mật khẩu thành công');
+        if(Auth::check()) $this->logouts();
+        return redirect('user/login');
+    }
+
+    public function logouts(){   
         Auth::logout();
         Session::flush();
         return redirect(url('/'));

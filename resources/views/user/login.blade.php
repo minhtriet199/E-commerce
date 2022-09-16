@@ -14,7 +14,7 @@
                 @csrf
             </form>
             <div class="row">
-                    <h5 class="col-8" style="text-align:left;"><a href="">Quên Mật khẩu</a></h5>
+                    <h5 class="col-8" style="text-align:left;"><a href="{{ url('user/reset')}}">Quên Mật khẩu</a></h5>
                     <h5 class="col-4" style="text-align:right;"><a href="{{ url('user/signup')}}">Đăng ký</a></h5>
             </div>
             <hr>
