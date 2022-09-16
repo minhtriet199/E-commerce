@@ -74,11 +74,11 @@
                         <div class="account-table">
                             <h4>Đổi mật khẩu</h4>
                             <div class="account-table-content">
-                                <form id="update-password">
-                                    <p id="user-alert-password"></p>
+                                <form id="update-password" action="{{ url('user/link-reset') }}" method="POST">>
+                                    @include('user.alert')
                                     <p>Nhập email</p>
-                                    <input type="text" name="password" value="">
-                                    <button type="button" onclick="updatePass()" id="btn-update-user">Cập nhật</button>
+                                    <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Email">
+                                    <button type="submit" id="btn-update-user">Đổi mật khẩu</button>
                                     @csrf
                                 </form>
                             </div>

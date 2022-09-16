@@ -86,6 +86,11 @@ Route::post('user/signup/create',[UserController::class,'create']);
 Route::get('user/login',[UserController::class,'login']);
 Route::post('user/login/store',[UserController::class,'store']);
 
+Route::get('user/reset',[UserController::class,'reset']);
+Route::post('user/link-reset',[UserController::class,'sendResetLink']);
+Route::get('user/change_pass/{token}',[UserController::class,'passwordForm']);
+Route::post('user/change_pass',[UserController::class,'change_pass']);
+
 //Đăng nhập google
 Route::get('login/google', [App\Http\Controllers\Api\GoogleController::class, 'loginGoogle']);
 Route::get('login/google/callback', [App\Http\Controllers\Api\GoogleController::class, 'loginCallback']);
