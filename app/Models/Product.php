@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Menus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Menus;
+use App\Models\Comment;
 
 class Product extends Model
 {

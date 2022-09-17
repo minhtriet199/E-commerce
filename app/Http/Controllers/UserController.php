@@ -132,7 +132,7 @@ class UserController extends Controller
     public function logouts(){   
         Auth::logout();
         Session::flush();
-        return redirect(url('/'));
+        return redirect()->back();
     }
 
     public function update(Request $request){

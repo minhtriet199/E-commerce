@@ -36,4 +36,9 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => ('http://localhost:8000/login/google/callback'),
     ],
+    'facebook' => [
+        'client_id' => env('FACEBOOK_APP_ID'),
+        'client_secret' => env('FACEBOOK_APP_SECRET'),
+        'redirect' => ('http://localhost:8000/login/facebook/callback'),
+    ],
 ];

@@ -113,21 +113,37 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tabs-6" role="tabpanel">
-                                    <div class="product__details__tab__content">
-                                        <div class="product__details__tab__content__item">
-                                            <h5>Products Infomation</h5>
+                                    @if(Auth::check())
+                                        <div style="width:100%;text-align:center;padding-top:50px;">
+                                            <form action="">
+                                                <textarea name="comment" cols="30" rows="5" style="width:100%;padding:20px" placeholder="Nhập comment"></textarea>
+                                                <input type="button" value="Bình luận" class="primary-btn btn-comment" id="btn-comment">
+                                            </form>
                                         </div>
-                                        <div class="product__details__tab__content__item">
-                                            <h5>Material used</h5>
-                                            <p>Polyester is deemed lower quality due to its none natural quality’s. Made
-                                                from synthetic materials, not natural like wool. Polyester suits become
-                                                creased easily and are known for not being breathable. Polyester suits
-                                                tend to have a shine to them compared to wool and cotton suits, this can
-                                                make the suit look cheap. The texture of velvet is luxurious and
-                                                breathable. Velvet is a great choice for dinner party jacket and can be
-                                            worn all year round.</p>
+                                    @else
+                                        <div style="width:100%;text-align:center;padding-top:50px;">
+                                            <a href="{{ url('user/login') }}" class="primary-btn">
+                                                Đăng nhập
+                                            </a>
                                         </div>
-                                    </div>
+                                    @endif
+                                    @foreach($comments as $comment)
+                                        <div class="product__details__tab__content">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <img src="/assets/img/user.png" >
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <div><span class="user_name">{{ $comment->users->name}} </span> 
+                                                    {{ $comment->updated_at}} 
+                                                    {{-- {!! \App\Helpers\Helper::checkOrder($comment->user_id,$products->name) !!}</div> --}}
+                                                    <div>
+                                                        {{ $comment->Content}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

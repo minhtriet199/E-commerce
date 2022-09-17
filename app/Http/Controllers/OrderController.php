@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\Order\OrderService;
-
+use App\Mail\OrderMail;
 
 class OrderController extends Controller
 {
@@ -15,7 +15,9 @@ class OrderController extends Controller
         $this->orderService = $orderService;
     }
 
-   
+    public function senOrderMail($order){
+        Mail::to($order->email)->send(new OrderMail($order));
+    }
 
     public function show(){
         return view('block.finish',[
