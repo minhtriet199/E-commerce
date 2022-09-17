@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\FacebookController;
 use App\Http\Controllers\Admin\Users\LoginController;
 use App\Http\Controllers\Admin\AdminMainController;
 use App\Http\Controllers\Admin\MenusController;
@@ -95,7 +96,15 @@ Route::post('user/change_pass',[UserController::class,'change_pass']);
 Route::get('login/google', [App\Http\Controllers\Api\GoogleController::class, 'loginGoogle']);
 Route::get('login/google/callback', [App\Http\Controllers\Api\GoogleController::class, 'loginCallback']);
 //hết google
+
+//Đăng nhập facebook
+Route::get('login/facebook',[FacebookController::class,'loginFacebook']);
+Route::get('login/facebook/callback',[FacebookController::class,'loginCallback']);
+
 Route::get('/logouts',[UserController::class,'logouts']);
+
+
+
 
 Route::get('shop/{slug}', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);

@@ -4013,3 +4013,10 @@ table{
 	border-top: 1px solid black;
 	border-bottom: 1px solid;
 }
+.btn-comment{
+	margin-top: 20px;
+}
+.user_name{
+	font-size: 20px;
+	font-weight: bold;
+}

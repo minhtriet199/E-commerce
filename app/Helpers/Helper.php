@@ -2,6 +2,10 @@
 
 namespace App\Helpers;
 
+use App\Models\Order;
+use App\Models\Order_detail;
+
+
 class Helper{
     public static function active($active = 0)
     {   
@@ -98,4 +102,16 @@ class Helper{
         return '<h5 class="order-status">Giao hàng thành công</h5>';
     }
     
+//    public static function checkOrder($user_id,$product){
+//         $html= '';
+//         $order = Order::where('user_id' ,$user_id)->get();
+//         $detail = Order_detail::where('order_id',$order->id)->get();
+//         if($detail){
+//             $product = Order_detail::where('product_name',$product)->first();
+//             $html .='  
+//                 <span>Da mua hang</span>
+//             ';
+//         }
+//     }
+
 }

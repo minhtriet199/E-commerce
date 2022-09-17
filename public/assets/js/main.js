@@ -247,13 +247,7 @@ function autoTop() {
   document.documentElement.scrollTop = 0;
 }
 
-function Required(){
-    var userInput1 =document.getElementById('input-formu').value;
-    var userInput2 =document.getElementById('input-formp').value;
-    var btnUser = document.getElementById('btn-user');
-    
-    if(userInput1&&userInput2 != "") btnUser.removeAttribute("disabled");
-}
+
 
 
 $(document).ready(function() {
