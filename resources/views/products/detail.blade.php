@@ -8,7 +8,7 @@
                     <div class="col-lg-12">
                         <div class="product__details__breadcrumb">
                             <a href="{{url('/shop')}}">Cửa hàng</a>
-                            <a href="/shop/{{$products->menus->slug}}.html">{{ $products->menus->name}}</a>
+                            <a href="/shop/{{$products->menus->slug}}">{{ $products->menus->name}}</a>
                             <span>{{ $products -> name}}</span>
                         </div>
                     </div>
@@ -48,25 +48,6 @@
                             {!! \App\Helpers\Helper::priceDetail($products,$products->price,$products->price_sale) !!}
 
                             <p>{{ $products -> description }}</p>
-                            
-                            <!-- Chưa làm-->
-                            <div class="product__details__option">
-                                <div class="product__details__option__size">
-                                    <span>Size:</span>
-                                    <label for="xxl">xxl
-                                        <input type="radio" id="xxl">
-                                    </label>
-                                    <label class="active" for="xl">xl
-                                        <input type="radio" id="xl">
-                                    </label>
-                                    <label for="l">l
-                                        <input type="radio" id="l">
-                                    </label>
-                                    <label for="sm">s
-                                        <input type="radio" id="sm">
-                                    </label>
-                                </div>
-                            </div>
 
                             <div class="product__details__cart__option">
 
@@ -86,9 +67,6 @@
                             </div>
                             <div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> Thêm vào danh sách ước</a>
-                            </div>
-                            <div class="product__details__last__option">
-                                <img src="/assets/img/shop-details/details-payment.png" alt="">
                             </div>
                             
                         </div>
@@ -116,8 +94,10 @@
                                     @if(Auth::check())
                                         <div style="width:100%;text-align:center;padding-top:50px;">
                                             <form action="">
-                                                <textarea name="comment" cols="30" rows="5" style="width:100%;padding:20px" placeholder="Nhập comment"></textarea>
+                                                <input type="hidden" name="product_id" value="{{ $products->id }}">
+                                                <textarea name="content" id="content" cols="30" rows="5" style="width:100%;padding:20px" placeholder="Nhập comment"></textarea>
                                                 <input type="button" value="Bình luận" class="primary-btn btn-comment" id="btn-comment">
+                                                @csrf
                                             </form>
                                         </div>
                                     @else
@@ -127,23 +107,26 @@
                                             </a>
                                         </div>
                                     @endif
-                                    @foreach($comments as $comment)
-                                        <div class="product__details__tab__content">
-                                            <div class="row">
-                                                <div class="col-lg-1">
-                                                    <img src="/assets/img/user.png" >
-                                                </div>
-                                                <div class="col-lg-11">
-                                                    <div><span class="user_name">{{ $comment->users->name}} </span> 
-                                                    {{ $comment->updated_at}} 
-                                                    {{-- {!! \App\Helpers\Helper::checkOrder($comment->user_id,$products->name) !!}</div> --}}
-                                                    <div>
-                                                        {{ $comment->Content}}
+                                    <div id="comment">
+                                        @foreach($comments as $comment)
+                                            <div class="product__details__tab__content">
+                                                <div class="row">
+                                                    <div class="col-lg-1">
+                                                        <img src="/assets/img/user.png" >
+                                                    </div>
+                                                    <div class="col-lg-11">
+                                                        <div><span class="user_name">{{ $comment->users->name}} </span> 
+                                                        {{ $comment->updated_at->diffForHumans()}} 
+                                                        {{-- {!! \App\Helpers\Helper::checkOrder($comment->user_id,$products->name) !!}</div> --}}
+                                                        <div>
+                                                            {{ $comment->Content}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                            <hr>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>

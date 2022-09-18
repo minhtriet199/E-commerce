@@ -285,6 +285,8 @@ $(document).ready(function() {
             }
         });
     });
+
+   
 });
 
 
@@ -437,4 +439,38 @@ $(document).ready(function(){
 
    });
    
+    fetch_comment();
+    
+    function fetch_comment(){
+        $.ajax({
+            type:'GET',
+            url:'/fetch-comment',
+            dataType:'JSON',
+            success: function(response){
+                window.location.reload;
+             }
+        });
+    }
+
+   $('#btn-comment').click(function(e){
+        const user_id=$('input[name="user_id"]').val();
+        const product_id =$('input[name="product_id"]').val();
+        const content = $('#content').val();
+        const token = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            type: 'POST',
+            dataType:'JSON',
+            url:'/comment',
+            data:{
+                user_id:user_id,
+                product_id:product_id,
+                content:content,
+                token:token,
+            },
+            success:function(response){
+                fetch_comment();
+            }
+        });
+    });
 });

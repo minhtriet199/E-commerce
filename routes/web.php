@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CommentController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
@@ -110,6 +111,9 @@ Route::get('shop/{slug}', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);
 Route::get('product/{slug}',[ProductsController::class,'index']);
 
+//phần comment
+Route::post('comment',[CommentController::class,'store']);
+Route::get('fetch-comment/',[CommentController::class,'fetch_comment']);
 
 Route::post('add-cart',[CartController::class,'insert']);
 Route::get('view-cart',[CartController::class,'index']);
@@ -134,6 +138,8 @@ Route::middleware(['auth'])->group(function (){
         Route::get('cart',[CartController::class,'userStore']);
         Route::patch('update-carts',[CartController::class,'cart_update']);
         Route::delete('destroy',[CartController::class,'destroy']);
+       
+
     });
 });
 
