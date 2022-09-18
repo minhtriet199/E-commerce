@@ -311,6 +311,10 @@ $(document).ready(function() {
                 product_thumb:product_thumb,
             },
             success:function(data){
+                Swal.fire({
+                    type: 'success',
+                    title: 'Thêm giỏ hàng thành công',
+                });
             }
 
         });

@@ -19,17 +19,8 @@ class UserService
             ->with('profile')
             ->firstOrFail();
     }
-    protected function isValidatePassword($request){
-        if($request->input('password-confirm') != $request->input('password')
-        ){
-            Session::flash('error','Hai mật khẩu không giống nhau');
-            return false;
-        }
-        return true;
-    }
+
     public function insert($request){
-        $isValidatePassword =$this->isValidatePassword($request);
-        if($isValidatePassword === false) return false;
 
         try{
             $request->except('_token');

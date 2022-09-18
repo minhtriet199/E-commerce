@@ -18,7 +18,7 @@ use App\Models\District;
 use App\Models\Cart;
 use App\Models\Password_reset;
 use Carbon\Carbon;
-
+Use Alert;
 use App\Http\Requests\User\UserRequest;
 use App\Http\Requests\Password\PasswordRequest;
 use App\Notifications\ResetPassword;
@@ -90,12 +90,26 @@ class UserController extends Controller
     }
 
     public function sendResetLink(Request $request){
-        $request->validate([
-            'email' => 'required|email|exists:users,email'
-        ],[
-            'email.required' => 'Chưa nhập email',
-            'email.exists' => 'Email này không tồn tại trong hệ thống' 
-        ]);
+        if(Auth::check()){
+            if($request->email != Auth::user()->email){
+                Session()->flash( 'error','Email không đúng');
+                return redirect()->back();
+            }
+            $request->validate([
+                'email' => 'required|email|exists:users,email'
+            ],[
+                'email.required' => 'Chưa nhập email',
+                'email.exists' => 'Email này không tồn tại trong hệ thống' 
+            ]);
+        }
+        else{
+            $request->validate([
+                'email' => 'required|email|exists:users,email'
+            ],[
+                'email.required' => 'Chưa nhập email',
+                'email.exists' => 'Email này không tồn tại trong hệ thống' 
+            ]);
+        }
 
         $user = User::where('email', $request->email)->firstOrFail();
         $password = Password_reset::updateOrCreate([
@@ -104,8 +118,7 @@ class UserController extends Controller
         ]);
         if($password){
             $user->notify(new ResetPassword($password->token));
-        }
-        Session()->flash( 'success','Hãy kiểm tra email của bạn');
+        }Session()->flash( 'success','Hãy kiểm tra email của bạn');
         return redirect()->back();
 
     }
@@ -132,7 +145,7 @@ class UserController extends Controller
     public function logouts(){   
         Auth::logout();
         Session::flush();
-        return redirect()->back();
+        return redirect('/');
     }
 
     public function update(Request $request){

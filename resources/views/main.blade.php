@@ -9,7 +9,7 @@
 </head>
 
 <body > 
-
+	@include('sweetalert::alert')
 	@if(Auth::check()) @include('block.Userheader')
 	@else @include('block.header')
 	@endif

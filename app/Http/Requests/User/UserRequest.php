@@ -37,6 +37,7 @@ class UserRequest extends FormRequest
             'email.required' => 'Chưa nhập email',
             'email.unique' => 'Email bị trùng',
             'password.required' =>'Chưa nhập mật khẩu',
+            'password.confirmed' =>'2 mật khẩu không trùng nhau',
             'password_confirmation.required' => 'Chưa xác nhận mật khẩu',
         ];
     }
