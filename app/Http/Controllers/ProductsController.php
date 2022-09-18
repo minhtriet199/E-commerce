@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Http\Services\Product\ProductService;
 use App\Http\Controllers\CommentController;
+use Carbon\carbon;
 
 class ProductsController extends Controller
 {
@@ -17,6 +18,7 @@ class ProductsController extends Controller
     }
     public function index($slug)
     {
+        Carbon::setLocale('vi');
         $product = $this->productServices->show($slug);
         $comment =$this->commentController->index($slug);
         $more = $this->productServices->more($slug);
