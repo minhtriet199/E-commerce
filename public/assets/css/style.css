@@ -1158,7 +1158,9 @@ ol {
 /*---------------------
   Shop
 -----------------------*/
-
+.main-home{
+	margin-top:100px;
+}
 .shop__sidebar {
 	padding-right: 20px;
 }
@@ -4018,4 +4020,27 @@ table{
 .user_name{
 	font-size: 20px;
 	font-weight: bold;
+}
+.header-search-box{
+	width: 330px;
+	height: 30px;
+}
+#search-result{
+	width:330px;
+	max-height:330px;
+	background-color: white;
+	padding: 10px;
+	overflow:hidden;
+	overflow-y:scroll;
+}
+#search-result .row{
+	margin: 10px 0px;
+}
+#search-result img{
+	width:120px;
+	height:120px;
+}
+
+#search-result .row:hover{
+	background-image: linear-gradient(rgb(0 0 0/40%) 0 0);
 }

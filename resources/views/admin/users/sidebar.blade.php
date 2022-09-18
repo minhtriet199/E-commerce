@@ -128,7 +128,7 @@
           </li>
           <li class="nav-item">
             <a href="/admin/voucher/list" class="nav-link">
-              <i class="fa fa-truck"></i><p> Voucher</p>
+              <i class="fa fa-ticket-alt"></i><p> Voucher</p>
             </a>
           </li>
           
