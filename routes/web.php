@@ -102,7 +102,7 @@ Route::get('login/google/callback', [App\Http\Controllers\Api\GoogleController::
 Route::get('login/facebook',[FacebookController::class,'loginFacebook']);
 Route::get('login/facebook/callback',[FacebookController::class,'loginCallback']);
 
-Route::get('/logouts',[UserController::class,'logouts']);
+
 
 
 
@@ -113,7 +113,7 @@ Route::get('product/{slug}',[ProductsController::class,'index']);
 
 //phần comment
 Route::post('comment',[CommentController::class,'store']);
-Route::get('fetch-comment/',[CommentController::class,'fetch_comment']);
+Route::get('fetch-comment',[CommentController::class,'fetch_comment']);
 
 Route::post('add-cart',[CartController::class,'insert']);
 Route::get('view-cart',[CartController::class,'index']);
@@ -129,15 +129,19 @@ Route::get('finish',[OrderController::class,'show']);
 
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){
+        
+        Route::get('/logouts',[UserController::class,'logouts']);
+        Route::get('view-cart',[CartController::class,'user_cart']);
+        Route::get('cart',[CartController::class,'userStore']);
+        Route::patch('update-carts',[CartController::class,'cart_update']);
+        Route::delete('destroy',[CartController::class,'destroy']);
+
         Route::prefix('account')->group(function(){
             Route::get('profile',[UserController::class,'index']);
             Route::post('profile/update',[UserController::class,'update']);
             Route::post('profile/update-password',[UserController::class,'updatepass']);
         });
-        Route::get('view-cart',[CartController::class,'user_cart']);
-        Route::get('cart',[CartController::class,'userStore']);
-        Route::patch('update-carts',[CartController::class,'cart_update']);
-        Route::delete('destroy',[CartController::class,'destroy']);
+
        
 
     });

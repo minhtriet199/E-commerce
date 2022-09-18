@@ -9,7 +9,7 @@
                 <h2>Đăng nhập</h2>
                 @include('user.alert')
                 <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Email" id="input-formu" value="{!! old('email') !!}">
-                <input type="text" name="password" placeholder="Mật khẩu" id="input-formp">
+                <input type="password" name="password" placeholder="Mật khẩu" id="input-formp">
                 <input type="submit" value="Đăng nhập" id="btn-user" >
                 @csrf
             </form>

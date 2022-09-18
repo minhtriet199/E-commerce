@@ -1,6 +1,7 @@
 @extends('main')
 
 @section('content')
+
     <section class="shop-details">
         <div class="product__details__pic">
             <div class="container">

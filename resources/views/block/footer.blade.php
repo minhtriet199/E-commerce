@@ -64,6 +64,7 @@
 		</form>
 	</div>
 </div>
+	<script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 	<script src="/assets/js/jquery-3.6.1.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/jquery.nice-select.min.js"></script>
