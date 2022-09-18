@@ -101,6 +101,49 @@ class Helper{
         }
         return '<h5 class="order-status">Giao hàng thành công</h5>';
     }
+
+    public static function product($product,$price =0,$price_sale=0){
+        $html= '';
+        if($price_sale != 0) {
+            $html = ' 
+                <div class="product__item">
+                    <a href="/product/'. $product->slug .'">
+                        <div class="product__item__pic set-bg" data-setbg="'. $product->thumb .'" style="background-image: url('. $product->thumb. ')">
+                            <span class="label" style="width:150px;border:none">Giảm giá</span>
+                            <ul class="product__hover">
+                                <span class="label" class="product__hover"><h6>'. $product->name .'</h6></span>
+                            </ul>
+                        </div>
+                    </a>
+                    <div class="product__item__text">
+                        <h6>'. $product->name .'</h6>
+                        <a href="/product/{{$product->slug}}" class="add-cart">+ Xem chi tiết</a>
+                        '. number_format($product->price_sale,0,',','.') .' đ
+                    </div>
+                </div>
+            ';
+            return $html;
+        }
+        if($price !=0 ) {
+            $html = ' 
+                <div class="product__item">
+                    <a href="/product/'. $product->slug .'">
+                        <div class="product__item__pic set-bg" data-setbg="'. $product->thumb .'" style="background-image: url('. $product->thumb. ')">
+                            <ul class="product__hover">
+                                <span class="label" class="product__hover"><h6>'. $product->name .'</h6></span>
+                            </ul>
+                        </div>
+                    </a>
+                    <div class="product__item__text">
+                        <h6>'. $product->name .'</h6>
+                        <a href="/product/{{$product->slug}}" class="add-cart">+ Xem chi tiết</a>
+                        '. number_format($product->price,0,',','.') .' đ 
+                    </div>
+                </div>
+            ';
+        return $html;
+        }
+    }
     
 //    public static function checkOrder($user_id,$product){
 //         $html= '';

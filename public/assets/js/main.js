@@ -39,17 +39,6 @@
         $(this).css('background-image', 'url(' + bg + ')');
     });
 
-    //Search Switch
-    $('.search-switch').on('click', function () {
-        $('.search-model').fadeIn(400);
-    });
-
-    $('.search-close-switch').on('click', function () {
-        $('.search-model').fadeOut(400, function () {
-            $('#search-input').val('');
-        });
-    });
-
     /*------------------
 		Navigation
 	--------------------*/
@@ -443,7 +432,6 @@ $(document).ready(function(){
 
    });
    
-    fetch_comment();
     
     function fetch_comment(){
         $.ajax({
@@ -477,4 +465,21 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('#search-box').keyup(function(){
+        const search = $('input[name="search-box"]').val();
+        $.ajax({
+            type: 'get',
+            dataType: 'JSON',
+            url:'/search',
+            data:{
+                search:search,
+            },
+            success:function(data){
+                console.log(data);
+                $('#search-result').html(data.result);
+            }
+        })
+    });
+
 });

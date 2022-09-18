@@ -76,22 +76,7 @@
                     <div class="row">
                         @foreach($products as $product)
                             <div class="col-lg-4 col-md-6 col-sm-6">
-                                <a href="/product/{{$product->slug}}">
-                                    <div class="product__item">
-                                            <div class="product__item__pic set-bg" data-setbg="{{$product->thumb}}" >
-                                    
-                                            <ul class="product__hover">
-                                                <span class="label" class="product__hover"><h6>{{$product -> name}}</h6></span>
-                                            </ul>
-                                    
-                                    </div>
-                                </a>
-                                <div class="product__item__text">
-                                    <h6>{{$product -> name}}</h6>
-                                    <a href="#" class="add-cart">+ Thêm vào giỏ hàng</a>
-                                    {!! \App\Helpers\Helper::price($product,$product->price,$product->price_sale) !!}
-                                </div>
-                                </div>
+                                {!! \App\Helpers\Helper::product($product,$product->price,$product->price_sale) !!}
                             </div>
                         @endforeach
                     </div>

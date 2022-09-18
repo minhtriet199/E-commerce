@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Http\Services\Product\ProductService;
 use App\Http\Controllers\CommentController;
+use App\Models\Product;
 use Carbon\carbon;
 
 class ProductsController extends Controller

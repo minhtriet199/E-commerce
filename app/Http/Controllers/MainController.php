@@ -9,6 +9,7 @@ use App\Http\Services\Menu\MenuService;
 
 use Illuminate\Support\Facades\Auth;
 use Session;
+use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Cart_item;
 
@@ -80,4 +81,22 @@ class MainController extends Controller
         }
     }
 
+    public function search(Request $request){
+        $data = $request->all();
+        $output= '';
+        $products = Product::where('name','Like','%'.$data['search'].'%')
+                ->orWhere('slug','Like','%'.$data['search'].'%')->get();
+        
+        foreach($products as $product){
+            $output.='
+                <a href="/product/'.$product->slug.'">
+                    <div class="row">
+                        <div class="col-lg-4"> <img src="'.$product->thumb.'"></div>
+                        <div class="col-lg-8"> <p>'.$product->name.'</p>  '.$product->price.'  </div>
+                    </div>
+                </a>
+                ';
+        }
+        return response()->json(['result'=>$output]);
+    }
 }
