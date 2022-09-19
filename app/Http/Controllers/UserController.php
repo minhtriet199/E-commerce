@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Services\User\UserService;
 use App\Http\Services\Order\OrderService;
 use App\Http\Services\Voucher\VoucherService;
+use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Models\User_attribute;
 use App\Models\Cities;
 use App\Models\District;
 use App\Models\Cart;
+use App\Models\Cart_item;
 use App\Models\Password_reset;
 use Carbon\Carbon;
 Use Alert;
@@ -65,6 +67,82 @@ class UserController extends Controller
             'title' => 'Đăng nhập'
         ]);
     }
+    //facebook
+    public function loginfacebook(){
+        return Socialite::driver('facebook')
+        ->redirect();
+    }
+
+    public function facebookCallback(Request $request){
+        $facebookUser = Socialite::driver('facebook')->stateless()->user();
+        $findUser = User::where('email', $facebookUser->email)->first();
+        
+        if($findUser){
+            Auth::login($findUser, true);
+            $this->userStore();
+            return redirect(url('user/account/profile/'));
+        }
+        else{
+            $user = User::updateOrCreate([
+                'facebook_id' => $facebookUser->id,
+            ], [
+                'name' => $facebookUser->name,
+                'email' => $facebookUser->email,
+                'facebook_token' => $facebookUser->token,
+                'facebook_refresh_token' => $facebookUser->refreshToken,
+                'password'=> Hash::make(Str::random(11)),
+            ]);
+            User_attribute::create([
+                'id' => $user->id,
+                'user_id' => $user->id,
+            ]);
+        }
+        
+        Auth::login($user);
+        $this->userStore();
+        return redirect('user/account/profile/');
+        
+    }
+    //end facebook
+
+    //google login
+    public function loginGoogle(){
+        return Socialite::driver('google')
+        ->redirect();
+    }
+
+    public function googleCallback(Request $request){
+        $googleUser = Socialite::driver('google')->stateless()->user();
+        $findUser = User::where('email', $googleUser->email)->first();
+        
+        if($findUser){
+            Auth::login($findUser, true);
+            $this->userStore();
+            return redirect(url('user/account/profile/'));
+        }
+        else{
+            $user = User::updateOrCreate([
+                'google_id' => $googleUser->id,
+            ], [
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'google_token' => $googleUser->token,
+                'google_refresh_token' => $googleUser->refreshToken,
+                'password'=> Hash::make(Str::random(11)),
+            ]);
+            User_attribute::create([
+                'id' => $user->id,
+                'user_id' => $user->id,
+            ]);
+        }
+
+        Auth::login($user);
+        $this->userStore();
+        return redirect('user/account/profile/');
+        
+    }
+    //end google
+
     
     public function store(Request $request){
         $this->validate($request, [
@@ -76,7 +154,8 @@ class UserController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input( 'password'),
         ])){
-            return redirect(url('/'));
+            $this->userStore();
+            return redirect(url('/user/account/profile/'));
         }
         Session()->flash( 'error','Email hoặc password không đúng');
         return redirect()->back();
@@ -151,13 +230,42 @@ class UserController extends Controller
     public function update(Request $request){
         $User_attribute = User_attribute::find($request->user_id);
         $User_attribute->update($request->input());
+        $User = User::where('id',Auth::id())->update(['name' => $request->input('name')]);
         return response()->json($User_attribute);
     }
 
-    public function updatepass(Request $request){
-        $User = User::find($request->id);
-        $User->update($request->input());
-        return response()->json($User);
-    }
 
+    public function userStore(){
+        if(Auth::check()){
+            $Cart = Cart::updateOrCreate([
+                'user_id' => Auth::id(),
+                'user_name' => Auth::user()->name,
+            ]);
+            if(Session::has('carts')){
+                foreach(Session::get('carts') as $product_id => $details){
+                    if(Cart_item::where('product_id',$details['product_id'])->first()){
+                        Cart_item::where('product_id',$details['product_id'])
+                            ->update([
+                                'cart_id' => $Cart->id,
+                                'product_id' => $details['product_id'],
+                                'name' => $details['name'],
+                                'thumb' => $details['thumb'],
+                                'quantity' => $details['quantity'],
+                                'price' => $details['price'],
+                            ]);
+                    }
+                    else{
+                        Cart_item::Create([
+                            'cart_id' => $Cart->id,
+                            'product_id' => $details['product_id'],
+                            'name' => $details['name'],
+                            'thumb' => $details['thumb'],
+                            'quantity' => $details['quantity'],
+                            'price' => $details['price'],
+                        ]);
+                    }
+                }
+            }
+        }
+    }
 }

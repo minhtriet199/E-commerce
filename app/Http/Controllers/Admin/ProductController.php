@@ -13,13 +13,11 @@ class ProductController extends Controller
 {
     protected $productService;
 
-    public function __construct(ProductAdminService $productService)
-    {
+    public function __construct(ProductAdminService $productService){
         $this->productService = $productService;
     }
 
-    public function index()
-    {
+    public function index(){
         return view('admin.products.list',[
             'title' => 'Danh sách sản phẩm',
             'products' => $this->productService->get()  
@@ -27,23 +25,20 @@ class ProductController extends Controller
     }
 
 
-    public function create()
-    {
+    public function create(){
         return view('admin.products.add',[
             'title' => 'Thêm sản phẩm mới',
             'products' => $this->productService->getMenu()
         ]);
     }
-    public function store(ProductRequest $request)
-    {
+    public function store(ProductRequest $request){
         $result = $this->productService->insert($request);
         
         if($result) return redirect('admin/products/list');
         else return redirect()->back()->withInput();
     }
 
-    public function show(Product $product)
-    {
+    public function show(Product $product){
         return view('admin.products.edit',[
             'title' => 'Sửa tên sản phẩm',
             'product' => $product,
@@ -51,16 +46,14 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update(Request $request, Product $product)
-    {
+    public function update(Request $request, Product $product){
         $result = $this->productService->update($request,$product);
 
         if($result) return redirect('admin/products/list');
         else return redirect()->back();
     }
 
-    public function destroy(Request $request)
-    {
+    public function destroy(Request $request){
         $result = $this->productService->delete($request);
         if($result){
             return response()->json([
@@ -70,6 +63,14 @@ class ProductController extends Controller
         }
         return response()->json([
             'error' => true
+        ]);
+    }
+
+    public function image(){
+        return view('admin.products.image',[
+            'title' => 'Ảnh sản phẩm',
+            'products' => Product::with('product_image')
+                ->paginate(9),
         ]);
     }
 }

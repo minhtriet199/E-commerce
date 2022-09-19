@@ -6,13 +6,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+
 
 
 use App\Http\Services\CartServices;
 use App\Http\Services\User\UserService;
-use App\Http\Controllers\MainController;
-use App\Mail\OrderMail;
+use App\Http\Services\MailServices;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Cart;
@@ -28,12 +27,13 @@ use Session;
 class CartController extends Controller
 {
     protected $cartServices;
+    protected $mailServices;
     protected $mainController;
     
-    public function __construct(CartServices $cartServices,UserService $userServices,mainController $mainController){
+    public function __construct(CartServices $cartServices,UserService $userServices,MailServices $mailServices){
         $this->cartServices = $cartServices;
         $this->userServices =$userServices;
-        $this->mainServices =$mainController;
+        $this->mailServices =$mailServices;
     }
    
 
@@ -206,7 +206,6 @@ class CartController extends Controller
     }
 
     public function checkout(){  
-
         if(Session::has('carts')){
             if(Auth::check()){
                 return view('block.user-checkout',[
@@ -226,10 +225,6 @@ class CartController extends Controller
         }
         else return redirect()->back();
         
-    }
-
-    public function sendOrderMail($order){
-        Mail::to($order->email)->send(new OrderMail($order));
     }
 
     public function place_order(Request $request){
@@ -255,6 +250,7 @@ class CartController extends Controller
                     'quantity'=> $cart['quantity'],
                     'price' => $cart['price'],
                 ]);
+                $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
             }
             Cart::where('user_id',Auth::id())->delete();
         }
@@ -267,12 +263,14 @@ class CartController extends Controller
                     'quantity'=> $cart['quantity'],
                     'price' => $cart['price'],
                 ]);
+                $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
             }
         }
-        $this->sendOrderMail($order);
+        $this->mailServices->sendOrderMail($order);
 
         Session::forget('carts');
         Session::put('order',$order->id);
         return redirect('/finish');
     }
+
 }

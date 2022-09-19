@@ -74,6 +74,11 @@
                   <p>Thêm sản phẩm</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/admin/products/image" class="nav-link">
+                  <p>Ảnh sản phẩm</p>
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -98,29 +103,44 @@
               </li>
             </ul>
           </li>
-           
+
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="fa fa-solid fa-shopping-cart"> </i>
+              <i class="nav-icon fa fa-solid fa-shopping-cart"></i>
               <p>
-                  Đơn hàng
+                 Đơn hàng
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview" style="display: none;">
               <li class="nav-item">
-              <a href="/admin/sliders/list" class="nav-link">
-                  <p>Danh sách đơn hàng</p>
+              <a href="/admin/order/list" class="nav-link">
+                  <p>Quản lý đơn hàng</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/order/shipping" class="nav-link">
-                  <p>Xem đơn hàng</p>
+                <a href="/admin/order/list/0" class="nav-link">
+                  <p>Đơn đang chờ xử lý</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/order/list/1" class="nav-link">
+                  <p>Đơn đang đang giao</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/order/list/2" class="nav-link">
+                  <p>Đơn đang đã thành công</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/order/list/3" class="nav-link">
+                  <p>Đơn đang hoàn tiền</p>
                 </a>
               </li>
             </ul>
           </li>
-
+          
           <li class="nav-item">
             <a href="/admin/shipping" class="nav-link">
               <i class="fa fa-truck"></i><p> Giá giao hàng</p>

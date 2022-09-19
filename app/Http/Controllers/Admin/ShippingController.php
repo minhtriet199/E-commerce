@@ -55,10 +55,12 @@ class ShippingController extends Controller
         $data = $request->all();
         $fee = fee::where('id',$data['id'])
                 ->update(['fee' => $data['fee']]);
+        return response()->json();
     }
     public function remove_row(Request $request){
         $data = $request->all();
         fee::where('id',$data['id'])
             ->dump();
+        return response()->json();
     }
 }

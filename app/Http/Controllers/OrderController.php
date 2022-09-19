@@ -19,7 +19,6 @@ class OrderController extends Controller
     public function senOrderMail($order){
         Mail::to($order->email)->send(new OrderMail($order));
     }
-
     public function show(){
         return view('block.finish',[
             'title' => 'Thông tin đơn hàng',
@@ -27,4 +26,5 @@ class OrderController extends Controller
             'details' => $this->orderService->getOrderDetail(),
         ]);
     }
+
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\MenusController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\MainController;
@@ -57,6 +58,10 @@ Route::middleware(['auth'])->group(function (){
 
             Route::get('add',[ProductController::class,'create']);
             Route::post('add',[ProductController::class,'store']);
+
+            Route::get('image',[ProductController::class,'image']);
+            Route::post('image',[ProductController::class,'store_image']);
+
             Route::get('edit/{product}',[ProductController::class,'show']);
             Route::post('edit/{product}',[ProductController::class,'update']);
             Route::DELETE('destroy',[ProductController::class,'destroy']);
@@ -73,7 +78,10 @@ Route::middleware(['auth'])->group(function (){
         });
 
         Route::prefix('order')->group(function(){
-            
+            Route::get('list',[AdminOrderController::class,'index']);
+            Route::get('list/{status}',[AdminOrderController::class,'list_status']);
+            Route::get('edit/{id}',[AdminOrderController::class,'show']);
+            Route::post('update',[AdminOrderController::class,'update']);
 
         });
     }); 
@@ -96,13 +104,13 @@ Route::get('user/change_pass/{token}',[UserController::class,'passwordForm']);
 Route::post('user/change_pass',[UserController::class,'change_pass']);
 
 //Đăng nhập google
-Route::get('login/google', [App\Http\Controllers\Api\GoogleController::class, 'loginGoogle']);
-Route::get('login/google/callback', [App\Http\Controllers\Api\GoogleController::class, 'loginCallback']);
+Route::get('login/google', [UserController::class, 'loginGoogle']);
+Route::get('login/google/callback', [UserController::class, 'googleCallback']);
 //hết google
 
 //Đăng nhập facebook
-Route::get('login/facebook',[FacebookController::class,'loginFacebook']);
-Route::get('login/facebook/callback',[FacebookController::class,'loginCallback']);
+Route::get('login/facebook',[UserController::class,'loginFacebook']);
+Route::get('login/facebook/callback',[UserController::class,'facebookCallback']);
 
 
 
@@ -114,8 +122,7 @@ Route::get('shop',[MenuController::class,'show']);
 Route::get('product/{slug}',[ProductsController::class,'index']);
 
 //phần comment
-Route::post('comment',[CommentController::class,'store']);
-Route::get('fetch-comment',[CommentController::class,'fetch_comment']);
+
 
 Route::post('add-cart',[CartController::class,'insert']);
 Route::get('view-cart',[CartController::class,'index']);
@@ -137,6 +144,8 @@ Route::middleware(['auth'])->group(function (){
         Route::get('cart',[CartController::class,'userStore']);
         Route::patch('update-carts',[CartController::class,'cart_update']);
         Route::delete('destroy',[CartController::class,'destroy']);
+
+        Route::post('comment',[CommentController::class,'store']);
 
         Route::prefix('account')->group(function(){
             Route::get('profile',[UserController::class,'index']);
