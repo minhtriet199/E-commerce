@@ -57,13 +57,13 @@
                                         @php $total += $details['price'] * $details['quantity']  @endphp
                                         <li style="font-weight:bold;'" class="row">
                                             <span class="col-lg-8">x{{ $details['quantity'] }} {{ $details['name'] }}</span>
-                                            <span class="col-lg-4">{!! \App\Helpers\Helper::currency_format($details['price'] * $details['quantity']) !!}</span>
+                                            <span class="col-lg-4">{{ number_format($details['price'] * $details['quantity'],0,',','.')}} đ</span>
                                         </li>
                                     @endforeach
                                 </ul>
                                 <ul class="checkout__total__all">
-                                    <li>Tạm tính <span>{!! \App\Helpers\Helper::currency_format( $total) !!}</span></li>
-                                    <li>Tổng tiền <span>{!! \App\Helpers\Helper::currency_format( $total) !!}</span></li>
+                                    <li>Tạm tính <span>{{ number_format($total,0,',','.')}} đ</span></li>
+                                    <li>Tổng tiền <span>{{ number_format($total,0,',','.')}} đ</span></li>
                                     <input type="hidden" name="total" value="{{ $total }}">
                                 </ul>
                                 <button type="submit" class="site-btn">Thanh toán</button>

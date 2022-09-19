@@ -28,7 +28,6 @@ class MainController extends Controller
 
     public function index()
     {
-        if(Auth::check()) $this->userStore();
         return view('block.home', [
             'title' => 'Lowkey | Shop bán quần áo',
             'sliders' => $this->sliderService->get(),
@@ -47,39 +46,6 @@ class MainController extends Controller
         return response()->json(['html' => '']);
     }
 
-    public function userStore(){
-        if(Auth::check()){
-            $Cart = Cart::updateOrCreate([
-                'user_id' => Auth::id(),
-                'user_name' => Auth::user()->name,
-            ]);
-            if(Session::has('carts')){
-                foreach(Session::get('carts') as $product_id => $details){
-                    if(Cart_item::where('product_id',$details['product_id'])->first()){
-                        Cart_item::where('product_id',$details['product_id'])
-                            ->update([
-                                'cart_id' => $Cart->id,
-                                'product_id' => $details['product_id'],
-                                'name' => $details['name'],
-                                'thumb' => $details['thumb'],
-                                'quantity' => $details['quantity'],
-                                'price' => $details['price'],
-                            ]);
-                    }
-                    else{
-                        Cart_item::Create([
-                            'cart_id' => $Cart->id,
-                            'product_id' => $details['product_id'],
-                            'name' => $details['name'],
-                            'thumb' => $details['thumb'],
-                            'quantity' => $details['quantity'],
-                            'price' => $details['price'],
-                        ]);
-                    }
-                }
-            }
-        }
-    }
 
     public function search(Request $request){
         $data = $request->all();

@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="product__cart__item__text">
                                             <h6 style="padding-top:10px;">{{ $cart->name }}</h6>
-                                            <h5>{!! \App\Helpers\Helper::currency_format($cart->price) !!} </h5>
+                                            <h5>{{ number_format($cart->price,0,',','.') }} đ </h5>
                                         </div>
                                     </td>
                                     <td class="quantity__item">
@@ -52,7 +52,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="cart__price" > {!! \App\Helpers\Helper::currency_format($cart->price * $cart->quantity) !!} </td>
+                                    <td class="cart__price" > {{ number_format($cart->price * $cart->quantity,0,',','.')}} đ</td>
                                     <td class="cart__close"><button class="u-remove-from-cart" style="border-radius:45px"><i class="fa fa-close"></i></button></td>
                                 </tr>
                                 @endforeach
@@ -74,9 +74,9 @@
                 <div class="cart__total">
                     <h6>Tổng tiền</h6>
                     <ul id="cast">
-                        <li>Tạm tính <span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
+                        <li>Tạm tính <span>{{ number_format($total,0,',','.')}} đ</span></li>
                         <li id="Sales">Giảm giá <span></span></li>
-                        <li>Tổng tiền<span>{!! \App\Helpers\Helper::currency_format($total) !!}</span></li>
+                        <li>Tổng tiền<span>{{ number_format($total,0,',','.')}} đ</span></li>
                     </ul>
                     <a href="{{ url('/checkout') }}" class="primary-btn">THANH TOÁN</a>
                 </div>

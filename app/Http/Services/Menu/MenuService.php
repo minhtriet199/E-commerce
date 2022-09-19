@@ -64,7 +64,6 @@ class MenuService
             ->where('active', 1);
         if($request->input('price')){
             $query->orderBy('price',$request->input('price'));
-            $query->orderBy('price_sale',$request->input('price'));
         }
         return $query
             ->orderByDesc('id')

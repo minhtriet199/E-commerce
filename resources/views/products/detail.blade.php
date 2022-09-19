@@ -109,6 +109,9 @@
                                         </div>
                                     @endif
                                     <div id="comment">
+                                        <div id="new-comment">
+
+                                        </div>
                                         @foreach($comments as $comment)
                                             <div class="product__details__tab__content">
                                                 <div class="row">
@@ -149,20 +152,7 @@
             <div class="row">
             @foreach($more as $more)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <a href="/product/{{$more ->slug}}">
-                            <div class="product__item__pic set-bg" data-setbg="{{$more ->thumb}}" style="background-image: url('{{$more ->thumb}} ')">
-                                <ul class="product__hover">
-                                    <span class="label" class="product__hover"><h6>{{$more -> name}}</h6></span>
-                                </ul>
-                            </div>
-                        </a>
-                        <div class="product__item__text">
-                            <h6>{{$more -> name}}</h6>
-                            <a href="#" class="add-cart">+ Thêm vào giỏ hàng</a>
-                            {!! \App\Helpers\Helper::price($more ,$more ->price,$more ->price_sale) !!}
-                        </div>
-                    </div>
+                    {!! \App\Helpers\Helper::product($more,$more->price,$more->price_sale) !!}
                 </div>
             @endforeach
                 

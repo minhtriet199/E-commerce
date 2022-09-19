@@ -36,8 +36,8 @@
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->menus->name }}</td>
                         <td>{{ $product->amount }}</td>
-                        <td>{!! \App\Helpers\Helper::currency_format($product->price) !!}</td>
-                        <td>{!! \App\Helpers\Helper::currency_format($product->price_sale) !!}</td>
+                        <td>{{ number_format($product->price,0,',','.')}} đ</td>
+                        <td>{{ number_format($product->price_sale,0,',','.')}} đ</td>
                         <td>{!! \App\Helpers\Helper::active($product->active) !!}</td>
                         <td>{{ $product->updated_at }}</td>
                         <td>  

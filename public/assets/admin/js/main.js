@@ -6,22 +6,40 @@ $.ajaxSetup({
 
 function removeRow(id,url)
 {
-    if(confirm('Bạn có chắc muốn xóa không?')){
-        $.ajax({
-            type:'DELETE',
-            datatype:'JSON',
-            data: { id },
-            url: url,
-            success: function (result){
-                if(result.error === false){
-                    alert(result.message);
-                    location.reload();
-                }else{
-                    alert('Xóa lỗi vui lòng thử lại');
+    Swal.fire({
+        title: 'Cảnh báo! ',
+        text: "Bạn muốn xóa dòng này?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oke, Xóa!'
+    }).then((result) => {
+        if(result){
+            $.ajax({
+                type:'DELETE',
+                datatype:'JSON',
+                data: { id },
+                url: url,
+                success: function (result){
+                    if(result.error === false){
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        location.reload();
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oopsie woopsie',
+                            text: 'Có lỗi!',
+                          })
+                    }
                 }
-            }
-        })
-    }
+            })
+        }
+    });
 }
 
 function autoTop() {
@@ -69,7 +87,11 @@ $(document).ready(function(){
                 _token:_token,
             },
             success:function(data){
-                alert('Thanh cong')
+                Swal.fire(
+                    'Good job!',
+                    'Thêm thành công',
+                    'success'
+                  )
             }
         });
     });
@@ -113,7 +135,11 @@ $(document).ready(function(){
                 _token:_token,
             },
             success: function(data){
-                alert('thanh cong');
+                Swal.fire(
+                    'Good job!',
+                    'Thành công',
+                    'success'
+                  )
                 location.reload();
             }
         });
@@ -123,21 +149,45 @@ $(document).ready(function(){
         var id = $(this).data('id');
         var discount = $(this).text();
         
-        var _token = $('meta[name="csrf-token"]').attr('content');
+        var token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
             url: '/admin/voucher/edit',
             type: 'POST',
             data:{
                 id :id,
                 discount:discount,
-                _token:_token,
+                token:token,
             },
             success: function(data){
-                alert('thanh cong');
+                Swal.fire(
+                    'Good job!',
+                    'Thành công',
+                    'success'
+                  )
                 $("#table-fee").load(location.href + " #table-fee");
             }
         });
     });
 
+    $('.btn-update-order').click(function(e){
+        const id = $(this).data('id');
+        const token = $('meta[name="csrf-token"]').attr('content');
+        Swal.fire({
+            title: '<strong>Chờ chút!</strong>',
+            icon: 'info',
+            showConfirmButton: false,
+        });
+        $.ajax({
+            url: '/admin/order/update',
+            type: 'POST',
+            data:{
+                id:id,
+                token,token
+            },
+            success: function(data){
+                location.reload();
+            }
+        })
+    });
     
 });
