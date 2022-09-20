@@ -17,8 +17,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="./blog.html">Giới thiệu</a></li>
-                        <li><a href="https://www.facebook.com/triet19/"target="_blank">Liên hệ</a></li>
+                        <li><a href="http://m.me//triet19/"target="_blank">Liên hệ</a></li>
                     </ul>
                 </nav>
             </div>

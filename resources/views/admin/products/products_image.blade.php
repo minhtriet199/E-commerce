@@ -21,21 +21,15 @@
                     <th>Ảnh</th>
                     <th>Tên</th>
                     <th>Số ảnh</th>
-                    <th style="width:120px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($products as $key => $product)
-                    
-                        <tr>
-                            
-                                <td><a href="/admin/products/image/{{ $product->id }}"><img src="{{ $product->thumb }}" class="admin-thumb"> </a></td>
-                                <td>{{ $product->name }}</td>
-                                <td></td>
-                                <td>{{ $product->menus->name }}</td>
-                           
-                        </tr>
-                    
+                @foreach($products as $key => $product) 
+                    <tr>
+                        <td><a href="/admin/products/image/{{ $product->id }}"><img src="{{ $product->thumb }}" class="admin-thumb"> </a></td>
+                        <td>{{ $product->name }}</td>
+                        <td></td>
+                    </tr>    
                 @endforeach
             </tbody>
         </table>

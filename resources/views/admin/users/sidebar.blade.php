@@ -34,6 +34,12 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
           <li class="nav-item">
+            <a href="/admin/" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i><p> Dashboard</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-solid fa-bars"></i>
               <p>
@@ -50,6 +56,28 @@
               <li class="nav-item">
                 <a href="/admin/menus/add" class="nav-link">
                   <p>Thêm Danh mục</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard"></i></i>
+              <p>
+                 Doanh thu
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+              <a href="/admin/revenue/month" class="nav-link">
+                  <p>Danh thu tháng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/revenue/day" class="nav-link">
+                  <p>Doanh thu ngày</p>
                 </a>
               </li>
             </ul>
@@ -143,12 +171,12 @@
           
           <li class="nav-item">
             <a href="/admin/shipping" class="nav-link">
-              <i class="fa fa-truck"></i><p> Giá giao hàng</p>
+              <i class="nav-icon fa fa-truck"></i><p> Giá giao hàng</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="/admin/voucher/list" class="nav-link">
-              <i class="fa fa-ticket-alt"></i><p> Voucher</p>
+              <i class="nav-icon fa fa-ticket-alt"></i><p> Voucher</p>
             </a>
           </li>
           

@@ -13,6 +13,6 @@ class CheckAdmin
         if (Auth::user() &&  Auth::user()->role == 1) {
             return $next($request);
         }
-        return redirect('/')->with('error','Bạn không phải admin');
+        return redirect('/admin/users/login')->with('error','Bạn không phải admin');
     }
 }
