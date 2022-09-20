@@ -66,11 +66,17 @@ class ProductController extends Controller
         ]);
     }
 
-    public function image(){
-        return view('admin.products.image',[
+    public function products_image(){
+        return view('admin.products.products_image',[
             'title' => 'Ảnh sản phẩm',
             'products' => Product::with('product_image')
                 ->paginate(9),
+        ]);
+    }
+    public function product_image($id){
+        return view('admin.products.product_image',[
+            'title' => 'Thêm ảnh sản phẩm',
+            'product' => Product::where('id',$id)->firstOrFail(),
         ]);
     }
 }

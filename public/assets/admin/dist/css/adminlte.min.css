@@ -49,6 +49,10 @@
   background-color: #2DC258;
   color:white;
 }
+.row .dashboard_info{
+  width:100%;
+  text-align:center;
+}
 
 
 
