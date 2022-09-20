@@ -8,10 +8,6 @@ use Illuminate\Support\facades\Auth;
 
 class LoginController extends Controller
 { 
-    public function __construct()
-    {
-        $this->middleware('guest', ['except' => ['getLogout', 'getRegister']]);
-    }
     public function index()
     {
         return view('admin.users.login', [
@@ -21,7 +17,7 @@ class LoginController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'email' => 'required|email:filter',
+            'email' => 'required',
             'password' => 'required'
         ]);
 

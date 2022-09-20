@@ -24,6 +24,7 @@ class MainController extends Controller
         $this->sliderService = $sliderService;
         $this->product = $product;
         $this->menus = $menus;
+        $this->middleware('auth');
     }
 
     public function index()

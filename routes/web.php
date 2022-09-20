@@ -24,7 +24,7 @@ Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
 Route::get('/logout',[AdminMainController::class,'logout'])->name('admin');
 Route::post('select-delivery',[ShippingController::class,'select_delivery']);
 
-Route::middleware(['auth'])->group(function (){
+Route::group(['middleware' => 'CheckAdmin'],function (){
     Route::prefix('admin')->group(function(){
         Route::get( '/',[AdminMainController::class, 'index'] )->name('admin');
         Route::get( 'main',[AdminMainController::class, 'index'] )->name('admin');

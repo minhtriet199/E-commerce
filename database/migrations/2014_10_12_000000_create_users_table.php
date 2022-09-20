@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('google_id')->nullable();
             $table->string('facebook_id')->nullable();
-            $table->integer('level')->default(0);
+            $table->integer('role')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
