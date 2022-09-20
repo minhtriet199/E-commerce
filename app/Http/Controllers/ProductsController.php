@@ -21,12 +21,10 @@ class ProductsController extends Controller
     {
         Carbon::setLocale('vi');
         $product = $this->productServices->show($slug);
-        $comment =$this->commentController->index($slug);
         $more = $this->productServices->more($slug);
         return view('products.detail',[
             'title' => $product->name,
             'products' =>$product,
-            'comments' =>$comment,
             'more'=>$more,
         ]);
     }
