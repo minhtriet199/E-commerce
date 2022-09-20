@@ -122,7 +122,7 @@ Route::get('shop',[MenuController::class,'show']);
 Route::get('product/{slug}',[ProductsController::class,'index']);
 
 //phần comment
-
+Route::get('fetchcmt',[CommentController::class,'fetchcmt']);
 
 Route::post('add-cart',[CartController::class,'insert']);
 Route::get('view-cart',[CartController::class,'index']);

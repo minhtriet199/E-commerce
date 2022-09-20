@@ -450,8 +450,7 @@ $(document).ready(function(){
                 token:token,
             },
             success:function(data){
-                console.log(data);
-                $('#new-comment').html(data.result);
+                fetchcmt();
             }
         });
     });
@@ -472,4 +471,19 @@ $(document).ready(function(){
         })
     });
 
+    
+
 });
+
+function fetchcmt(){
+    const product_id = $('#product_id').val();
+    $.ajax({
+        type: 'get',
+        url: '/fetchcmt/',
+        data:{product_id:product_id},
+        success: function(data) {
+            $('#comment-section').html(data.result);
+        },
+    });
+}
+fetchcmt();

@@ -1,7 +1,6 @@
 @extends('main')
 
 @section('content')
-
     <section class="shop-details">
         <div class="product__details__pic">
             <div class="container">
@@ -57,7 +56,7 @@
                                         <div class="pro-qty">
                                             <input type="number" value="1" class="quanity-btn" name="product_quantity">
                                         </div>
-                                        <input type="hidden" value="{{ $products -> id}}" name="product_id">
+                                        <input type="hidden" value="{{ $products -> id}}" name="product_id" id="product_id">
                                         <input type="hidden" value="{{ $products -> name}}" name="product_name">
                                         <input type="hidden" value="{{ $products -> thumb}}" name="product_thumb">
                                         {!! \App\Helpers\Helper::formprice($products,$products->price,$products->price_sale) !!}
@@ -109,27 +108,9 @@
                                         </div>
                                     @endif
                                     <div id="comment">
-                                        <div id="new-comment">
+                                        <div id="comment-section">
 
-                                        </div>
-                                        @foreach($comments as $comment)
-                                            <div class="product__details__tab__content">
-                                                <div class="row">
-                                                    <div class="col-lg-1">
-                                                        <img src="/assets/img/user.png" >
-                                                    </div>
-                                                    <div class="col-lg-11">
-                                                        <div><span class="user_name">{{ $comment->users->name}} </span> 
-                                                        {{ $comment->updated_at->diffForHumans()}} 
-                                                        {{-- {!! \App\Helpers\Helper::checkOrder($comment->user_id,$products->name) !!}</div> --}}
-                                                        <div>
-                                                            {{ $comment->Content}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        @endforeach
+                                        </div>   
                                     </div>
                                 </div>
                             </div>
