@@ -335,48 +335,12 @@ $(document).ready(function(){
         });
     });
 
-    $(".u-quantity-btn").change(function (e) {
-        const qty = $('input[name="product_quantity"]').val();
-
-        $.ajax({
-            url: 'update-carts',
-            method: 'patch',
-            dataType:'JSON',
-            data: {
-                id: $(this).parents("tr").attr("data-id"), 
-                quantity: qty,
-                _token: $('meta[name="csrf-token"]').attr('content'),
-            },
-            success:function(data) {
-                location.reload();
-            }
-        });
-    });
-
     $(".remove-from-cart").click(function (e) {
         e.preventDefault();
         var ele = $(this);
         var id = ele.parents("tr").attr("data-id");
         $.ajax({
             url: '/remove-cart',
-            method: "DELETE",
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content'), 
-                id: id, 
-            },
-            success: function (response) {
-                $('#product'+id).remove();
-                $("#cast").load(location.href + " #cast");
-            }
-        });
-    });
-
-    $(".u-remove-from-cart").click(function (e) {
-        e.preventDefault();
-        var ele = $(this);
-        var id = ele.parents("tr").attr("data-id");
-        $.ajax({
-            url: 'destroy',
             method: "DELETE",
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'), 
@@ -470,9 +434,6 @@ $(document).ready(function(){
             }
         })
     });
-
-    
-
 });
 
 function fetchcmt(){

@@ -40,18 +40,18 @@ class SliderController extends Controller
         else return redirect()->back()->withInput();
     }
 
-    public function show(Slider $slider)
+    public function show(Slider $id)
     {
         return view('admin.sliders.edit',[
             'title' => 'Sửa tên sản phẩm',
-            'slider' => $slider     
+            'slider' => $id   
         ]);
     }
 
 
-    public function update(Request $request, Slider $slider)
+    public function update(Request $request, Slider $id)
     {
-        $result = $this->sliderService->update($request,$slider);
+        $result = $this->sliderService->update($request,$id);
 
         if($result) return redirect('admin/sliders/list');
         else return redirect()->back();

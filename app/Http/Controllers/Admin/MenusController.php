@@ -41,16 +41,16 @@ class MenusController extends Controller
         return redirect('/admin/menus/list');
     }
 
-    public function show(Menus $menus)
+    public function show(Menus $id)
     {   
         return view('admin.menus.edit',[
-            'title' => 'Chỉnh sửa danh mục : ' . $menus->name,
-            'Menus' => $menus,
+            'title' => 'Chỉnh sửa danh mục : ' . $id->name,
+            'Menus' => $id,
         ]);
     }
-    public function update(Menus $menus, UpdateRequest $request)
+    public function update(Menus $id, UpdateRequest $request)
     {
-        $this->MenuService->update($request, $menus);
+        $this->MenuService->update($request, $id);
 
         return redirect('/admin/menus/list');
     }
