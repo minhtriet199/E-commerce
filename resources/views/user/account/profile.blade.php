@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="col-lg-6 ">
                                             <p>Số điện thoại</p>
-                                            <input type="number" name="phone" value="{{ $users->profile->phone}}">
+                                            <input type="number" name="phone" value="0{{ $users->profile->phone}}">
                                         </div>
                                     </div>
                                     <p>Địa chỉ</p>

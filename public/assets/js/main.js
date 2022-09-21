@@ -213,7 +213,7 @@ $.ajaxSetup({
 
 function loadMore(){
     const page= $('#page').val();
-    var trang=parseInt(page);
+    const trang=parseInt(page);
     $.ajax({
         type:'POST',
         datatype:'JSON',
@@ -315,9 +315,9 @@ $(document).ready(function(){
     
     $(".quantity-btn").change(function (e) {
         e.preventDefault();
-        var ele = $(this);
+        const ele = $(this);
         const qty = $('input[name="product_qty"]').val();
-        var _token = $('meta[name="csrf-token"]').attr('content');
+        const _token = $('meta[name="csrf-token"]').attr('content');
         
         $.ajax({
             url: '/update-cart',
@@ -329,16 +329,15 @@ $(document).ready(function(){
                 _token:_token,
             },
             success: function (response) {
-               window.location.reload();
-                $("#cast").load(location.href + " #cast");
+               location.reload();
             }
         });
     });
 
     $(".remove-from-cart").click(function (e) {
         e.preventDefault();
-        var ele = $(this);
-        var id = ele.parents("tr").attr("data-id");
+        const ele = $(this);
+        const id = ele.parents("tr").attr("data-id");
         $.ajax({
             url: '/remove-cart',
             method: "DELETE",
@@ -354,10 +353,10 @@ $(document).ready(function(){
     });
     
     $('.choose').change(function(){
-        var action = $(this).attr('id');
-        var city_id = $(this).val();
-        var _token = $('meta[name="csrf-token"]').attr('content');
-        var result = '';
+        const action = $(this).attr('id');
+        const city_id = $(this).val();
+        const _token = $('meta[name="csrf-token"]').attr('content');
+        const result = '';
 
         if(action == 'city') {
             result='district';
@@ -396,29 +395,6 @@ $(document).ready(function(){
 
    });
    
-    
-   $('#btn-comment').click(function(e){
-        const user_id=$('input[name="user_id"]').val();
-        const product_id =$('input[name="product_id"]').val();
-        const content = $('#content').val();
-        const token = $('meta[name="csrf-token"]').attr('content');
-
-        $.ajax({
-            type: 'POST',
-            dataType:'JSON',
-            url:'/user/comment',
-            data:{
-                user_id:user_id,
-                product_id:product_id,
-                content:content,
-                token:token,
-            },
-            success:function(data){
-                fetchcmt();
-            }
-        });
-    });
-
     $('#search-box').keyup(function(){
         const search = $('input[name="search-box"]').val();
         $.ajax({
@@ -436,15 +412,3 @@ $(document).ready(function(){
     });
 });
 
-function fetchcmt(){
-    const product_id = $('#product_id').val();
-    $.ajax({
-        type: 'get',
-        url: '/fetchcmt/',
-        data:{product_id:product_id},
-        success: function(data) {
-            $('#comment-section').html(data.result);
-        },
-    });
-}
-fetchcmt();
