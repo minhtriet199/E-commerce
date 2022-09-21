@@ -18,11 +18,21 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <!-- list ảnh chưa làm-->
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">
                                     <div class="product__thumb__pic set-bg" data-setbg="{{ $products -> thumb}}">
-                                    </div>
+                                    </div>    
                                 </a>
                             </li>
+                            @php $tab = 1 @endphp
+                            @foreach($products->product_image as $product_images)
+                                @php $tab += 1 @endphp
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-{{ $tab }}" role="tab" aria-selected="false">
+                                        <div class="product__thumb__pic set-bg" data-setbg="{{ $product_images -> image}}">
+                                        </div>
+                                    </a>
+                                </li>
+                            @endforeach
 
                         </ul>
                     </div>
@@ -33,6 +43,15 @@
                                     <img src="{{ $products -> thumb}}" alt="">
                                 </div>
                             </div>
+                            @php $tabpanel = 1 @endphp
+                            @foreach($products->product_image as $product_images)
+                                @php $tabpanel += 1 @endphp
+                                <div class="tab-pane" id="tabs-{{ $tabpanel }}" role="tabpanel">
+                                    <div class="product__details__pic__item">
+                                        <img src="{{ $product_images -> image}}" alt="">
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -141,3 +160,42 @@
         </div>
     </section>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btn-comment').click(function(e){
+            const user_id=$('input[name="user_id"]').val();
+            const product_id =$('input[name="product_id"]').val();
+            const content = $('#content').val();
+            const token = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: 'POST',
+                dataType:'JSON',
+                url:'/user/comment',
+                data:{
+                    user_id:user_id,
+                    product_id:product_id,
+                    content:content,
+                    token:token,
+                },
+                success:function(data){
+                    fetchcmt();
+                }
+            });
+        });
+
+        function fetchcmt(){
+            const product_id = $('#product_id').val();
+            $.ajax({
+                type: 'get',
+                url: '/fetchcmt/',
+                data:{product_id:product_id},
+                success: function(data) {
+                    $('#comment-section').html(data.result);
+                },
+            });
+        }
+        fetchcmt();
+    });
+</script>

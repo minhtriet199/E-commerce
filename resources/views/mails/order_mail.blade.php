@@ -4,17 +4,15 @@
     <title>Order Confirm</title>
 </head>
 <body>
-    
-
     <section>
-        <div class="container">
-            <div class="mid-table finish">
+        <div class="container" style="width:100%;display:flex;justify-content: center;">
+            <div class="mid-table finish" style="padding:10px 20px;border:1px solid black;">
                 <h4><i class="fa fa-check" style="color:#55FF2E;margin-bottom:50px;"></i> Mã đơn hàng của bạn là: <span>{{ session('order') }}</span></h4>
                 <div class="user_info">
-                    <div  style="text-align:left; margin-bottom:20px" >
-                        <div class="row">
+                    <div  style="text-align:left; margin-bottom:20px;" >
+                        <div class="row" style="display:flex;">
                             <div class="col-lg-8">
-                                <h4> Xin chào {{ $order ->username}}</h4>
+                                <h4> Xin chào {{ $order ->username}} </h4>
                             </div>
                             <div class="col-lg-4">
                                 {!! \App\Helpers\Helper::orderStatus($order->status) !!}
@@ -50,6 +48,5 @@
             </div>
         </div>
     </section>
-
 </body>
 </html>

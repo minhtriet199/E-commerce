@@ -23,6 +23,7 @@ class ProductService
     {
         return Product::where('slug',$slug)
             ->with('menus')
+            ->with('product_image')
             ->firstOrFail();
     }
     public function more($slug)

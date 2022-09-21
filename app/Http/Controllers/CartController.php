@@ -130,11 +130,7 @@ class CartController extends Controller
             $carts[$request->id]['quantity'] = $request->quantity;
             session()->put('carts', $carts);
             session()->flash('success', 'Cart updated successfully');
-            if(Auth::check()){
-                $this->userStore();
-            }
         }
-        return response()->json($data);
     }
 
     public function remove(Request $request){

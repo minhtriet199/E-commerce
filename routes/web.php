@@ -20,9 +20,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CommentController;
 
-Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login');
+Route::get( 'admin/users/login', [LoginController::class, 'index']);
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
-Route::get('/logout',[AdminMainController::class,'logout'])->name('admin');
+Route::get('/logout',[AdminMainController::class,'logout']);
 Route::post('select-delivery',[ShippingController::class,'select_delivery']);
 Route::group(['middleware' => ['CheckAdmin']],function (){
     Route::prefix('admin')->group(function(){
@@ -129,6 +129,7 @@ Route::middleware(['auth'])->group(function (){
         Route::post('comment',[CommentController::class,'store']);
         Route::prefix('account')->group(function(){
             Route::get('profile',[UserController::class,'index']);
+            Route::post('profile/update',[UserController::class,'update']);
         });
     });
 });
