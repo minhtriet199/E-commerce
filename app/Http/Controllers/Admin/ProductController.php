@@ -38,16 +38,16 @@ class ProductController extends Controller
         else return redirect()->back()->withInput();
     }
 
-    public function show(Product $product){
+    public function show(Product $id){
         return view('admin.products.edit',[
             'title' => 'Sửa tên sản phẩm',
-            'product' => $product,
+            'product' => $id,
             'menus' => $this->productService->getMenu()
         ]);
     }
 
-    public function update(Request $request, Product $product){
-        $result = $this->productService->update($request,$product);
+    public function update(Request $request, Product $id){
+        $result = $this->productService->update($request,$id);
 
         if($result) return redirect('admin/products/list');
         else return redirect()->back();

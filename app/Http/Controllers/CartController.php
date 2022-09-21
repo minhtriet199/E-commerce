@@ -38,44 +38,18 @@ class CartController extends Controller
    
 
     public function index(){
-        return view('block.cart',[
-            'title'=> 'Giỏ hàng'
-        ]);
-    }
-
-    public function user_insert(Request $request){
-        $product_id = $request->input('product_id');
-        $product_name = $request->input('product_name');
-        $product_price = $request->input('product_price');
-        $product_quantity =$request->input('product_quantity');
-        $product_thumb = $request->input('product_thumb');
-
-        $Cart = Cart::updateOrCreate([
-            'user_id' => Auth::id(),
-            'user_name' => Auth::user()->name,
-        ]);
-        if(Cart_item::where('cart_id',$cart->id)->first()){
-            Cart_item::where('product_id',$details['product_id'])
-                ->update([
-                    'cart_id' => $Cart->id,
-                    'product_id' => $product_id,
-                    'name' => $product_name,
-                    'thumb' =>  $product_thumb,
-                    'quantity' => $product_quantity,
-                    'price' =>  $product_price,
-                ]);
-        }
-        else{
-            Cart_item::Create([
-                'cart_id' => $Cart->id,
-                'product_id' => $product_id,
-                'name' => $product_name,
-                'thumb' =>  $product_thumb,
-                'quantity' => $product_quantity,
-                'price' =>  $product_price,
+        if(Auth::check()) {
+            return view('block.cart',[
+                'title'=> 'Giỏ hàng',
+                'carts' =>  $this->cartServices->get(),
             ]);
         }
-
+        else{
+            return view('block.cart',[
+                'title'=> 'Giỏ hàng',
+            ]);
+        }
+       
     }
 
     public function userStore(){
@@ -113,11 +87,11 @@ class CartController extends Controller
     }
 
     public function insert(Request $request){
-        $product_id = $request->input('product_id');
-        $product_name = $request->input('product_name');
-        $product_price = $request->input('product_price');
-        $product_quantity =$request->input('product_quantity');
-        $product_thumb = $request->input('product_thumb');
+        $product_id = $request->product_id;
+        $product_name = $request->product_name;
+        $product_price = $request->product_price;
+        $product_quantity =$request->product_quantity;
+        $product_thumb = $request->product_thumb;
 
         $carts = Session::get('carts',[]);
         $exist = Arr::exists($carts,$product_id);
@@ -156,58 +130,40 @@ class CartController extends Controller
             $carts[$request->id]['quantity'] = $request->quantity;
             session()->put('carts', $carts);
             session()->flash('success', 'Cart updated successfully');
+            if(Auth::check()){
+                $this->userStore();
+            }
         }
+        return response()->json($data);
     }
 
     public function remove(Request $request){
         if($request->id) {
-            $carts = Session::get('carts',[]);
-            if(isset($carts[$request->id])) {
-                unset($carts[$request->id]);
-                session()->put('carts', $carts);
+            if(Auth::check()){
+                $carts = cart_item::where('product_id' , $request->input('id'))->delete();
             }
-            session()->flash('success', 'Product removed successfully');
+            else{
+                $carts = Session::get('carts',[]);
+                if(isset($carts[$request->id])) {
+                    unset($carts[$request->id]);
+                    session()->put('carts', $carts);
+                }
+            }
         }
-    }
-
-    public function user_cart(){
-        return view('user.cart',[
-            'title' => 'Giỏ hàng',
-            'carts' => $this->cartServices->get(),
-        ]);
     }
 
     public function cart_update(Request $request){
         $data = $request->all();
         $cart_item = cart_item::where('product_id',$data['id'])
             ->update(['fee' => $cart_item['cart_item']]);
+        return $cart_item;
     }
-
-    public function destroy(Request $request){
-        if($request->id) {
-            $carts = cart_item::where('product_id' , $request->input('id'))->first();
-            if($carts){
-                $carts -> delete();
-                return true;
-            }
-            return false;
-        }
-    }
-
-    public function use_voucher(Request $request){
-        $data = $request->all();
-        $voucher  = Voucher::where('voucher_code',$data['voucher_code'])->first();
-        if($voucher){
-           
-        }
-        else{
-           
-        }
-    }
-
-    public function checkout(){  
-        if(Session::has('carts')){
-            if(Auth::check()){
+    
+    public function checkout(){    
+        if(Auth::check()){
+            $Cart= Cart::where('user_id', Auth::id())->first();
+            $Cart_item = Cart_item::where('cart_id', $Cart->id)->firstOrFail();
+            if($Cart_item){
                 return view('block.user-checkout',[
                     'title' => 'Checkout',
                     'users' => $this->userServices->get(),
@@ -216,15 +172,17 @@ class CartController extends Controller
                     'citys' => Cities::all(),
                 ]);
             }
-            else{
+            else return redirect()->back();
+        }
+        else{
+            if(Session::has('carts')){
                 return view('block.checkout',[
                     'title' =>'checkout',
                     'citys' => Cities::all(),
                 ]);
             }
-        }
-        else return redirect()->back();
-        
+            else return redirect()->back();
+        }  
     }
 
     public function place_order(Request $request){

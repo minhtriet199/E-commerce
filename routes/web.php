@@ -49,8 +49,8 @@ Route::group(['middleware' => ['CheckAdmin']],function (){
             Route::get('list',[MenusController::class,'index']);
             Route::get('add',[MenusController::class,'create']);
             Route::post('add',[MenusController::class,'store']);
-            Route::get('edit/{menus}',[MenusController::class,'show']);
-            Route::post('edit/{menus}',[MenusController::class,'update']);
+            Route::get('edit/{id}',[MenusController::class,'show']);
+            Route::post('edit/{id}',[MenusController::class,'update']);
             Route::DELETE('destroy',[MenusController::class,'destroy']);
         });
         Route::prefix('products')->group(function(){
@@ -60,8 +60,8 @@ Route::group(['middleware' => ['CheckAdmin']],function (){
             Route::get('image',[ProductController::class,'products_image']);
             Route::get('image/{id}',[ProductController::class,'product_image']);
 
-            Route::get('edit/{product}',[ProductController::class,'show']);
-            Route::post('edit/{product}',[ProductController::class,'update']);
+            Route::get('edit/{id}',[ProductController::class,'show']);
+            Route::post('edit/{id}',[ProductController::class,'update']);
             Route::DELETE('destroy',[ProductController::class,'destroy']);
         });
         Route::post('upload/services',[UploadController::class,'store']);
@@ -69,8 +69,8 @@ Route::group(['middleware' => ['CheckAdmin']],function (){
             Route::get('list',[SliderController::class,'index']);
             Route::get('add',[SliderController::class,'create']);
             Route::post('add',[SliderController::class,'store']);
-            Route::get('edit/{slider}',[SliderController::class,'show']);
-            Route::post('edit/{slider}',[SliderController::class,'update']);
+            Route::get('edit/{id}',[SliderController::class,'show']);
+            Route::post('edit/{id}',[SliderController::class,'update']);
             Route::DELETE('destroy',[SliderController::class,'destroy']);
         });
         Route::prefix('order')->group(function(){
@@ -78,7 +78,6 @@ Route::group(['middleware' => ['CheckAdmin']],function (){
             Route::get('list/{status}',[AdminOrderController::class,'list_status']);
             Route::get('edit/{id}',[AdminOrderController::class,'show']);
             Route::post('update',[AdminOrderController::class,'update']);
-
         });
     }); 
 });
@@ -102,32 +101,34 @@ Route::get('login/google/callback', [UserController::class, 'googleCallback']);
 //Đăng nhập facebook
 Route::get('login/facebook',[UserController::class,'loginFacebook']);
 Route::get('login/facebook/callback',[UserController::class,'facebookCallback']);
+//Hết facebook
 Route::get('shop/{slug}', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);
 Route::get('product/{slug}',[ProductsController::class,'index']);
-//phần comment
+
 Route::get('fetchcmt',[CommentController::class,'fetchcmt']);
 Route::post('add-cart',[CartController::class,'insert']);
+
 Route::get('view-cart',[CartController::class,'index']);
+
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
 Route::get('use-voucher',[CartController::class,'use_voucher']);
 Route::get('checkout',[CartController::class,'checkout']);
 Route::post('select-delivery',[ShippingController::class,'select_delivery']);
+
 Route::post('checkout',[CartController::class,'place_order']);
+
 Route::get('finish',[OrderController::class,'show']);
+
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){       
         Route::get('/logouts',[UserController::class,'logouts']);
-        Route::get('view-cart',[CartController::class,'user_cart']);
         Route::get('cart',[CartController::class,'userStore']);
         Route::patch('update-carts',[CartController::class,'cart_update']);
-        Route::delete('destroy',[CartController::class,'destroy']);
         Route::post('comment',[CommentController::class,'store']);
         Route::prefix('account')->group(function(){
             Route::get('profile',[UserController::class,'index']);
-            Route::post('profile/update',[UserController::class,'update']);
-            Route::post('profile/update-password',[UserController::class,'updatepass']);
         });
     });
 });

@@ -19,7 +19,7 @@
                     <a class="nav-link" data-toggle="pill" href="#voucher" role="tab" aria-selected="false">
                     <i class="fa fa-ticket"></i> Kho voucher
                     </a>
-                    @if(Auth::user()->level > 0)
+                    @if(Auth::user()->role > 0)
                         <a href="/admin/" class="nav-link"> <i class="fa fa-solid fa-key"></i> Trang admin</a>
                     @endif
                 </div>
