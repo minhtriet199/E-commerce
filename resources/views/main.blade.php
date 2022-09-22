@@ -1,6 +1,3 @@
-
-<button  onclick="autoTop()" id="btnScrolltop" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
-	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +8,7 @@
 <body > 
 	@include('sweetalert::alert')
 	@include('block.header')
-	<button  onclick="autoTop()" id="btnScrolltop" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
+	<button id="btnScrolltop" class="btn-top" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
 	
 	@yield('content')
 
@@ -19,4 +16,3 @@
 
 </body>
 </html>
-

@@ -231,10 +231,6 @@ function loadMore(){
     })
 }
 
-function autoTop() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-}
 
 
 
@@ -428,6 +424,11 @@ $(document).ready(function(){
                 $("#cast").load(location.href + " #cast");
             }
         })
+    });
+    
+    $('.btn-top').click(function(){
+        $('html,body').animate({scrollTop : 0},360);
+        return false;
     });
 });
 

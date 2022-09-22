@@ -42,10 +42,7 @@ function removeRow(id,url)
     });
 }
 
-function autoTop() {
-    document.body.scrollTop = 0; 
-    document.documentElement.scrollTop = 0;
-}
+
 
 $('#upload').change(function (){ 
     const form = new FormData();
