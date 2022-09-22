@@ -16,3 +16,15 @@
 
 </body>
 </html>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(window).scroll(function(){
+			if($(this).scrollTop() > 40){
+				$('.btn-top').show(); //not working
+			} else{
+				$('.btn-top').show();
+			}
+		}).trigger('scroll');
+	});
+</script>

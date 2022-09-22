@@ -3902,7 +3902,7 @@ ol {
   	margin: 0;
 }
 
-#btnScrolltop{
+.btn-top{
 	position: fixed;
 	bottom: 50px;
 	right: 50px;
@@ -3916,6 +3916,7 @@ ol {
 	padding: 2px 10px;
 	border-radius: 30px;
 }
+
 
 #myBtn:hover {background-color: none;}
 ::-webkit-scrollbar {width: 6px;background: transparent;}
