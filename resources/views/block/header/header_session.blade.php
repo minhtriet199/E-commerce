@@ -10,6 +10,5 @@
             </div>
         </ul>
     </li>
-    <li><a href="#"><i class="fa fa-heart"></i></a></li>
     <li><a href="{{url('/view-cart')}}"><i class="fa fa-shopping-cart"></i></a></li>
 </ul>

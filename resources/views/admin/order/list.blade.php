@@ -28,26 +28,28 @@
                     <th style="width:120px">&nbsp;</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach($orders as $key => $order)
-                    
-                    <tr>
-                        <th><a href="/admin/order/edit/{{$order->id}}">{{$order->id}}</a></th>
-                        <th>{{ $order->created_at->format('d/m/y') }}</th>
-                        <th>{{ $order->username }}</th>
-                        <th>0{{ $order->phone }}</th>
-                        <th>{{ number_format($order->total,0,',','.') }} đ</th>
-                        <th>{!! \App\Helpers\Helper::orderStatus($order->status) !!}</th>
-                        <th>{!! \App\Helpers\Helper::order_button($order,$order->status) !!}</th>
-                    </tr>
-                    
-                @endforeach
+            <tbody id="order-section">
+                
             </tbody>
         </table>
         <div class="card-footer clearfix">
-            {!! $orders->links() !!}
+
         </div>
     </div>
 </div>
 
 @endsection
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function fetchorder(){
+        $.ajax({
+            type: 'get',
+            url: 'fetchorder',
+            success: function(data) {
+                $('#order-section').html(data.result);
+            },
+        });
+    }
+    fetchorder();
+</script>

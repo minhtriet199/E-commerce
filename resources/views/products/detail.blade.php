@@ -84,10 +84,6 @@
                                     @csrf
                                 </form>
                             </div>
-                            <div class="product__details__btns__option">
-                                <a href="#"><i class="fa fa-heart"></i> Thêm vào danh sách ước</a>
-                            </div>
-                            
                         </div>
                     </div>
                 </div>

@@ -23,10 +23,29 @@ class AdminOrderController extends Controller
     {
         return view('admin.order.list',[
             'title' => 'Quản lý đơn hàng',
-            'orders' => Order::orderBy('created_at','desc')
-            ->paginate(9),
         ]);
     }
+
+    public function fetchorder(){
+        $output= '';
+        $orders = Order::orderBy('created_at','desc')
+        ->get();
+        foreach($orders as $order){
+            $output.= '
+                <tr>
+                    <th><a href="/admin/order/edit/'.$order->id.' ">'. $order->id .'</a></th>
+                    <th>'.$order->created_at->format('d/m/y') .'</th>
+                    <th>'. $order->username .'</th>
+                    <th>0'. $order->phone .'</th>
+                    <th> '. number_format($order->total,0,',','.') .' đ</th>
+                    <th>'. \App\Helpers\Helper::orderStatus($order->status) .'</th>
+                    <th> '. \App\Helpers\Helper::order_button($order,$order->status) .' </th>
+                </tr>
+            ';
+        }
+        return response()->json(['result'=> $output]);
+    }
+
     public function show(Order $id){
         return view('admin.order.edit',[
             'title' => 'Quản lý đơn hàng',
@@ -34,7 +53,6 @@ class AdminOrderController extends Controller
             'details' => order_detail::where('order_id',$id->id)->get(),
         ]);
     }
-    
 
     public function update(Request $request){
         $result = $this->orderService->update($request);
@@ -49,6 +67,7 @@ class AdminOrderController extends Controller
             'error' => true
         ]);
     }
+
     public function list_status($status){
         return view('admin.order.show',[
             'title' => 'Quản lý đơn hàng',

@@ -47,12 +47,6 @@
         @csrf
       </form>
 
-      <p class="mb-1">
-        <a href="forgot-password.html">Quên mật khẩu</a>
-      </p>
-      <p class="mb-0">
-        <a href="register.html" class="text-center">Đăng ký</a>
-      </p>
     </div>
     <!-- /.login-card-body -->
   </div>

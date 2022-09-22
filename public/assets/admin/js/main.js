@@ -118,7 +118,7 @@ $(document).ready(function(){
                 $('#'+result).html(data);
             }
         });
-   });
+    });
 
 
    $('.fee_edit').blur(function(){
@@ -174,6 +174,7 @@ $(document).ready(function(){
         const token = $('meta[name="csrf-token"]').attr('content');
         Swal.fire({
             title: '<strong>Chờ chút!</strong>',
+            text:'Đang gửi mail tới khách hàng',
             icon: 'info',
             showConfirmButton: false,
         });
@@ -185,8 +186,10 @@ $(document).ready(function(){
                 token,token
             },
             success: function(data){
-                location.reload();
+                fetchorder();
             }
         })
     });
+
+    
 });

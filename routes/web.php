@@ -75,6 +75,9 @@ Route::group(['middleware' => ['CheckAdmin']],function (){
         });
         Route::prefix('order')->group(function(){
             Route::get('list',[AdminOrderController::class,'index']);
+
+            Route::get('fetchorder',[AdminOrderController::class,'fetchorder']);
+
             Route::get('list/{status}',[AdminOrderController::class,'list_status']);
             Route::get('edit/{id}',[AdminOrderController::class,'show']);
             Route::post('update',[AdminOrderController::class,'update']);
@@ -107,6 +110,7 @@ Route::get('shop',[MenuController::class,'show']);
 Route::get('product/{slug}',[ProductsController::class,'index']);
 
 Route::get('fetchcmt',[CommentController::class,'fetchcmt']);
+
 Route::post('add-cart',[CartController::class,'insert']);
 
 Route::get('view-cart',[CartController::class,'index']);

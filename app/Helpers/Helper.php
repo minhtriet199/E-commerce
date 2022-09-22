@@ -7,46 +7,24 @@ use App\Models\Order_detail;
 
 
 class Helper{
-    public static function active($active = 0)
-    {   
+    public static function active($active = 0){   
         return $active == 0 ? '<span class="btn btn-danger btn-sm"> Ngưng hoạt động </span>'
         : '<span class="btn btn-success btn-sm"> Hoạt động </span>';
 
     }
 
- 
-
     public static function menus($Menus) {
         $html = '';
         foreach ($Menus as $key => $menu) {
                 $html .= ' 
-                        <a href="/shop/'. $menu-> slug. '">
-                            ' . $menu->name . '
-                        </a>';
+                    <a href="/shop/'. $menu-> slug. '">
+                        ' . $menu->name . '
+                    </a>';
                 unset($Menus[$key]);
                 $html .= '';
         }
         return $html;
     }
-
-    public static function price($Product,$price =0,$price_sale=0){
-        $html= '';
-        if($price_sale != 0) {
-            $html .='
-                <h7 style="text-decoration:line-through;">'. number_format($Product->price,0,',','.') .' đ</h7>
-                <h5 style="color:red; padding-top:5px">'. number_format($Product->price_sale,0,',','.') .' đ</h5>
-            ';
-            return $html;
-        }
-        if($price !=0 ) {
-            $html .='
-                <h5>'. number_format($Product->price,0,',','.') .' đ</h5>
-            ';
-            return $html;
-        }
-        return '<a href="">lien he</a>';
-    }
-
 
     public static function formprice($Product,$price =0,$price_sale=0){
         $html ='';
@@ -84,19 +62,24 @@ class Helper{
 
     public static function orderStatus($status =0){
         $html= '';
-        if($status == 0) {
-            $html .='<h5 class="order-status">Đang chờ xác nhận</h5>';
-            return $html;
+        switch($status){
+            case "0":
+                $html .='<h5 class="order-status">Đang chờ xác nhận</h5>';
+                return $html;
+                break;
+            case "1":
+                $html .='<h5 class="order-status">Đang vận chuyển</h5>';
+                return $html;
+                break;
+            case "2":
+                $html .='<h5 class="order-status">Giao hàng thành công</h5>';
+                return $html;
+                break;
+            default: 
+                $html .='<h5 class="order-status">Đã hoàn tiền</h5>';
+                return $html;
+                break;
         }
-        if($status ==1 ) {
-            $html .='<h5 class="order-status">Đang vận chuyển</h5>';
-            return $html;
-        }
-        if($status==2){
-            $html .='<h5 class="order-status">Giao hàng thành công</h5>';
-            return $html;
-        }
-        return '<h5 class="order-status">Đã hoàn tiền</h5>';
     }
 
     public static function product($product,$price =0,$price_sale=0){
@@ -143,24 +126,22 @@ class Helper{
     }
     
     public static function order_button($order,$status =0){
-        $html ='';{
-            if($status ==0){
+        $html ='';
+        switch($status){
+            case "0":
                 $html .= ' <a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Giao hàng</a> ';
                 return $html;
-            }
-            if($status ==1){
+            case "1":
                 $html .= ' <a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Hoàn thành đơn hàng</a> ';
                 return $html;
-            }
-            if($status ==2){
+            case "2":
                 $html .='<a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Hoàn tiền</a>';
                 return $html;
-            }
-            if($status >= 3 ){
+            default:
                 $html.='<a class="btn btn-primary btn-lg"> Đã hoàn tiền</a>';
                 return $html;
-            }
         }
+
     }
 
 }

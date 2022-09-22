@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Order Confirm</title>
+    <title>Thông tin đơn hàng {{ $order -> id}}</title>
 </head>
 <body>
     <section>
         <div class="container" style="width:100%;display:flex;justify-content: center;">
             <div class="mid-table finish" style="padding:10px 20px;border:1px solid black;">
-                <h4><i class="fa fa-check" style="color:#55FF2E;margin-bottom:50px;"></i> Mã đơn hàng của bạn là: <span>{{ session('order') }}</span></h4>
+                <h4><i class="fa fa-check" style="color:#55FF2E;margin-bottom:50px;"></i> Mã đơn hàng của bạn là: <span>{{ $order -> id}}</span></h4>
                 <div class="user_info">
                     <div  style="text-align:left; margin-bottom:20px;" >
                         <div class="row" style="display:flex;">
