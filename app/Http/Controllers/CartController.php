@@ -42,6 +42,7 @@ class CartController extends Controller
             return view('block.cart',[
                 'title'=> 'Giỏ hàng',
                 'carts' =>  $this->cartServices->get(),
+                'voucher' => Cart::select('voucher')->where('user_id',Auth::id())->first(),
             ]);
         }
         else{
@@ -165,6 +166,7 @@ class CartController extends Controller
                     'users' => $this->userServices->get(),
                     'carts' => $this->cartServices->get(),
                     'cartid' => $this->cartServices->getCart(),
+                    'voucher' => Cart::select('voucher')->where('user_id',Auth::id())->first(),
                     'citys' => Cities::all(),
                 ]);
             }
@@ -225,6 +227,23 @@ class CartController extends Controller
         Session::forget('carts');
         Session::put('order',$order->id);
         return redirect('/finish');
+    }
+
+    public function use_voucher(Request $request){
+        $output= '';
+        $voucher = Voucher::where('voucher_code',$request->voucher)->firstOrFail();
+        if($voucher){
+            $output.=  ' <span>'.number_format($voucher->discount,0,',',',').'đ<span>' ;
+            if(Auth::check()){
+                Cart::where('user_id',Auth::id())->update(['voucher'=>$voucher->discount]);
+            }
+        }
+        else{
+            Alert::warning('voucher không đúng', 'Warning Message');
+        }
+       
+        return response()->json(['result'=> $output]);
+
     }
 
 }

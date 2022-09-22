@@ -21,6 +21,7 @@
                         <h5><strong>{{ $order->email }}</strong></h5>
                         <h6>{{ $order->address}}</h6>
                         <h6>0{{ $order->phone}}</h6>
+                        <h4>Tổng tiền {{number_format($order->total,0,',',',')}} đ</h4>
                     </div>
                 </div>
                 <div class="shopping__cart__table">
@@ -39,10 +40,10 @@
                                     <td> <img src=" {{ $detail -> thumb}}" style="width:100px"></td>
                                     <td>{{ $detail -> product_name }}</td>
                                     <td>{{ $detail -> quantity}}</td>
-                                    <td>{{ $detail -> price}} đ</td>
+                                    <td>{{ number_format($detail -> price,0,',',','}} đ</td>
                                 </tr>
                             @endforeach
-                        </tbody>
+                        </tbody>s
                     </table>
                 </div>
             </div>

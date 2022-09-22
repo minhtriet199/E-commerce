@@ -410,5 +410,24 @@ $(document).ready(function(){
             }
         })
     });
+
+    $('#voucher-btn').click(function(){
+        const voucher =$('input[name="voucher_code"]').val();
+        const token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            type: 'post',
+            dataType: 'JSON',
+            url:'/use-voucher',
+            data:{
+                voucher:voucher,
+                token:token,
+            },
+            success:function(data){
+                console.log(data);
+                $('#discount').html(data.result);
+                $("#cast").load(location.href + " #cast");
+            }
+        })
+    });
 });
 

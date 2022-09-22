@@ -73,10 +73,13 @@
                                 </ul>
                                 <ul class="checkout__total__all">
                                     <li>Tạm tính <span>{{ number_format($total,0,',','.')}} đ</span></li>
-                                    
+                                    <li id="Sales">Giảm giá
+                                        <span id="discount">{{$voucher->voucher}}</span>
+                                    </li>
+                                    @php $maintotal = $total - $voucher->voucher @endphp
                                     <li>Tiền vận chuyển <span>0</span></li>
-                                    <li>Tổng tiền <span>{{ number_format($total,0,',','.')}} đ</span></li>
-                                    <input type="hidden" name="total" value="{{ $total }}">
+                                    <li>Tổng tiền<span>{{ number_format($maintotal,0,',','.')}} đ</span></li>
+                                    <input type="hidden" name="total" value="{{ $maintotal }}">
                                 </ul>
                                 <button type="submit" class="site-btn">Thanh toán</button>
                             </div>

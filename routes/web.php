@@ -117,12 +117,13 @@ Route::get('view-cart',[CartController::class,'index']);
 
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
-Route::get('use-voucher',[CartController::class,'use_voucher']);
+
+Route::post('use-voucher',[CartController::class,'use_voucher']);
+
 Route::get('checkout',[CartController::class,'checkout']);
 Route::post('select-delivery',[ShippingController::class,'select_delivery']);
 
 Route::post('checkout',[CartController::class,'place_order']);
-
 Route::get('finish',[OrderController::class,'show']);
 
 Route::middleware(['auth'])->group(function (){
