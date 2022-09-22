@@ -10,7 +10,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('command:daily')->Daily();
+        $schedule->command('command:daily')->withoutOverlapping()->dailyAt('22:00');
     }
 
     protected function commands()

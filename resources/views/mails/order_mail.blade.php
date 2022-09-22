@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Order Confirm</title>
+    <title>Thông tin đơn hàng {{ $order -> id}}</title>
 </head>
 <body>
     <section>

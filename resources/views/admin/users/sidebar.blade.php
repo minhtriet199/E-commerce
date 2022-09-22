@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="position:fixed">
     <!-- Brand Logo -->
     <a href="/admin" class="brand-link">
       <img src="{{ url('assets/admin/img/mini-logo.png')}}" class="brand-image " style="opacity: .8">
