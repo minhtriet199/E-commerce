@@ -307,7 +307,6 @@ $(document).ready(function() {
 
 });
 
-
 $(document).ready(function(){
     
     $(".quantity-btn").change(function (e) {
