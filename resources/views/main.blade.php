@@ -10,7 +10,9 @@
 	@include('block.header')
 	<button id="btnScrolltop" class="btn-top" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
 	
-	@yield('content')
+	<div class="body">
+		@yield('content')
+	</div>
 
 	@include('block.footer')
 
