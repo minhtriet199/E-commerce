@@ -82,40 +82,64 @@ Route::group(['middleware' => ['CheckAdmin']],function (){
         });
     }); 
 });
+//Home page
 Route::get('/',[MainController::class,'index']);
-Route::get('/search',[MainController::class,'search']);
 Route::post('/services/load-product',[MainController::class,'loadProduct']);
+
+//Search
+Route::get('/search',[MainController::class,'search']);
+
+//Sign up
 Route::get('user/signup',[UserController::class,'signup']);
 Route::post('user/signup/create',[UserController::class,'create']);
+
+//Login
 Route::get('user/login',[UserController::class,'login']);
 Route::post('user/login/store',[UserController::class,'store']);
+
+//Forget pass 
 Route::get('user/reset',[UserController::class,'reset']);
 Route::post('user/link-reset',[UserController::class,'sendResetLink']);
+//Change pass
 Route::get('user/change_pass/{token}',[UserController::class,'passwordForm']);
 Route::post('user/change_pass',[UserController::class,'change_pass']);
+
+//Api login
 Route::get('login/google', [UserController::class, 'loginGoogle']);
 Route::get('login/google/callback', [UserController::class, 'googleCallback']);
 Route::get('login/facebook',[UserController::class,'loginFacebook']);
 Route::get('login/facebook/callback',[UserController::class,'facebookCallback']);
+
+//Shop page
 Route::get('shop/{slug}', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);
+
+//Product detail page
 Route::get('product/{slug}',[ProductsController::class,'index']);
 Route::get('fetchcmt',[CommentController::class,'fetchcmt']);
 Route::post('add-cart',[CartController::class,'insert']);
+
+//Cart page
 Route::get('view-cart',[CartController::class,'index']);
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
 Route::post('use-voucher',[CartController::class,'use_voucher']);
+
+//Check out
 Route::get('checkout',[CartController::class,'checkout']);
 Route::post('select-delivery',[ShippingController::class,'select_delivery']);
 Route::post('checkout',[CartController::class,'place_order']);
+//View purchase
 Route::get('finish',[OrderController::class,'show']);
+
+//User login
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){       
         Route::get('/logouts',[UserController::class,'logouts']);
         Route::get('cart',[CartController::class,'userStore']);
         Route::patch('update-carts',[CartController::class,'cart_update']);
         Route::post('comment',[CommentController::class,'store']);
+        //User profile
         Route::prefix('account')->group(function(){
             Route::get('profile',[UserController::class,'index']);
             Route::post('profile/update',[UserController::class,'update']);

@@ -1,6 +1,7 @@
 @extends('main')
 
 @section('content')
+    <!-- Shop Details Section Begin -->
     <section class="shop-details">
         <div class="product__details__pic">
             <div class="container">
@@ -102,12 +103,14 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content" style="text-align:center">
+                                        <!-- Use this to convert HTML -->
                                         {!! html_entity_decode($products ->content) !!}
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tabs-6" role="tabpanel">
                                     @if(Auth::check())
                                         <div style="width:100%;text-align:center;padding-top:50px;">
+                                            <!-- Comment Ajax at the bottom page -->
                                             <form action="">
                                                 <input type="hidden" name="product_id" value="{{ $products->id }}">
                                                 <textarea name="content" id="content" cols="30" rows="5" style="width:100%;padding:20px" placeholder="Nhập comment"></textarea>
@@ -124,7 +127,7 @@
                                     @endif
                                     <div id="comment">
                                         <div id="comment-section">
-
+                                        <!-- Using Fetchcomment at the bottom page-->
                                         </div>   
                                     </div>
                                 </div>
@@ -155,10 +158,25 @@
             </div>
         </div>
     </section>
+    <!-- Related Section End -->
 @endsection
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        function fetchcmt(){
+            const product_id = $('#product_id').val();
+            $.ajax({
+                type: 'get',
+                url: '/fetchcmt/',
+                data:{product_id:product_id},
+                success: function(data) {
+                    $('#comment-section').html(data.result);
+                },
+            });
+        }
+        fetchcmt();
+
         $('#btn-comment').click(function(e){
             const user_id=$('input[name="user_id"]').val();
             const product_id =$('input[name="product_id"]').val();
@@ -181,17 +199,6 @@
             });
         });
 
-        function fetchcmt(){
-            const product_id = $('#product_id').val();
-            $.ajax({
-                type: 'get',
-                url: '/fetchcmt/',
-                data:{product_id:product_id},
-                success: function(data) {
-                    $('#comment-section').html(data.result);
-                },
-            });
-        }
-        fetchcmt();
+      
     });
 </script>
