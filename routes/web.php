@@ -75,17 +75,13 @@ Route::group(['middleware' => ['CheckAdmin']],function (){
         });
         Route::prefix('order')->group(function(){
             Route::get('list',[AdminOrderController::class,'index']);
-
             Route::get('fetchorder',[AdminOrderController::class,'fetchorder']);
-
             Route::get('list/{status}',[AdminOrderController::class,'list_status']);
             Route::get('edit/{id}',[AdminOrderController::class,'show']);
             Route::post('update',[AdminOrderController::class,'update']);
         });
     }); 
 });
-
-
 Route::get('/',[MainController::class,'index']);
 Route::get('/search',[MainController::class,'search']);
 Route::post('/services/load-product',[MainController::class,'loadProduct']);
@@ -97,35 +93,23 @@ Route::get('user/reset',[UserController::class,'reset']);
 Route::post('user/link-reset',[UserController::class,'sendResetLink']);
 Route::get('user/change_pass/{token}',[UserController::class,'passwordForm']);
 Route::post('user/change_pass',[UserController::class,'change_pass']);
-//Đăng nhập google
 Route::get('login/google', [UserController::class, 'loginGoogle']);
 Route::get('login/google/callback', [UserController::class, 'googleCallback']);
-//hết google
-//Đăng nhập facebook
 Route::get('login/facebook',[UserController::class,'loginFacebook']);
 Route::get('login/facebook/callback',[UserController::class,'facebookCallback']);
-//Hết facebook
 Route::get('shop/{slug}', [MenuController::class,'index']);
 Route::get('shop',[MenuController::class,'show']);
 Route::get('product/{slug}',[ProductsController::class,'index']);
-
 Route::get('fetchcmt',[CommentController::class,'fetchcmt']);
-
 Route::post('add-cart',[CartController::class,'insert']);
-
 Route::get('view-cart',[CartController::class,'index']);
-
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
-
 Route::post('use-voucher',[CartController::class,'use_voucher']);
-
 Route::get('checkout',[CartController::class,'checkout']);
 Route::post('select-delivery',[ShippingController::class,'select_delivery']);
-
 Route::post('checkout',[CartController::class,'place_order']);
 Route::get('finish',[OrderController::class,'show']);
-
 Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){       
         Route::get('/logouts',[UserController::class,'logouts']);
