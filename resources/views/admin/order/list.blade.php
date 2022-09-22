@@ -33,7 +33,7 @@
             </tbody>
         </table>
         <div class="card-footer clearfix">
-
+    
         </div>
     </div>
 </div>

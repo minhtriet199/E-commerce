@@ -16,6 +16,7 @@ class Cart extends Model
         'id',
         'user_id',
         'user_name',
+        'voucher',
         'total',       
     ];
 
