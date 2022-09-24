@@ -67,7 +67,7 @@
                     <div class="row" id="product-by-price">
 
                     </div>
-                    <div class="row">
+                    <div class="row" id="paginate">
                         {!! $products->links() !!}
                     </div>
                 </div>
@@ -75,3 +75,4 @@
         </div>
     </section>
 @stop
+

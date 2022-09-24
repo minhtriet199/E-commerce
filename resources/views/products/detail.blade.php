@@ -81,7 +81,11 @@
                                         <input type="hidden" value="{{ $products -> thumb}}" name="product_thumb">
                                         {!! \App\Helpers\Helper::formprice($products,$products->price,$products->price_sale) !!}
                                     </div>
-                                    <input type="button" class="primary-btn" value="Thêm vào giỏ hàng" id="btn-cart">
+                                    @if($products->amount <= 0 )
+                                        <input type="button" class="primary-btn" value="Hết hàng">
+                                    @else
+                                        <input type="button" class="primary-btn" value="Thêm vào giỏ hàng" id="btn-cart">
+                                    @endif
                                     @csrf
                                 </form>
                             </div>

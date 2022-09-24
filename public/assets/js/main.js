@@ -435,7 +435,7 @@ $(document).ready(function(){
     $('.orderby-price').change(function(e){
         e.preventDefault();
         const url = (window.location).href;
-        var last_url = url.substring(url.lastIndexOf('/') + 1);
+        var last_url = url.substring(url.lastIndexOf('/') + 1).split('?')[0] ;
         const orderby = $('.orderby-price').find(':selected').val();
 
         $.ajax({
@@ -447,6 +447,7 @@ $(document).ready(function(){
             },
             success:function(data){
                 $('#product-by-price').html(data.result);
+                $('#paginate').hide();
                 $('#product-tab').hide();
             }
         })
