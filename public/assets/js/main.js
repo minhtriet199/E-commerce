@@ -434,13 +434,16 @@ $(document).ready(function(){
 
     $('.orderby-price').change(function(e){
         e.preventDefault();
+        const url = (window.location).href;
+        var last_url = url.substring(url.lastIndexOf('/') + 1);
         const orderby = $('.orderby-price').find(':selected').val();
-        
+
         $.ajax({
             url:'/orderby',
             method: 'POST',
             data:{
-                orderby:orderby
+                orderby:orderby,
+                url:last_url
             },
             success:function(data){
                 $('#product-by-price').html(data.result);

@@ -18,21 +18,21 @@ class MenuController extends Controller
 
     public function index(Request $request, $slug)
     {
-        $menu = $this->menuService->getSlug($slug);
-        $products = $this->menuService->getProduct($menu,$request);
-
-        return view('block.shop',[
-            'title' => $menu->name,
-            'products' =>$products,
-            'menu' =>$menu,
-            'menus' => $this->menuService->get()
-        ]);
-    }
-    public function show(){
-        return view('block.shop',[
-            'title' =>'Cửa hàng',
-            'menus'=>$this->menuService->get(),
-            'products' =>$this->productService->get()
-        ]);
+        if($slug == 'all'){
+            return view('block.shop',[
+                'title' =>'Cửa hàng',
+                'menus'=>$this->menuService->get(),
+                'products' =>$this->productService->get()
+            ]);
+        }
+        else{
+            $menu = $this->menuService->getSlug($slug);
+            return view('block.shop',[
+                'title' => $menu->name,
+                'products' =>$this->menuService->getProduct($menu,$request),
+                'menu' =>$menu,
+                'menus' => $this->menuService->get()
+            ]);
+        }
     }
 }

@@ -30,7 +30,7 @@
                                     <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__tags">
-                                                <a href="{{ url('/shop')}}">Tất cả</a>
+                                                <a href="{{ url('/shop/all')}}">Tất cả</a>
                                                 {!! \App\Helpers\Helper::menus($menus) !!}
                                             </div>
                                         </div>

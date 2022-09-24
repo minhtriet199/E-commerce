@@ -110,11 +110,10 @@ Route::get('login/facebook/callback',[UserController::class,'facebookCallback'])
 
 //Shop page
 Route::get('shop/{slug}', [MenuController::class,'index']);
-Route::get('shop',[MenuController::class,'show']);
+Route::post('/orderby',[ProductsController::class,'orderby']);
 
 //Product detail page
 Route::get('product/{slug}',[ProductsController::class,'index']);
-Route::post('/orderby',[ProductsController::class,'orderby']);
 Route::get('fetchcmt',[CommentController::class,'fetchcmt']);
 Route::post('add-cart',[CartController::class,'insert']);
 

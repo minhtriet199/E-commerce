@@ -11,7 +11,7 @@
                 <nav class="header__menu mobile-menu">
                     <ul>
                         <li><a href="/">Trang chủ</a></li>
-                        <li><a href="{{ url('/shop')}}">Cửa hàng</a>
+                        <li><a href="{{ url('/shop/all')}}">Cửa hàng</a>
                             <ul class="dropdown">
                                 <li>
                                     {!! $menusHtml !!}

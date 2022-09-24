@@ -7,6 +7,7 @@ use App\Http\Services\Product\ProductService;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
+use App\Models\Menus;
 use Carbon\carbon;
 
 class ProductsController extends Controller
@@ -31,10 +32,20 @@ class ProductsController extends Controller
     }
     public function orderby(Request $request){
         $output= '';
-        $products = Product::select('*')
-        ->addSelect(DB::raw('if(price_sale=0,price, price_sale) AS current_price'))
-        ->orderby('current_price', $request->orderby)
-        ->paginate(9);
+        if($request->url == 'all'){
+            $products = Product::select('*')
+            ->addSelect(DB::raw('if(price_sale=0,price, price_sale) AS current_price'))
+            ->orderby('current_price', $request->orderby)
+            ->paginate(9);
+        }
+        else{
+            $menu = Menus::where('slug',$request->url)->first();
+            $products = Product::select('*')
+            ->addSelect(DB::raw('if(price_sale=0,price, price_sale) AS current_price'))
+            ->where('menu_id',$menu->id)
+            ->orderby('current_price', $request->orderby)
+            ->paginate(9);
+        }
         foreach($products as $product){
             $output.= '
                 <div class="col-lg-4 col-md-6 col-sm-6">
