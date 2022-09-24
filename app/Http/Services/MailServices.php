@@ -12,5 +12,4 @@ class MailServices{
     public function sendOrderMail($order){
         Mail::to($order->email)->send(new OrderMail($order));
     }
-
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('voucher_id')->nullable();
-            $table->integer('status')->default('0');
+            $table->integer('status')->default('1');
             $table->integer('total');
             $table->string('username',255);
             $table->string('address',255);
