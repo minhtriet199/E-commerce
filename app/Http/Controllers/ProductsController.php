@@ -22,8 +22,8 @@ class ProductsController extends Controller
     public function index($slug)
     {
         Carbon::setLocale('vi');
-        $product = $this->productServices->show($slug);
         $more = $this->productServices->more($slug);
+        $product = $this->productServices->show($slug);
         return view('products.detail',[
             'title' => $product->name,
             'products' =>$product,
@@ -36,7 +36,7 @@ class ProductsController extends Controller
             $products = Product::select('*')
             ->addSelect(DB::raw('if(price_sale=0,price, price_sale) AS current_price'))
             ->orderby('current_price', $request->orderby)
-            ->paginate(9);
+            ->get();
         }
         else{
             $menu = Menus::where('slug',$request->url)->first();
@@ -44,7 +44,7 @@ class ProductsController extends Controller
             ->addSelect(DB::raw('if(price_sale=0,price, price_sale) AS current_price'))
             ->where('menu_id',$menu->id)
             ->orderby('current_price', $request->orderby)
-            ->paginate(9);
+            ->get();
         }
         foreach($products as $product){
             $output.= '
