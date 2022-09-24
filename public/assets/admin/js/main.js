@@ -183,10 +183,8 @@ $(document).ready(function(){
                 token,token
             },
             success: function(data){
-                fetchorder();
+                location.reload();
             }
         })
     });
-
-    
 });

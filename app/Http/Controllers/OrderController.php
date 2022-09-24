@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\Order\OrderService;
-
+use Session;
 use App\Mail\OrderMail;
 
 class OrderController extends Controller
@@ -25,6 +25,7 @@ class OrderController extends Controller
             'order' => $this->orderService->getOrder(),
             'details' => $this->orderService->getOrderDetail(),
         ]);
+        
     }
 
 }

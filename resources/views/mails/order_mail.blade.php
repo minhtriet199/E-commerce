@@ -40,7 +40,7 @@
                                     <td> <img src=" {{ $detail -> thumb}}" style="width:100px"></td>
                                     <td>{{ $detail -> product_name }}</td>
                                     <td>{{ $detail -> quantity}}</td>
-                                    <td>{{ number_format($detail -> price,0,',',','}} đ</td>
+                                    <td>{{ number_format($detail -> price,0,',',',')} đ</td>
                                 </tr>
                             @endforeach
                         </tbody>s

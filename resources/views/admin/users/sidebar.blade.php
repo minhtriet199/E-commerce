@@ -142,27 +142,27 @@
             </a>
             <ul class="nav nav-treeview" style="display: none;">
               <li class="nav-item">
-              <a href="/admin/order/list" class="nav-link">
+              <a href="/admin/order/list/0" class="nav-link">
                   <p>Quản lý đơn hàng</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/order/list/0" class="nav-link">
+                <a href="/admin/order/list/1" class="nav-link">
                   <p>Đơn đang chờ xử lý</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/order/list/1" class="nav-link">
+                <a href="/admin/order/list/2" class="nav-link">
                   <p>Đơn đang đang giao</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/order/list/2" class="nav-link">
+                <a href="/admin/order/list/3" class="nav-link">
                   <p>Đơn đang đã thành công</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/order/list/3" class="nav-link">
+                <a href="/admin/order/list/4" class="nav-link">
                   <p>Đơn đang hoàn tiền</p>
                 </a>
               </li>

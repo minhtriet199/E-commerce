@@ -63,15 +63,15 @@ class Helper{
     public static function orderStatus($status =0){
         $html= '';
         switch($status){
-            case "0":
+            case "1":
                 $html .='<h5 class="order-status">Đang chờ xác nhận</h5>';
                 return $html;
                 break;
-            case "1":
+            case "2":
                 $html .='<h5 class="order-status">Đang vận chuyển</h5>';
                 return $html;
                 break;
-            case "2":
+            case "3":
                 $html .='<h5 class="order-status">Giao hàng thành công</h5>';
                 return $html;
                 break;
@@ -128,13 +128,13 @@ class Helper{
     public static function order_button($order,$status =0){
         $html ='';
         switch($status){
-            case "0":
+            case "1":
                 $html .= ' <a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Giao hàng</a> ';
                 return $html;
-            case "1":
+            case "2":
                 $html .= ' <a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Hoàn thành đơn hàng</a> ';
                 return $html;
-            case "2":
+            case "3":
                 $html .='<a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Hoàn tiền</a>';
                 return $html;
             default:

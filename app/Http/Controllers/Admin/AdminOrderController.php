@@ -19,13 +19,24 @@ class AdminOrderController extends Controller
         $this->mailServices =$mailServices;
     }
 
-    public function index()
+    public function index($status)
     {
-        return view('admin.order.list',[
-            'title' => 'Quản lý đơn hàng',
-        ]);
+        if($status == 0){
+            return view('admin.order.list',[
+                'title' => 'Quản lý đơn hàng',
+                'orders' => Order::paginate(10),
+            ]);
+        }
+        else{
+            return view('admin.order.list',[
+                'title' => 'Quản lý đơn hàng',
+                'orders' => Order::where('status',$status)->paginate(10),
+            ]);
+        }
+       
     }
-
+    //not working
+    
     public function fetchorder(){
         $output= '';
         $orders = Order::orderBy('created_at','desc')
@@ -65,13 +76,6 @@ class AdminOrderController extends Controller
         }
         return response()->json([
             'error' => true
-        ]);
-    }
-
-    public function list_status($status){
-        return view('admin.order.show',[
-            'title' => 'Quản lý đơn hàng',
-            'orders' => Order::where('status',$status)->paginate(10),
         ]);
     }
 }

@@ -211,26 +211,6 @@ $.ajaxSetup({
 });
 
 
-function loadMore(){
-    const page= $('#page').val();
-    const trang=parseInt(page);
-    $.ajax({
-        type:'POST',
-        datatype:'JSON',
-        data: {page},
-        url: '/services/load-product',
-        success: function(result){
-            if(result.html !== ''){
-                $('#loadProduct').append(result.html);
-                $('#page').val(trang+1);
-            }
-            else{
-                $('#btn-loadmore').css('display','none');
-            }
-        }
-    })
-}
-
 
 
 
@@ -238,6 +218,7 @@ function loadMore(){
 $(document).ready(function() {
     //update user ajax
     $('#btn-update-user').click(function(e){
+        e.preventDefault();
         const user_id =$('input[name="user_id"]').val();
         const name = $('input[name="name"]').val();
         const phone =$('input[name="phone"]').val();
@@ -271,7 +252,26 @@ $(document).ready(function() {
         });
     });
 
-   
+   $('#loadmore').click(function(e){
+        e.preventDefault();
+        const page= $('#page').val();
+        const trang=parseInt(page);
+        $.ajax({
+            type:'POST',
+            datatype:'JSON',
+            data: {page},
+            url: '/services/load-product',
+            success: function(result){
+                if(result.html !== ''){
+                    $('#loadProduct').append(result.html);
+                    $('#page').val(trang+1);
+                }
+                else{
+                    $('#btn-loadmore').css('display','none');
+                }
+            }
+        });
+    });
 });
 
 
@@ -371,26 +371,26 @@ $(document).ready(function(){
                 $('#district').html(data);
             }
         });
-   });
+    });
    
-   $('#voucher-btn').click(function(e){
-        e.preventDefault();
-        const voucher_code = $('input[name="voucher_code"]').val();
-        const _token = $('meta[name="csrf-token"]').attr('content');
+    $('#voucher-btn').click(function(e){
+            e.preventDefault();
+            const voucher_code = $('input[name="voucher_code"]').val();
+            const _token = $('meta[name="csrf-token"]').attr('content');
 
-        $.ajax({
-            url: '/use-voucher',
-            method: 'get',
-            dataType:'json',
-            data: {
-                _token:_token,
-                voucher_code:voucher_code,
-            },
-            success: function(data){
-            }
-        })
+            $.ajax({
+                url: '/use-voucher',
+                method: 'get',
+                dataType:'json',
+                data: {
+                    _token:_token,
+                    voucher_code:voucher_code,
+                },
+                success: function(data){
+                }
+            })
 
-   });
+    });
    
     $('#search-box').keyup(function(){
         const search = $('input[name="search-box"]').val();
@@ -430,6 +430,23 @@ $(document).ready(function(){
     $('.btn-top').click(function(){
         $('html,body').animate({scrollTop : 0},360);
         return false;
+    });
+
+    $('.orderby-price').change(function(e){
+        e.preventDefault();
+        const orderby = $('.orderby-price').find(':selected').val();
+        
+        $.ajax({
+            url:'/orderby',
+            method: 'POST',
+            data:{
+                orderby:orderby
+            },
+            success:function(data){
+                $('#product-by-price').html(data.result);
+                $('#product-tab').hide();
+            }
+        })
     });
 });
 

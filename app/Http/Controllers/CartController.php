@@ -189,7 +189,6 @@ class CartController extends Controller
         $user = User::where('email', $data['email'])->firstOrFail();
         $order = Order::create([
             'user_id' => Auth::id(),
-            'status' => 0,
             'total' => $data['total'],
             'username' => $data['user_name'],
             'email' => $data['email'],

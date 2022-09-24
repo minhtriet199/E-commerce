@@ -57,10 +57,9 @@
                         <ul id="cast">
                             <li>Tạm tính <span>{{ number_format($total,0,',','.')}} đ</span></li>
                             <li id="Sales">Giảm giá
-                                <span id="discount">{{$voucher->voucher}}</span>
+                                <span id="discount"></span>
                             </li>
-                            @php $maintotal = $total - $voucher->voucher @endphp
-                            <li>Tổng tiền<span>{{ number_format($maintotal,0,',','.')}} đ</span></li>
+                            <li>Tổng tiền<span>{{ number_format($total,0,',','.')}} đ</span></li>
                         </ul>
                     <a href="{{ url('/checkout') }}" class="primary-btn">THANH TOÁN</a>
                 </div>

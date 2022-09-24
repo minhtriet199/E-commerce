@@ -74,9 +74,7 @@ Route::group(['middleware' => ['CheckAdmin']],function (){
             Route::DELETE('destroy',[SliderController::class,'destroy']);
         });
         Route::prefix('order')->group(function(){
-            Route::get('list',[AdminOrderController::class,'index']);
-            Route::get('fetchorder',[AdminOrderController::class,'fetchorder']);
-            Route::get('list/{status}',[AdminOrderController::class,'list_status']);
+            Route::get('list/{status}',[AdminOrderController::class,'index']);
             Route::get('edit/{id}',[AdminOrderController::class,'show']);
             Route::post('update',[AdminOrderController::class,'update']);
         });
@@ -116,6 +114,7 @@ Route::get('shop',[MenuController::class,'show']);
 
 //Product detail page
 Route::get('product/{slug}',[ProductsController::class,'index']);
+Route::post('/orderby',[ProductsController::class,'orderby']);
 Route::get('fetchcmt',[CommentController::class,'fetchcmt']);
 Route::post('add-cart',[CartController::class,'insert']);
 
@@ -127,7 +126,7 @@ Route::post('use-voucher',[CartController::class,'use_voucher']);
 
 //Check out
 Route::get('checkout',[CartController::class,'checkout']);
-Route::post('select-delivery',[ShippingController::class,'select_delivery']);
+Route::post('select-delivery',[ShippingController::class,'select_delivery']); // not working
 Route::post('checkout',[CartController::class,'place_order']);
 //View purchase
 Route::get('finish',[OrderController::class,'show']);

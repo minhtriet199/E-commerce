@@ -31,7 +31,7 @@
 			
 			<div class="row button-more " id="btn-loadmore">
 				<input type="hidden" value="1" id="page">
-				<a onclick="loadMore()"> Xem thêm</a>
+				<a id="loadmore"> Xem thêm</a>
 			</div>
 		</div>
 	</section>
