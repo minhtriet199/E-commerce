@@ -21,7 +21,6 @@ class UserService
     }
 
     public function insert($request){
-
         try{
             $request->except('_token');
             $user =User::create([
