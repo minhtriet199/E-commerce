@@ -295,13 +295,12 @@ $(document).ready(function() {
                 product_name:product_name,
                 product_thumb:product_thumb,
             },
-            success:function(data){
+            success:function(){
                 Swal.fire({
                     type: 'success',
                     title: 'Thêm giỏ hàng thành công',
                 });
             }
-
         });
     });
     
@@ -312,21 +311,20 @@ $(document).ready(function(){
     
     $(".quantity-btn").change(function (e) {
         e.preventDefault();
-        const ele = $(this);
-        const qty = $('input[name="product_qty"]').val();
-        const _token = $('meta[name="csrf-token"]').attr('content');
+        const ele = $(this).parents("tr").attr("data-id");
+        const quantity = $(this).closest('input[name="product_qty"]').val();
+        const token = $('meta[name="csrf-token"]').attr('content');
         
         $.ajax({
             url: '/update-cart',
-            method: "patch",
+            method: 'patch',
             data: {
-                _token: $('meta[name="csrf-token"]').attr('content'), 
-                id: ele.parents("tr").attr("data-id"), 
-                quantity: qty,
-                _token:_token,
+                token: token, 
+                id: ele, 
+                quantity: quantity,
             },
-            success: function (response) {
-               location.reload();
+            success:function(){
+                location.reload();
             }
         });
     });
@@ -335,11 +333,12 @@ $(document).ready(function(){
         e.preventDefault();
         const ele = $(this);
         const id = ele.parents("tr").attr("data-id");
+        const token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
             url: '/remove-cart',
             method: "DELETE",
             data: {
-                _token: $('meta[name="csrf-token"]').attr('content'), 
+                token: token, 
                 id: id, 
             },
             success: function (response) {

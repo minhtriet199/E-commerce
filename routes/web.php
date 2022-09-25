@@ -121,7 +121,7 @@ Route::post('add-cart',[CartController::class,'insert']);
 Route::get('view-cart',[CartController::class,'index']);
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
-Route::post('use-voucher',[CartController::class,'use_voucher']);
+Route::post('use-voucher',[CartController::class,'use_voucher']); // still a mess
 
 //Check out
 Route::get('checkout',[CartController::class,'checkout']);
