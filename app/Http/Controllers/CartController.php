@@ -131,7 +131,6 @@ class CartController extends Controller
                 $carts = Cart::where('user_id',Auth::id())->first();
                 $item = Cart_item::where('cart_id',$carts->id)->where('product_id',$request->id)
                 ->update(['quantity' => $request->quantity]);
-                return response()->json(['data'=>$item]);
             }
             else{
                 $carts = Session::get('carts',[]);

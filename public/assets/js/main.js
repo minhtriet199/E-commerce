@@ -295,13 +295,12 @@ $(document).ready(function() {
                 product_name:product_name,
                 product_thumb:product_thumb,
             },
-            success:function(data){
+            success:function(){
                 Swal.fire({
                     type: 'success',
                     title: 'Thêm giỏ hàng thành công',
                 });
             }
-
         });
     });
     
@@ -313,19 +312,19 @@ $(document).ready(function(){
     $(".quantity-btn").change(function (e) {
         e.preventDefault();
         const ele = $(this).parents("tr").attr("data-id");
-        const qty = $('input[name="product_qty"]').val();
+        const quantity = $(this).closest('input[name="product_qty"]').val();
         const token = $('meta[name="csrf-token"]').attr('content');
         
         $.ajax({
             url: '/update-cart',
-            method: "patch",
+            method: 'patch',
             data: {
                 token: token, 
                 id: ele, 
-                quantity: qty,
+                quantity: quantity,
             },
-            success: function (response) {
-               location.reload();
+            success:function(){
+                location.reload();
             }
         });
     });

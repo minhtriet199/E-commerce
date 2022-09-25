@@ -29,7 +29,7 @@
                                         <td class="quantity__item">
                                             <div class="quantity">
                                                 <div class="pro-qty-2" data-th="Quantity">
-                                                    <input type="number" value="{{ $cart->quantity }}" class="quantity quantity-btn" name="product_qty" > 
+                                                    <input type="number" value="{{ $cart->quantity }}" class="quantity quantity-btn" name="product_qty"> 
                                                 </div>
                                             </div>
                                         </td>
