@@ -127,10 +127,17 @@ class CartController extends Controller
 
     public function update(Request $request){
         if($request->id && $request->quantity){
-            $carts = Session::get('carts',[]);
-            $carts[$request->id]['quantity'] = $request->quantity;
-            session()->put('carts', $carts);
-            session()->flash('success', 'Cart updated successfully');
+            if(Auth::check()){
+                $carts = Cart::where('user_id',Auth::id())->first();
+                $item = Cart_item::where('cart_id',$carts->id)->where('product_id',$request->id)
+                ->update(['quantity' => $request->quantity]);
+                return response()->json(['data'=>$item]);
+            }
+            else{
+                $carts = Session::get('carts',[]);
+                $carts[$request->id]['quantity'] = $request->quantity;
+                session()->put('carts', $carts);
+            }
         }
     }
 

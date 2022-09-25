@@ -312,18 +312,17 @@ $(document).ready(function(){
     
     $(".quantity-btn").change(function (e) {
         e.preventDefault();
-        const ele = $(this);
+        const ele = $(this).parents("tr").attr("data-id");
         const qty = $('input[name="product_qty"]').val();
-        const _token = $('meta[name="csrf-token"]').attr('content');
+        const token = $('meta[name="csrf-token"]').attr('content');
         
         $.ajax({
             url: '/update-cart',
             method: "patch",
             data: {
-                _token: $('meta[name="csrf-token"]').attr('content'), 
-                id: ele.parents("tr").attr("data-id"), 
+                token: token, 
+                id: ele, 
                 quantity: qty,
-                _token:_token,
             },
             success: function (response) {
                location.reload();
@@ -335,11 +334,12 @@ $(document).ready(function(){
         e.preventDefault();
         const ele = $(this);
         const id = ele.parents("tr").attr("data-id");
+        const token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
             url: '/remove-cart',
             method: "DELETE",
             data: {
-                _token: $('meta[name="csrf-token"]').attr('content'), 
+                token: token, 
                 id: id, 
             },
             success: function (response) {
