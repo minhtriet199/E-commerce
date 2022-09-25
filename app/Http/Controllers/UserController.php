@@ -74,8 +74,8 @@ class UserController extends Controller
     }
 
     public function facebookCallback(Request $request){
-        $facebookUser = Socialite::driver('facebook')->stateless()->user();
-        $findUser = User::where('email', $facebookUser->email)->first();
+        $User = Socialite::driver('facebook')->stateless()->user();
+        $findUser = User::where('email', $User->email)->first();
         
         if($findUser){
             Auth::login($findUser, true);
@@ -84,27 +84,23 @@ class UserController extends Controller
         }
         else{
             $user = User::updateOrCreate([
-                'facebook_id' => $facebookUser->id,
+                'facebook_id' => $User->id,
             ], [
-                'name' => $facebookUser->name,
-                'email' => $facebookUser->email,
-                'facebook_token' => $facebookUser->token,
-                'facebook_refresh_token' => $facebookUser->refreshToken,
+                'name' => $User->name,
+                'email' => $User->email,
                 'password'=> Hash::make(Str::random(11)),
             ]);
             User_attribute::create([
                 'id' => $user->id,
                 'user_id' => $user->id,
             ]);
-        }
-        
+        }   
         Auth::login($user);
         $this->userStore();
         return redirect('user/account/profile/');
         
     }
     //end facebook
-
     //google login
     public function loginGoogle(){
         return Socialite::driver('google')
@@ -112,22 +108,25 @@ class UserController extends Controller
     }
 
     public function googleCallback(Request $request){
-        $googleUser = Socialite::driver('google')->stateless()->user();
-        $findUser = User::where('email', $googleUser->email)->first();
-        
+        $User = Socialite::driver('google')->stateless()->user();
+        $findUser = User::where('email', $User->email)->first();
         if($findUser){
             Auth::login($findUser, true);
+            if($findUser->email_verified_at == null){
+                User::where('id',$findUser->id)
+                ->update(['email_verified_at' => now(),]);
+            }
+            
             $this->userStore();
             return redirect(url('user/account/profile/'));
         }
         else{
             $user = User::updateOrCreate([
-                'google_id' => $googleUser->id,
+                'google_id' => $User->id,
             ], [
-                'name' => $googleUser->name,
-                'email' => $googleUser->email,
-                'google_token' => $googleUser->token,
-                'google_refresh_token' => $googleUser->refreshToken,
+                'name' => $User->name,
+                'email' => $User->email,
+                'email_verified_at' => now(),
                 'password'=> Hash::make(Str::random(11)),
             ]);
             User_attribute::create([
@@ -135,11 +134,9 @@ class UserController extends Controller
                 'user_id' => $user->id,
             ]);
         }
-
         Auth::login($user);
         $this->userStore();
-        return redirect('user/account/profile/');
-        
+        return redirect('user/account/profile/');  
     }
     //end google
 
