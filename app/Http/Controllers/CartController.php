@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
-
-
 use App\Http\Services\CartServices;
 use App\Http\Services\User\UserService;
 use App\Http\Services\MailServices;
