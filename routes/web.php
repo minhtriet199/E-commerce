@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Admin\RevenueController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductsController;
@@ -77,7 +78,10 @@ Route::middleware(['auth_admin'])->group(function (){
                     Route::post('edit/{id}',[SliderController::class,'update']);
                     Route::DELETE('destroy',[SliderController::class,'destroy']);
                 });
+                Route::prefix('account')->group(function(){
+                    Route::get('list',[AdminUserController::class,'index']);
 
+                });
             });
             Route::prefix('order')->group(function(){
                 Route::get('list/{status}',[AdminOrderController::class,'index']);
@@ -151,7 +155,6 @@ Route::middleware(['auth'])->group(function (){
         });
     });
 });
-
-Route::get('test-mail',[JobController::class,'processQueue']); //test queue
-
-
+Route::middleware(['throttle:mail'])->group(function () {
+    Route::get('test-mail',[JobController::class,'processQueue']); //test queue
+});

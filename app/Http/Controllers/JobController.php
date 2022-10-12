@@ -11,6 +11,6 @@ class JobController extends Controller
 {
     public function processQueue()
     {
-       sendMail::dispatch()->delay(now()->addMinutes(10));
+       sendMail::dispatch()->delay(Carbon::now()->addMinutes(10));
     }
 }

@@ -149,7 +149,17 @@ class Helper{
 
     }
 
-    public static function count_cart(){
-        
+    public static function user_status($role){
+        $html ='';
+        switch($role){
+            case "0" :
+                return $html = '<a class=" btn btn-primary">Khách hàng</a>';
+            case "1" :
+                return $html = '<a class=" btn btn-success">Admin</a>';
+            case "2" :
+                return $html = '<a class=" btn btn-warning">Owner</a>';
+            default :
+                return $html = '<a class=" btn btn-danger">Error</a>';
+        }
     }
 }

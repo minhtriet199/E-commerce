@@ -40,6 +40,12 @@
           </li>
 
           <li class="nav-item">
+            <a href="/admin/account/list" class="nav-link">
+              <i class="nav-icon fas fa-user"></i><p> Tài khoản</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-solid fa-bars"></i>
               <p>
