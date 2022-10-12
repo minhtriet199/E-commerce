@@ -23,6 +23,7 @@ use Carbon\Carbon;
 Use Alert;
 use App\Http\Requests\User\UserRequest;
 use App\Http\Requests\Password\PasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Notifications\ResetPassword;
 
 
@@ -165,26 +166,12 @@ class UserController extends Controller
         ]);
     }
 
-    public function sendResetLink(Request $request){
+    public function sendResetLink(ResetPasswordRequest $request){
         if(Auth::check()){
             if($request->email != Auth::user()->email){
                 Session()->flash( 'error','Email không đúng');
                 return redirect()->back();
             }
-            $request->validate([
-                'email' => 'required|email|exists:users,email'
-            ],[
-                'email.required' => 'Chưa nhập email',
-                'email.exists' => 'Email này không tồn tại trong hệ thống' 
-            ]);
-        }
-        else{
-            $request->validate([
-                'email' => 'required|email|exists:users,email'
-            ],[
-                'email.required' => 'Chưa nhập email',
-                'email.exists' => 'Email này không tồn tại trong hệ thống' 
-            ]);
         }
 
         $user = User::where('email', $request->email)->firstOrFail();

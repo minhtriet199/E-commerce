@@ -8,7 +8,9 @@
 <body > 
 	@include('sweetalert::alert')
 	@include('block.header')
-	<button id="btnScrolltop" class="btn-top" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
+	<button class="btn-top btnScrolltop" title="Go to top">
+		<i class="fa fa-angle-double-up"></i>
+	</button>
 	
 	<div class="body">
 		@yield('content')

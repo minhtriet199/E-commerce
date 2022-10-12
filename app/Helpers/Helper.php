@@ -4,6 +4,11 @@ namespace App\Helpers;
 
 use App\Models\Order;
 use App\Models\Order_detail;
+use App\Models\Cart;
+use App\Models\Cart_item;
+
+use Illuminate\Support\Facades\Auth;
+use Session;
 
 
 class Helper{
@@ -144,4 +149,7 @@ class Helper{
 
     }
 
+    public static function count_cart(){
+        
+    }
 }

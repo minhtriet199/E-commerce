@@ -24,6 +24,7 @@ class ProductsController extends Controller
         Carbon::setLocale('vi');
         $more = $this->productServices->more($slug);
         $product = $this->productServices->show($slug);
+        
         return view('products.detail',[
             'title' => $product->name,
             'products' =>$product,

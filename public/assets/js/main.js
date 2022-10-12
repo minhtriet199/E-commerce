@@ -431,6 +431,7 @@ $(document).ready(function(){
         return false;
     });
 
+
     $('.orderby-price').change(function(e){
         e.preventDefault();
         const url = (window.location).href;
@@ -452,4 +453,13 @@ $(document).ready(function(){
         })
     });
 });
+// $(document).ready(function(){
 
+//     $(window).scroll(function() {
+//         if ($(this).scrollTop() > 100) {
+//             $('.btnScrolltop').show();
+//         } else {
+//             $('.btnScrolltop').hide();
+//         }
+//     });
+// });

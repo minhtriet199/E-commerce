@@ -11,6 +11,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('command:daily')->withoutOverlapping()->dailyAt('23:50');
+        $schedule->command('command:monthly')->withoutOverlapping()->monthly();
     }
 
     protected function commands()

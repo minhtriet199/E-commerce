@@ -34,8 +34,7 @@ class MainController extends Controller
             'products' => $this->product->get(),
         ]);
     }
-    public function loadProduct(Request $request)
-    {
+    public function loadProduct(Request $request){
         $page = $request ->input('page',0);
         $result = $this->product->get($page);
 

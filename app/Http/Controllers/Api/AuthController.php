@@ -27,9 +27,6 @@ class AuthController extends Controller
         return response()->json(['token' => $token], 200);
     }
 
-    /**
-     * Login Req
-     */
     public function login(Request $request)
     {
         $data = [
