@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfAuthenticated
+class RedirectIfAuthenticated_admin
 {
 
     public function handle(Request $request, Closure $next, ...$guards)
@@ -16,7 +16,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect('/user/account/profile');
+                return redirect('/admin');
             }
         }
 

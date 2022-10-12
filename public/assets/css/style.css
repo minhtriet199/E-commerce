@@ -3915,7 +3915,7 @@ ol {
   	margin: 0;
 }
 
-#btnScrolltop{
+.btnScrolltop{
 	position: fixed;
 	bottom: 50px;
 	right: 50px;

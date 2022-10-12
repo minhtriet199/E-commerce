@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
+            $table->integer('voucher');
             $table->unsignedBigInteger('user_id');
             $table->string('user_name',255);
             $table->integer('total')->nullable();

@@ -4,6 +4,11 @@ namespace App\Helpers;
 
 use App\Models\Order;
 use App\Models\Order_detail;
+use App\Models\Cart;
+use App\Models\Cart_item;
+
+use Illuminate\Support\Facades\Auth;
+use Session;
 
 
 class Helper{
@@ -144,4 +149,17 @@ class Helper{
 
     }
 
+    public static function user_status($role){
+        $html ='';
+        switch($role){
+            case "0" :
+                return $html = '<a class=" btn btn-primary">Khách hàng</a>';
+            case "1" :
+                return $html = '<a class=" btn btn-success">Admin</a>';
+            case "2" :
+                return $html = '<a class=" btn btn-warning">Owner</a>';
+            default :
+                return $html = '<a class=" btn btn-danger">Error</a>';
+        }
+    }
 }

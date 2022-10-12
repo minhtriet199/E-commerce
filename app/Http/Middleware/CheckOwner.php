@@ -6,13 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckAdmin
+class CheckOwner
 {
+
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->role >= 1) {
+        if (Auth::user() &&  Auth::user()->role == 2) {
             return $next($request);
         }
-        return redirect('/admin/users/login')->with('error','Bạn không phải admin');
+        return redirect('/admin')->with('error','Bạn không có quyền');
     }
 }

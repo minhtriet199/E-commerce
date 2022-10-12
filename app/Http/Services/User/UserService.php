@@ -40,4 +40,7 @@ class UserService
         return true;
     }
 
+    public function get_all(){
+        return User::with('profile')->get();
+    }
 }

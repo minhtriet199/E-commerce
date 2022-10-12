@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Admin\RevenueController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductsController;
@@ -19,66 +20,76 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\JobController;
 
-Route::get( 'admin/users/login', [LoginController::class, 'index']);
+Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login_admin')->middleware('admin');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
 Route::get('/logout',[AdminMainController::class,'logout']);
 Route::post('select-delivery',[ShippingController::class,'select_delivery']);
-Route::group(['middleware' => ['CheckAdmin']],function (){
-    Route::prefix('admin')->group(function(){
-        Route::get( '/',[AdminMainController::class, 'index'] )->name('admin');
-        Route::get( 'main',[AdminMainController::class, 'index'] )->name('admin');
-        Route::get('create',[ShippingController::class,'shippinglist']);
-        Route::post('select-delivery',[ShippingController::class,'select_delivery']);
-        Route::post('insert-delivery',[ShippingController::class,'insert_delivery']);
-        Route::get('shipping',[ShippingController::class,'index']);
-        Route::post('update-fee',[ShippingController::class,'update_fee']);
-        
-        Route::prefix('revenue')->group(function(){
-            Route::get('month',[RevenueController::class,'index']);
-            Route::get('day',[RevenueController::class,'index2']);
-        });
-        Route::prefix('voucher')->group(function(){
-            Route::get('list',[VoucherController::class,'index']);
-            Route::get('add',[VoucherController::class,'create']);
-            Route::post('add',[VoucherController::class,'store']);
-            Route::post('edit',[VoucherController::class,'update']);
-        });    
+Route::middleware(['auth_admin'])->group(function (){
+    Route::group(['middleware' => ['CheckAdmin']],function (){
+        Route::prefix('admin')->group(function(){
+            Route::get( '/',[AdminMainController::class, 'index'] )->name('admin');
+            Route::get( 'main',[AdminMainController::class, 'index'] )->name('admin');
+            Route::get('create',[ShippingController::class,'shippinglist']);
+            Route::post('select-delivery',[ShippingController::class,'select_delivery']);
+            Route::post('insert-delivery',[ShippingController::class,'insert_delivery']);
+            Route::get('shipping',[ShippingController::class,'index']);
+            Route::post('update-fee',[ShippingController::class,'update_fee']);
+            
+            Route::prefix('revenue')->group(function(){
+                Route::get('month',[RevenueController::class,'index']);
+                Route::get('day',[RevenueController::class,'index2']);
+            });
+            Route::prefix('voucher')->group(function(){
+                Route::get('list',[VoucherController::class,'index']);
+                Route::get('add',[VoucherController::class,'create']);
+                Route::post('add',[VoucherController::class,'store']);
+                Route::post('edit',[VoucherController::class,'update']);
+            });    
 
-        Route::prefix('menus')->group(function(){
-            Route::get('list',[MenusController::class,'index']);
-            Route::get('add',[MenusController::class,'create']);
-            Route::post('add',[MenusController::class,'store']);
-            Route::get('edit/{id}',[MenusController::class,'show']);
-            Route::post('edit/{id}',[MenusController::class,'update']);
-            Route::DELETE('destroy',[MenusController::class,'destroy']);
-        });
-        Route::prefix('products')->group(function(){
-            Route::get('list',[ProductController::class,'index']);
-            Route::get('add',[ProductController::class,'create']);
-            Route::post('add',[ProductController::class,'store']);
-            Route::get('image',[ProductController::class,'products_image']);
-            Route::get('image/{id}',[ProductController::class,'product_image']);
+            Route::prefix('menus')->group(function(){
+                Route::get('list',[MenusController::class,'index']);
+                Route::get('add',[MenusController::class,'create']);
+                Route::post('add',[MenusController::class,'store']);
+                Route::get('edit/{id}',[MenusController::class,'show']);
+                Route::post('edit/{id}',[MenusController::class,'update']);
+                Route::DELETE('destroy',[MenusController::class,'destroy']);
+            });
+            Route::prefix('products')->group(function(){
+                Route::get('list',[ProductController::class,'index']);
+                Route::get('add',[ProductController::class,'create']);
+                Route::post('add',[ProductController::class,'store']);
+                Route::get('image',[ProductController::class,'products_image']);
+                Route::get('image/{id}',[ProductController::class,'product_image']);
 
-            Route::get('edit/{id}',[ProductController::class,'show']);
-            Route::post('edit/{id}',[ProductController::class,'update']);
-            Route::DELETE('destroy',[ProductController::class,'destroy']);
-        });
-        Route::post('upload/services',[UploadController::class,'store']);
-        Route::prefix('sliders')->group(function(){
-            Route::get('list',[SliderController::class,'index']);
-            Route::get('add',[SliderController::class,'create']);
-            Route::post('add',[SliderController::class,'store']);
-            Route::get('edit/{id}',[SliderController::class,'show']);
-            Route::post('edit/{id}',[SliderController::class,'update']);
-            Route::DELETE('destroy',[SliderController::class,'destroy']);
-        });
-        Route::prefix('order')->group(function(){
-            Route::get('list/{status}',[AdminOrderController::class,'index']);
-            Route::get('edit/{id}',[AdminOrderController::class,'show']);
-            Route::post('update',[AdminOrderController::class,'update']);
-        });
-    }); 
+                Route::get('edit/{id}',[ProductController::class,'show']);
+                Route::post('edit/{id}',[ProductController::class,'update']);
+                Route::DELETE('destroy',[ProductController::class,'destroy']);
+            });
+            Route::post('upload/services',[UploadController::class,'store']);
+            
+            Route::group(['middleware' => ['CheckOwner']],function (){
+                Route::prefix('sliders')->group(function(){
+                    Route::get('list',[SliderController::class,'index']);
+                    Route::get('add',[SliderController::class,'create']);
+                    Route::post('add',[SliderController::class,'store']);
+                    Route::get('edit/{id}',[SliderController::class,'show']);
+                    Route::post('edit/{id}',[SliderController::class,'update']);
+                    Route::DELETE('destroy',[SliderController::class,'destroy']);
+                });
+                Route::prefix('account')->group(function(){
+                    Route::get('list',[AdminUserController::class,'index']);
+
+                });
+            });
+            Route::prefix('order')->group(function(){
+                Route::get('list/{status}',[AdminOrderController::class,'index']);
+                Route::get('edit/{id}',[AdminOrderController::class,'show']);
+                Route::post('update',[AdminOrderController::class,'update']);
+            });
+        }); 
+    });
 });
 //Home page
 Route::get('/',[MainController::class,'index']);
@@ -92,7 +103,7 @@ Route::get('user/signup',[UserController::class,'signup']);
 Route::post('user/signup/create',[UserController::class,'create']);
 
 //Login
-Route::get('user/login',[UserController::class,'login']);
+Route::get('user/login',[UserController::class,'login'])->name('login')->middleware('guest');
 Route::post('user/login/store',[UserController::class,'store']);
 
 //Forget pass 
@@ -144,5 +155,6 @@ Route::middleware(['auth'])->group(function (){
         });
     });
 });
-
-
+Route::middleware(['throttle:mail'])->group(function () {
+    Route::get('test-mail',[JobController::class,'processQueue']); //test queue
+});

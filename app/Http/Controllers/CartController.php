@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Services\CartServices;
 use App\Http\Services\User\UserService;
 use App\Http\Services\MailServices;
+use App\jobs\sendMail;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Cart;
@@ -202,31 +203,19 @@ class CartController extends Controller
         if(Auth::check()){
             $carts = Cart_item::where('cart_id',$data['cart_id'])->get();
             foreach($carts as $cart){
-                $detail = order_detail::create([
-                    'order_id' => $order->id,
-                    'product_name' => $cart['name'],
-                    'thumb' => $cart['thumb'],
-                    'quantity'=> $cart['quantity'],
-                    'price' => $cart['price'],
-                ]);
+                $detail = $this->cartServices->insert_cart_detail($order,$cart);
                 $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
             }
             Cart::where('user_id',Auth::id())->delete();
         }
         else{
             foreach(Session::get('carts') as $product_id => $cart){
-                $detail = order_detail::create([
-                    'order_id' => $order->id,
-                    'product_name' => $cart['name'],
-                    'thumb' => $cart['thumb'],
-                    'quantity'=> $cart['quantity'],
-                    'price' => $cart['price'],
-                ]);
+                $detail = $this->cartServices->insert_cart_detail($order,$cart);
                 $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
             }
         }
         $this->mailServices->sendOrderMail($order);
-
+        // $sendmail = new sendMail($ordder);
         Session::forget('carts');
         Session::put('order',$order->id);
         return redirect('/finish');

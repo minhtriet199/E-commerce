@@ -18,11 +18,6 @@ class OrderMail extends Mailable
         $this ->order = $order;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
         return $this->subject('Order Confirm')->view('mails.order_mail',[

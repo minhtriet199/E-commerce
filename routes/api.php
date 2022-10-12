@@ -16,12 +16,13 @@ use App\Http\Controllers\Api\AuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+Route::middleware(['throttle:api'])->group(function () {
+    Route::post('login',[AuthController::class,'login']);
+    Route::get('products', [productController::class,'index']);
+    Route::post('products/create',[productController::class,'store']);
+    Route::get('products/show/{id}', [productController::class,'show']);
+    Route::put('products/update/{id}',[productController::class,'update']);
+    Route::delete('products/delete/{id}',[productController::class,'destroy']);
+});
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     Route::get('get-user', [PassportAuthController::class, 'userInfo']);
-// });
 
-Route::get('products', [productController::class,'index']);
-Route::get('user', [userController::class,'index']);
