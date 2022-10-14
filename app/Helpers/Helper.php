@@ -34,56 +34,43 @@ class Helper{
     public static function formprice($Product,$price =0,$price_sale=0){
         $html ='';
         if($price_sale != 0) {
-            $html .='
+            return $html .='
                 <input type="hidden" value="'.$Product -> price_sale.'" name="product_price">
             ';
-            return $html;
         }
         if($price !=0 ) {
-            $html .='
+            return $html .='
                 <input type="hidden" value=" '.$Product -> price.' " name="product_price">
             ';
-            return $html;
         }
-    }
-    
+    } 
 
     public static function priceDetail($Product,$price =0,$price_sale=0){
         $html= '';
         if($price_sale != 0) {
-            $html .='
+            return  $html .='
                 <h3>'. number_format($Product->price_sale,0,',','.') .' đ<span> '. number_format($Product->price,0,',','.') .' đ</span></h3>
             ';
-            return $html;
         }
         if($price !=0 ) {
-            $html .='
+            return  $html .='
                 <h3>'. number_format($Product->price,0,',','.') .' đ </span></h3>
             ';
-            return $html;
         }
-        return '<a href="">lien he</a>';
+        else return $html='<a href="">lien he</a>';
     }
 
     public static function orderStatus($status =0){
         $html= '';
         switch($status){
             case "1":
-                $html .='<h5 class="order-status">Đang chờ xác nhận</h5>';
-                return $html;
-                break;
+                return $html .='<h5 class="order-status">Đang chờ xác nhận</h5>';
             case "2":
-                $html .='<h5 class="order-status">Đang vận chuyển</h5>';
-                return $html;
-                break;
+                return $html .='<h5 class="order-status">Đang vận chuyển</h5>';
             case "3":
-                $html .='<h5 class="order-status">Giao hàng thành công</h5>';
-                return $html;
-                break;
+                return $html .='<h5 class="order-status">Giao hàng thành công</h5>';
             default: 
-                $html .='<h5 class="order-status">Đã hoàn tiền</h5>';
-                return $html;
-                break;
+                return $html .='<h5 class="order-status">Đã hoàn tiền</h5>';
         }
     }
 
@@ -134,17 +121,13 @@ class Helper{
         $html ='';
         switch($status){
             case "1":
-                $html .= ' <a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Giao hàng</a> ';
-                return $html;
+                return $html .= ' <a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Giao hàng</a> ';
             case "2":
-                $html .= ' <a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Hoàn thành đơn hàng</a> ';
-                return $html;
+                return   $html .= ' <a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Hoàn thành đơn hàng</a> ';
             case "3":
-                $html .='<a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Hoàn tiền</a>';
-                return $html;
+                return $html .='<a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Hoàn tiền</a>';
             default:
-                $html.='<a class="btn btn-primary btn-lg"> Đã hoàn tiền</a>';
-                return $html;
+                return   $html.='<a class="btn btn-primary btn-lg"> Đã hoàn tiền</a>';
         }
 
     }
@@ -160,6 +143,33 @@ class Helper{
                 return $html = '<a class=" btn btn-warning">Owner</a>';
             default :
                 return $html = '<a class=" btn btn-danger">Error</a>';
+        }
+    }
+
+    public static function countCart(){
+        $html ='';
+        if(Auth::check()){
+            $cart = Cart::where('user_id',Auth::id())->first();
+            $countCart = Cart_item::select('*')
+            ->where('cart_id',$cart['id'])
+            ->count();
+            return $html.= $countCart;
+        }
+        else {
+           
+        }
+    }
+    public static function check_comment($product_id,$user_id){
+        $order = Order::where('user_id',$user_id)->get();
+        $order_detail = Order_detail::where(
+            ['order_id',$order['id']],
+            ['product_id',$product_id],
+            )->get();
+        if($order_detail){
+            return $html .= 'mua';
+        }
+        else{
+            return $html .= 'chua';
         }
     }
 }

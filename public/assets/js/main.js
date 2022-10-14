@@ -223,8 +223,8 @@ $(document).ready(function() {
         const name = $('input[name="name"]').val();
         const phone =$('input[name="phone"]').val();
         const address =$('input[name="address"]').val();
-        const city =$('#city :selected').text();
-        const district =$('#district :selected').text();
+        const city =$('#city :selected').val();
+        const district =$('#district :selected').val();
 
         $.ajax({
             type: 'POST',
@@ -275,38 +275,6 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function() {
-
-    //them gio hang ajax
-    $('#btn-cart').click(function(e){
-        const product_id = $('input[name="product_id"]').val();
-        const product_name = $('input[name="product_name"]').val();
-        const product_price = $('input[name="product_price"]').val();
-        const product_quantity = $('input[name="product_quantity"]').val();
-        const product_thumb = $('input[name="product_thumb"]').val();
-        $.ajax({
-            type:'POST',
-            dataType:'JSON',
-            url:'/add-cart',
-            data:{
-                product_id : product_id,
-                product_price:product_price,
-                product_quantity:product_quantity,
-                product_name:product_name,
-                product_thumb:product_thumb,
-            },
-            success:function(){
-                Swal.fire({
-                    type: 'success',
-                    title: 'Thêm giỏ hàng thành công',
-                });
-            }
-        });
-    });
-    
-
-});
-
 $(document).ready(function(){
     
     $(".quantity-btn").change(function (e) {
@@ -354,9 +322,6 @@ $(document).ready(function(){
         const _token = $('meta[name="csrf-token"]').attr('content');
         const result = '';
 
-        if(action == 'city') {
-            result='district';
-        }
 
         $.ajax({
             url: '/select-delivery' ,
@@ -452,9 +417,62 @@ $(document).ready(function(){
             }
         })
     });
-});
-// $(document).ready(function(){
 
+    $('#btn-cart').click(function(e){
+        const product_id = $('input[name="product_id"]').val();
+        const product_name = $('input[name="product_name"]').val();
+        const product_price = $('input[name="product_price"]').val();
+        const product_quantity = $('input[name="product_quantity"]').val();
+        const product_thumb = $('input[name="product_thumb"]').val();
+        $.ajax({
+            type:'POST',
+            dataType:'JSON',
+            url:'/add-cart',
+            data:{
+                product_id : product_id,
+                product_price:product_price,
+                product_quantity:product_quantity,
+                product_name:product_name,
+                product_thumb:product_thumb,
+            },
+            success:function(){
+                Swal.fire({
+                    type: 'success',
+                    title: 'Thêm giỏ hàng thành công',
+                });
+            }
+        });
+    });
+
+    $('.add-wishlist').click(function(e){
+        const product_id = $('input[name="product_id"]').val();
+        const quantity = $('input[name="product_quantity"]').val();
+
+        $.ajax({
+            type:'POST',
+            dataType:'JSON',
+            url:'/add-wishlist',
+            data:{
+                product_id : product_id,
+                quantity : quantity,
+            },
+            success:function(result){
+               if(result.error !== true){
+                    window.location.replace("http://127.0.0.1:8000/user/login");    
+               }
+               else{
+                Swal.fire({
+                    type: 'success',
+                    title: 'Thêm danh sách ước thành công',
+                });
+               }
+            }
+        });
+    });
+});
+
+
+// $(document).ready(function(){
 //     $(window).scroll(function() {
 //         if ($(this).scrollTop() > 100) {
 //             $('.btnScrolltop').show();

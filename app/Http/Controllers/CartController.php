@@ -52,39 +52,39 @@ class CartController extends Controller
        
     }
 
-    public function userStore(){
-        if(Auth::check()){
-            $Cart = Cart::updateOrCreate([
-                'user_id' => Auth::id(),
-                'user_name' => Auth::user()->name,
-            ]);
-            if(Session::has('carts')){
-                foreach(Session::get('carts') as $product_id => $details){
-                    if(Cart_item::where('product_id',$details['product_id'])->first()){
-                        Cart_item::where('product_id',$details['product_id'])
-                            ->update([
-                                'cart_id' => $Cart->id,
-                                'product_id' => $details['product_id'],
-                                'name' => $details['name'],
-                                'thumb' => $details['thumb'],
-                                'quantity' => $details['quantity'],
-                                'price' => $details['price'],
-                            ]);
-                    }
-                    else{
-                        Cart_item::Create([
-                            'cart_id' => $Cart->id,
-                            'product_id' => $details['product_id'],
-                            'name' => $details['name'],
-                            'thumb' => $details['thumb'],
-                            'quantity' => $details['quantity'],
-                            'price' => $details['price'],
-                        ]);
-                    }
-                }
-            }
-        }
-    }
+    // public function userStore(){
+    //     if(Auth::check()){
+    //         $Cart = Cart::updateOrCreate([
+    //             'user_id' => Auth::id(),
+    //             'user_name' => Auth::user()->name,
+    //         ]);
+    //         if(Session::has('carts')){
+    //             foreach(Session::get('carts') as $product_id => $details){
+    //                 if(Cart_item::where('product_id',$details['product_id'])->first()){
+    //                     Cart_item::where('product_id',$details['product_id'])
+    //                         ->update([
+    //                             'cart_id' => $Cart->id,
+    //                             'product_id' => $details['product_id'],
+    //                             'name' => $details['name'],
+    //                             'thumb' => $details['thumb'],
+    //                             'quantity' => $details['quantity'],
+    //                             'price' => $details['price'],
+    //                         ]);
+    //                 }
+    //                 else{
+    //                     Cart_item::Create([
+    //                         'cart_id' => $Cart->id,
+    //                         'product_id' => $details['product_id'],
+    //                         'name' => $details['name'],
+    //                         'thumb' => $details['thumb'],
+    //                         'quantity' => $details['quantity'],
+    //                         'price' => $details['price'],
+    //                     ]);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     public function insert(Request $request){
         $product_id = $request->product_id;
@@ -116,7 +116,7 @@ class CartController extends Controller
         
         $request ->session()->put('carts', $carts);
         if(Auth::check()){
-            $this->userStore();
+            $this->cartServices->userStore();
         }
         $data = [];
         $data['carts'] = Arr::exists($carts,$product_id) ?  Session::get('carts') : [];
@@ -168,11 +168,12 @@ class CartController extends Controller
             if($Cart_item){
                 return view('block.user-checkout',[
                     'title' => 'Checkout',
-                    'users' => $this->userServices->get(),
+                    'account' => $this->userServices->get(),
                     'carts' => $this->cartServices->get(),
                     'cartid' => $this->cartServices->getCart(),
                     'voucher' => Cart::select('voucher')->where('user_id',Auth::id())->first(),
-                    'citys' => Cities::all(),
+                    'districts' => $this->userServices->user_district(Auth::id()),
+                    'cities' => Cities::all(),
                 ]);
             }
             else return redirect()->back();
@@ -181,7 +182,7 @@ class CartController extends Controller
             if(Session::has('carts')){
                 return view('block.checkout',[
                     'title' =>'checkout',
-                    'citys' => Cities::all(),
+                    'cities' => Cities::all(),
                 ]);
             }
             else return redirect()->back();
@@ -190,7 +191,7 @@ class CartController extends Controller
 
     public function place_order(Request $request){
         $data = $request->all();
-        $address = $data['address'] . " ".$data['district_id'] ." ". $data['city'];
+        $address = $data['address'] . " ".$data['district'] ." ". $data['city_id'];
         $user = User::where('email', $data['email'])->firstOrFail();
         $order = Order::create([
             'user_id' => Auth::id(),

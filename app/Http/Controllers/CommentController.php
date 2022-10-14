@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\facades\Auth;
 use App\Models\Product;
 use App\Models\Comment;
+use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
-    public function store(Request $request){
+    public function store(CommentRequest $request){
         $data = $request->all();
         $comment = Comment::create([
             'user_id' => Auth::id(),
@@ -26,7 +27,7 @@ class CommentController extends Controller
         ->with('users')
         ->orderBy('created_at','desc')
         ->get();
-        
+        // '.  \App\Helpers\Helper::check_comment($comment->product_id,$comment->user_id) .'       
         foreach($comments as $comment){
             $output.= '
                 <div class="product__details__tab__content">
@@ -37,6 +38,7 @@ class CommentController extends Controller
                         <div class="col-lg-11">
                             <div><span class="user_name">'. $comment->users->name.' </span> 
                             '. $comment->updated_at->diffForHumans().'
+                            
                             <div>
                                 '.$comment->Content.'
                             </div>

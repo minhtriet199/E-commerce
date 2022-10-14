@@ -7,7 +7,7 @@
         <div class="mid-table">
             <form id="validate-signup" action="{{ url('/user/signup/create') }}" method="POST" >
                 <h2>Đăng ký</h2>
-                @include('user.alert')
+                @include('block.alert')
                 <input type="text" name="name" placeholder="Họ và tên" id="input-formu" value="{!! old('name') !!}">
                 <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Email" id="input-formu" value="{!! old('email') !!}">
                 <input type="password" name="password" placeholder="Mật khẩu" id="input-formp">

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Services\User\UserService;
 use App\Http\Services\Order\OrderService;
 use App\Http\Services\Voucher\VoucherService;
+use App\Http\Services\CartServices;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Models\User_attribute;
@@ -32,21 +33,25 @@ class UserController extends Controller
 {
 
     protected $userServices;
+    protected $cartServices;
 
-    public function __construct(UserService $userServices,OrderService $orderService,VoucherService $voucherService){
+    public function __construct(UserService $userServices,OrderService $orderService,VoucherService $voucherService,CartServices $cartServices){
         $this ->userServices = $userServices;
-        $this ->orderService =$orderService;
+        $this ->orderService = $orderService;
         $this ->voucherService = $voucherService;
+        $this ->cartServices = $cartServices;
     }
 
     public function index(){
-        $city = Cities::all();
+        $user = $this->userServices->get();
+        $id = $user['id'];
         return view('user.account.profile',
         [
             'title'=> 'Tài khoản',
-            'users' => $this->userServices->get(),
-            'citys' => $city,
+            'account' => $user,
+            'cities' => $city = Cities::all(),
             'orders' => $this->orderService->get(),
+            'districts' => $this->userServices->user_district($id),
             'vouchers' => $this->voucherService->get(),
         ]);
     }
@@ -80,7 +85,8 @@ class UserController extends Controller
         
         if($findUser){
             Auth::login($findUser, true);
-            $this->userStore();
+            $this->cartServices->userStore();
+
             return redirect(url('user/account/profile/'));
         }
         else{
@@ -97,7 +103,8 @@ class UserController extends Controller
             ]);
         }   
         Auth::login($user);
-        $this->userStore();
+        $this->cartServices->userStore();
+
         return redirect('user/account/profile/');
         
     }
@@ -118,7 +125,8 @@ class UserController extends Controller
                 ->update(['email_verified_at' => now(),]);
             }
             
-            $this->userStore();
+            $this->cartServices->userStore();
+
             return redirect(url('user/account/profile/'));
         }
         else{
@@ -136,7 +144,8 @@ class UserController extends Controller
             ]);
         }
         Auth::login($user);
-        $this->userStore();
+        $this->cartServices->userStore();
+
         return redirect('user/account/profile/');  
     }
     //end google
@@ -152,7 +161,7 @@ class UserController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input( 'password'),
         ])){
-            $this->userStore();
+            $this->cartServices->userStore();
             return redirect(url('/user/account/profile/'));
         }
         Session()->flash( 'error','Email hoặc password không đúng');
@@ -218,38 +227,4 @@ class UserController extends Controller
         return response()->json($User_attribute);
     }
 
-
-    public function userStore(){
-        if(Auth::check()){
-            $Cart = Cart::updateOrCreate([
-                'user_id' => Auth::id(),
-                'user_name' => Auth::user()->name,
-            ]);
-            if(Session::has('carts')){
-                foreach(Session::get('carts') as $product_id => $details){
-                    if(Cart_item::where('product_id',$details['product_id'])->first()){
-                        Cart_item::where('product_id',$details['product_id'])
-                            ->update([
-                                'cart_id' => $Cart->id,
-                                'product_id' => $details['product_id'],
-                                'name' => $details['name'],
-                                'thumb' => $details['thumb'],
-                                'quantity' => $details['quantity'],
-                                'price' => $details['price'],
-                            ]);
-                    }
-                    else{
-                        Cart_item::Create([
-                            'cart_id' => $Cart->id,
-                            'product_id' => $details['product_id'],
-                            'name' => $details['name'],
-                            'thumb' => $details['thumb'],
-                            'quantity' => $details['quantity'],
-                            'price' => $details['price'],
-                        ]);
-                    }
-                }
-            }
-        }
-    }
 }

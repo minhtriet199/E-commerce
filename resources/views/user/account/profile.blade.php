@@ -35,33 +35,17 @@
                                     <div class="row"> 
                                         <div class="col-lg-6 ">
                                             <p>Họ tên</p>
-                                            <input type="text" name="name" value="{{ $users->profile->name}}">
+                                            <input type="text" name="name" value="{{ $account->profile->name}}">
                                         </div>
                                         <div class="col-lg-6 ">
                                             <p>Số điện thoại</p>
-                                            <input type="number" name="phone" value="0{{ $users->profile->phone}}">
+                                            <input type="number" name="phone" value="0{{ $account->profile->phone}}">
                                         </div>
                                     </div>
                                     <p>Địa chỉ</p>
-                                    <input type="text" name="address" value="{{ $users->profile->address}}">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <p>Thành phố</p>
-                                            <select name="city" id="city" class="custom-select rounded-0 choose city">
-                                                <option value="0"> {{ $users->profile->city}}</option>
-                                                @foreach($citys as $city)
-                                                    <option value="{{ $city->id}}"> {{ $city->name}} </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <p>Quận,Huyện</p>
-                                            <select  name="district_id" id="district" class="custom-select rounded-0 district">
-                                                <option value="0"> {{ $users->profile->district}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="user_id" value="{{$users->profile->id}}" data-id="{{$users->profile->id}}">
+                                    <input type="text" name="address" value="{{ $account->profile->address}}">
+                                    @include('block.cd')
+                                    <input type="hidden" name="user_id" value="{{$account->profile->id}}" data-id="{{$account->profile->id}}">
                                     <button type="button"  id="btn-update-user">Cập nhật</button>
                                     @csrf
                                 </form>
@@ -75,7 +59,7 @@
                             <h4>Đổi mật khẩu</h4>
                             <div class="account-table-content">
                                 <form id="update-password" action="{{ url('user/link-reset') }}" method="POST">
-                                    @include('user.alert')
+                                    @include('block.alert')
                                     <p>Nhập email</p>
                                     <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Email">
                                     <button type="submit" id="btn-update-user">Đổi mật khẩu</button>

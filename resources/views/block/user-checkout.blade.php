@@ -5,53 +5,29 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                @include('user.alert')
+                @include('block.alert')
                 <form method="post">
                     <div class="row">
                         <div class="col-lg-8 col-md-6" >
                             <h6 class="checkout__title">Thanh toán</h6>
                             <div class="checkout__input">
                                 <p>Họ tên<span>*</span></p>
-                                <input type="text" name="user_name" value="{{ $users->profile->name}}">
+                                <input type="text" name="user_name" value="{{ $account->profile->name}}">
                             </div>
                             <div class="checkout__input">
                                 <p>Email<span>*</span></p>
-                                <input type="text" name="email" value="{{ $users->email}}">
+                                <input type="text" name="email" value="{{ $account->email}}">
                             </div>
                             <div class="checkout__input">
                                 <p>Địa chỉ<span>*</span></p>
-                                <input type="text" placeholder="Địa chỉ..." class="checkout__input__add" name="address" value="{{ $users->profile->address}}">
+                                <input type="text" placeholder="Địa chỉ..." class="checkout__input__add" name="address" value="{{ $account->profile->address}}">
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Thành phố<span>*</span></p>
-                                            <select name="city" id="city" class="custom-select rounded-0 choose city">
-                                            @if( empty( $users->profile->city ))
-                                                <option> Chọn thành phố</option>
-                                                @foreach($citys as $city)
-                                                    <option value="{{ $city->name}}"> {{ $city->name}} </option>
-                                                @endforeach
-                                                
-                                            @else
-                                                <option value="{{ $users->profile->city}}"> {{ $users->profile->city}}</option>
-                                            @endif
-                                            </select>
-                                        
-                                    </div>
+                            @include('block.cd')
+                            <div class="form-group">
+                                <div class="checkout__input">
+                                    <p>Số điện thoại<span>*</span></p>
+                                    <input type="number" value="0{{ $account->profile->phone}}" name="phone">
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Quận<span>*</span></p>
-                                        <select  name="district_id" id="district" class="custom-select rounded-0 district">
-                                            <option value="{{ $users->profile->district}}"> {{ $users->profile->district}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="checkout__input">
-                                <p>Số điện thoại<span>*</span></p>
-                                <input type="number" value="0{{ $users->profile->phone}}" name="phone">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -61,14 +37,14 @@
                                 <input type="hidden" name="cart_id" value="{{ $cartid->id }}">
                                 <ul class="checkout__total__products">
                                     @php $total = 0 @endphp
-                                        @foreach($carts as $key => $cart)
-                                            @foreach($cart->cart_items as $item)
-                                                @php $total += $item['price'] * $item['quantity']  @endphp
-                                                <li style="font-weight:bold;'" class="row">
-                                                    <span class="col-lg-8">x{{ $item['quantity'] }} {{ $item['name'] }} đ</span>
-                                                    <span class="col-lg-4">{{ number_format($item['price'] * $item['quantity'],0,',','.')}} đ</span>
-                                                </li>
-                                            @endforeach
+                                    @foreach($carts as $key => $cart)
+                                        @foreach($cart->cart_items as $item)
+                                            @php $total += $item['price'] * $item['quantity']  @endphp
+                                            <li style="font-weight:bold;'" class="row">
+                                                <span class="col-lg-8">x{{ $item['quantity'] }} {{ $item['name'] }} đ</span>
+                                                <span class="col-lg-4">{{ number_format($item['price'] * $item['quantity'],0,',','.')}} đ</span>
+                                            </li>
+                                        @endforeach
                                     @endforeach
                                 </ul>
                                 <ul class="checkout__total__all">

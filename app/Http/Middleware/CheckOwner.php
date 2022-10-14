@@ -14,6 +14,6 @@ class CheckOwner
         if (Auth::user() &&  Auth::user()->role == 2) {
             return $next($request);
         }
-        return redirect('/admin')->with('error','Bạn không có quyền');
+        return redirect()->back()->with('error','Bạn không phải là owner');
     }
 }

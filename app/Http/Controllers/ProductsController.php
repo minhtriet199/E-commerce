@@ -19,8 +19,7 @@ class ProductsController extends Controller
         $this ->productServices = $productServices;
         $this ->commentController = $commentController;
     }
-    public function index($slug)
-    {
+    public function index($slug){
         Carbon::setLocale('vi');
         $more = $this->productServices->more($slug);
         $product = $this->productServices->show($slug);
@@ -56,4 +55,5 @@ class ProductsController extends Controller
         }
         return response()->json(['result'=>$output]);
     }
+
 }
