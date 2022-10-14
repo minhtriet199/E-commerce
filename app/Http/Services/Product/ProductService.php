@@ -16,6 +16,7 @@ class ProductService
             ->when($page != null, function($query) use ($page){
                 $query->offset($page * self::LIMIT);
             })
+            ->where('active',1)
             ->limit(self::LIMIT)
             ->get();
     }

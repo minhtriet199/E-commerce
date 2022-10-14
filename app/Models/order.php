@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Order_detail;
 use App\Models\Product;
 use App\models\User;
+use App\Models\Cities;
+use App\Models\District;
 
 class order extends Model
 {
@@ -21,11 +23,19 @@ class order extends Model
         'email',
         'username',
         'address',
-        'phone',     
+        'phone',  
+        'City',
+        'district',   
     ];
 
     public function order_details(){
         return $this->hasMany(Order_detail::class,'order_id','id');
+    }
+    public function district(){
+        return $this->hasOne(District::clas,'district','id');
+    }
+    public function city(){
+        return $this->hasOne(Cities::class,'City','id');
     }
 
 }

@@ -63,14 +63,14 @@ class Helper{
     public static function orderStatus($status =0){
         $html= '';
         switch($status){
-            case "1":
-                return $html .='<h5 class="order-status">Đang chờ xác nhận</h5>';
+            case "4":
+                return $html .='<h5 class="order-status">Đã hoàn tiền</h5>';
             case "2":
                 return $html .='<h5 class="order-status">Đang vận chuyển</h5>';
             case "3":
                 return $html .='<h5 class="order-status">Giao hàng thành công</h5>';
             default: 
-                return $html .='<h5 class="order-status">Đã hoàn tiền</h5>';
+                return $html .='<h5 class="order-status">Đang chờ xác nhận</h5>';
         }
     }
 
@@ -150,15 +150,27 @@ class Helper{
         $html ='';
         if(Auth::check()){
             $cart = Cart::where('user_id',Auth::id())->first();
-            $countCart = Cart_item::select('*')
-            ->where('cart_id',$cart['id'])
-            ->count();
-            return $html.= $countCart;
+            if($cart){
+                $countCart = Cart_item::select('*')
+                ->where('cart_id',$cart['id'])
+                ->count();
+                return $html.= $countCart;
+            }
+            else{
+                return $html .= '0';
+            }
         }
         else {
-           
+            if(Session::has('carts')){
+                $countCart = count(Session('carts'));
+                return $html.= $countCart;
+            }
+            else{
+                return $html.= '0';
+            }
         }
     }
+    
     public static function check_comment($product_id,$user_id){
         $order = Order::where('user_id',$user_id)->get();
         $order_detail = Order_detail::where(

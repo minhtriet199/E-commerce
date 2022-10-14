@@ -9,22 +9,26 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Mail;
-use App\Models\Order;
-use App\Mail\OrderMail;
+use App\Notifications\ResetPassword;
+use App\Models\User;
 
-class sendMail implements ShouldQueue
+
+class sendNotification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    protected $password;
+    public User $user;
 
-    public Order  $order;
-    public function __construct(Order $order)
+    public function __construct(User $user,$password)
     {
-        $this->order = $order;
+        $this->password = $password;
+        $this->user = $user;
     }
+
     public function handle()
     {
-        $order = $this->order;
-        $email =new OrderMail($order);
-        Mail::to($order->email)->send($email);
+        $password = $this->password;
+        $mail =new ResetPassword($password->token);
+        Mail::to($user->email)->send($mail);
     }
 }

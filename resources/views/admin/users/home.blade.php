@@ -53,7 +53,7 @@
         </div>
 
         <div class="row">
-            <section class="col-lg-5 connectedSortable ui-sortable">
+            <section class="col-lg-6 connectedSortable ui-sortable">
                 <div class="card">
                     <div class="card-header ui-sortable-handle">
                         <h3 class="card-title">
@@ -83,48 +83,48 @@
                     </div>
                 </div>
             </section>
-            <section class="col-lg-7 connectedSortable ui-sortable">
-                <div class="card">
-                    <div class="card-header ui-sortable-handle">
-                        <h3 class="card-title">
-                            <i class="ion ion-clipboard mr-1"></i>
-                            Đơn hàng mới hôm nay
-                        </h3>
-                    </div>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th>Mã đơn hàng</th>
-                                    <th>Ngày tạo đơn</th>
-                                    <th>Khách hàng</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Tổng tiền</th>
-                                    <th>Trạng thái đơn hàng</th>
-                                    <th style="width:120px">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($orders as $key => $order)
-                                    <tr>
-                                        <th><a href="/admin/order/edit/{{$order->id}}">{{$order->id}}</a></th>
-                                        <th>{{ $order->created_at->format('d/m/y') }}</th>
-                                        <th>{{ $order->username }}</th>
-                                        <th>0{{ $order->phone }}</th>
-                                        <th>{{ number_format($order->total,0,',','.') }} đ</th>
-                                        <th>{!! \App\Helpers\Helper::orderStatus($order->status) !!}</th>
-                                        <th>{!! \App\Helpers\Helper::order_button($order,$order->status) !!}</th>
-                                    </tr>
-                                    
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <section class="col-lg-6 connectedSortable ui-sortable">
+            <canvas id="myChart" height="100px"></canvas>
+               
             </section>
         </div>
-
-        <canvas id="myChart" height="100px"></canvas>
+        <div class="card">
+            <div class="card-header ui-sortable-handle">
+                <h3 class="card-title">
+                    <i class="ion ion-clipboard mr-1"></i>
+                    Đơn hàng mới hôm nay
+                </h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Ngày tạo đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Số điện thoại</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái đơn hàng</th>
+                            <th style="width:120px">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($orders as $key => $order)
+                            <tr>
+                                <th><a href="/admin/order/edit/{{$order->id}}">{{$order->id}}</a></th>
+                                <th>{{ $order->created_at->format('d/m/y') }}</th>
+                                <th>{{ $order->username }}</th>
+                                <th>0{{ $order->phone }}</th>
+                                <th>{{ number_format($order->total,0,',','.') }} đ</th>
+                                <th>{!! \App\Helpers\Helper::orderStatus($order->status) !!}</th>
+                                <th>{!! \App\Helpers\Helper::order_button($order,$order->status) !!}</th>
+                            </tr>
+                            
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -133,15 +133,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  <!-- Bí  -->
  <script>
-    var month = <?php echo $month; ?>;
-    var order = <?php echo $order; ?>;
+    var month = {{ Js::from($month) }};
+    var order_chart = {{ Js::from($order_chart) }};
     var barChartData = {
         labels: month,
         datasets: [{
           label: 'order',
           backgroundColor: 'blue',
           borderColor: 'blue',
-          data: order,
+          data: order_chart,
         }]
     };
 

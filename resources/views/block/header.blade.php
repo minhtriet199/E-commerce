@@ -31,7 +31,8 @@
                             @include('block.header.header_session')
                         @endif
                         <li><a href="{{ url('/wishlist') }}"> <i class="fa fa-heart"></i> </a></li>
-                        <li><a href="#" class="search-switch"><i class="fa fa-search"></i></a>
+
+                        <li><a  class="search-switch"><i class="fa fa-search"></i></a>
                             <ul class="dropdown" style="background:none">
                                 <li>
                                     <input type="text" name="search-box" placeholder="Tìm kiếm" class="header-search-box" id="search-box" autocomplete="off">
@@ -40,8 +41,13 @@
                                 </div>
                             </ul>
                         </li>
-                        <li><a href="{{url('/view-cart')}}"><i class="fa fa-shopping-cart"></i></a> </li>
-                        <!-- <li>{!! \App\Helpers\Helper::countCart() !!}</li> -->
+                        <li>
+                            <a href="{{url('/view-cart')}}">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span class='badge badge-warning' id='lblCartCount'>{!! Helper::countCart() !!}</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>

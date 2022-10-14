@@ -6,17 +6,13 @@ use App\Http\Controllers\Api\userController;
 use App\Http\Controllers\Api\productController;
 use App\Http\Controllers\Api\AuthController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 Route::middleware(['throttle:api'])->group(function () {
+
+    Route::middleware('auth:api')->get('/user', function (Request $request) {
+        return $request->user();
+    });    
+
+    //  Route::resource('products',[productController::class])->middleware('auth:api');
     Route::post('login',[AuthController::class,'login']);
     Route::get('products', [productController::class,'index']);
     Route::post('products/create',[productController::class,'store']);
