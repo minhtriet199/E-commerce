@@ -7,6 +7,7 @@ use Illuminate\Support\facades\Auth;
 use App\Models\Product;
 use App\Models\Comment;
 use App\Http\Requests\CommentRequest;
+use Helper; 
 
 class CommentController extends Controller
 {
@@ -38,7 +39,6 @@ class CommentController extends Controller
                         <div class="col-lg-11">
                             <div><span class="user_name">'. $comment->users->name.' </span> 
                             '. $comment->updated_at->diffForHumans().'
-                            
                             <div>
                                 '.$comment->Content.'
                             </div>

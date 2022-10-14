@@ -16,7 +16,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect('/user/account/profile');
+                return redirect()->bacK();
             }
         }
 

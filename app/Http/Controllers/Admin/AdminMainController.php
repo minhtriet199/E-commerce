@@ -12,7 +12,6 @@ use Carbon\Carbon;
 use App\Charts\RevenueChart;
 use Illuminate\Support\Facades\DB;
 
-
 use Auth;
 
 class AdminMainController extends Controller
@@ -22,14 +21,17 @@ class AdminMainController extends Controller
     }
     public function index(){
         $month = ['1','2','3','4','5','6','7','8','9','10','11','12'];
-
-        $order = [];
+        $order_chart = [];
         foreach ($month as $key => $value) {
-            $order[] = DB::table('orders')
+            $order_chart[] = Order::select('*')
         ->whereMonth('created_at',$value)
-        ->whereYear('created_at',2022)
         ->count();
         }
+
+        // $revenue = Order::select(DB::raw("sum(total) as earnings,date_format(created_at, '%m') as month"))
+        // ->groupBy('created_at')
+        // ->get();
+        
         return view('admin.users.home', [
             'title' => 'Dashboard',
             'orders' => Order::whereDate('created_at', Carbon::today())->get(),
@@ -41,26 +43,10 @@ class AdminMainController extends Controller
             'shipping_order' => $this->orderService->count_shipping_order(),
             'success_order' => $this->orderService->count_success_order(),
             'refund_order' => $this->orderService->count_refund_order(),
-        ])->with('month',json_encode($month,JSON_NUMERIC_CHECK))->with('order',json_encode($order,JSON_NUMERIC_CHECK));
+        ])->with('month',$month)->with('order_chart',$order_chart);
     }
     public function logout(){   
         Auth::logout();
         return redirect('admin/users/login');
     }
-    
-    public function search_product(Request $request){
-        $data = $request->all();
-        $output= '';
-        $products = Product::where('name','Like','%'.$data['search'].'%')
-                ->orWhere('slug','Like','%'.$data['search'].'%')->get();
-        foreach($products as $product){
-            $output.='
-
-            ';
-        }
-        return response()->json(['result'=>$output]);
-
-    }
-
-
 }

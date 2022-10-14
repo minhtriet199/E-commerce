@@ -24,7 +24,7 @@ class PasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'password' => 'required',
+            'password' => 'required|confirmed',
             'password_confirmation' => 'required',
         ];
     }
@@ -32,6 +32,7 @@ class PasswordRequest extends FormRequest
     {
         return[
             'password.required' => 'Chưa nhập mật khẩu',
+            'password.confirmed' => 'Hai mật khẩu không giống nhau',
             'password_confirmation.required' => 'Chưa nhập lại mật khẩu',
         ];
     }

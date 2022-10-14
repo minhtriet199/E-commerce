@@ -47,7 +47,7 @@ class OrderService
 
     public function count_total(){ 
         return DB::table('Orders')
-            ->whereMonth('created_at',Carbon::now()->month)
+            ->whereMonth('created_at',Carbon::now()->month())
             ->sum('total');
     }
     public function daily_order_count(){

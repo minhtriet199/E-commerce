@@ -21,7 +21,6 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\JobController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login_admin')->middleware('admin');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
@@ -37,12 +36,13 @@ Route::middleware(['auth_admin'])->group(function (){
             Route::post('insert-delivery',[ShippingController::class,'insert_delivery']);
             Route::get('shipping',[ShippingController::class,'index']);
             Route::post('update-fee',[ShippingController::class,'update_fee']);
-            Route::get('search_product',[AdminMainController::class,'search_product']);
+            Route::get('search_product',[AdminMainController::class,'search_product']);//Working on it
 
 
             Route::prefix('revenue')->group(function(){
                 Route::get('month',[RevenueController::class,'index']);
                 Route::get('day',[RevenueController::class,'index2']);
+                Route::post('store_dayly',[RevenueController::class,'store_dayly']);
             });
             Route::prefix('voucher')->group(function(){
                 Route::get('list',[VoucherController::class,'index']);
@@ -166,7 +166,4 @@ Route::middleware(['auth'])->group(function (){
             Route::post('profile/update',[UserController::class,'update']);
         });
     });
-});
-Route::middleware(['throttle:mail'])->group(function () {
-    Route::get('test-mail',[JobController::class,'processQueue']); //test queue
 });

@@ -12,6 +12,8 @@ use App\Http\Services\User\UserService;
 use App\Http\Services\Order\OrderService;
 use App\Http\Services\Voucher\VoucherService;
 use App\Http\Services\CartServices;
+use App\Http\Services\MailServices;
+use App\Jobs\sendNotification;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Models\User_attribute;
@@ -69,6 +71,8 @@ class UserController extends Controller
     }
 
     public function login(){
+    session(['link' => url()->previous()]);
+
         return view('user.login',[
             'title' => 'Đăng nhập'
         ]);
@@ -127,7 +131,8 @@ class UserController extends Controller
             
             $this->cartServices->userStore();
 
-            return redirect(url('user/account/profile/'));
+             return redirect(session('link'));
+
         }
         else{
             $user = User::updateOrCreate([
@@ -146,7 +151,7 @@ class UserController extends Controller
         Auth::login($user);
         $this->cartServices->userStore();
 
-        return redirect('user/account/profile/');  
+         return redirect(session('link'));
     }
     //end google
 
@@ -162,7 +167,7 @@ class UserController extends Controller
             'password' => $request->input( 'password'),
         ])){
             $this->cartServices->userStore();
-            return redirect(url('/user/account/profile/'));
+            return redirect(session('link'));
         }
         Session()->flash( 'error','Email hoặc password không đúng');
         return redirect()->back();
@@ -190,6 +195,7 @@ class UserController extends Controller
         ]);
         if($password){
             $user->notify(new ResetPassword($password->token));
+        //    dispatch(new sendNotification($user,$password));
         }Session()->flash( 'success','Hãy kiểm tra email của bạn');
         return redirect()->back();
 
@@ -205,13 +211,18 @@ class UserController extends Controller
     public function change_pass(PasswordRequest $request){
         $data = $request->all();
         $passwordReset = Password_reset::where('token',$data['token'])->firstOrFail();
-        $user = User::where('email',$passwordReset->email)->firstOrFail();
-        $user->update(['password' => Hash::make($data['password']) ]);
-        $passwordReset->delete();
-
-        Session()->flash( 'success','Đổi mật khẩu thành công');
-        if(Auth::check()) $this->logouts();
-        return redirect('user/login');
+        if($passwordReset){
+            $user = User::where('email',$passwordReset->email)->firstOrFail();
+            $user->update(['password' => Hash::make($data['password']) ]);
+            $passwordReset->delete();
+            Session()->flash( 'success','Đổi mật khẩu thành công');
+            if(Auth::check()) $this->logouts();
+            return redirect('user/login');
+        }
+        else{
+            Session()->flash('error','Bị lỗi');
+            return redirect()->back();
+        }
     }
 
     public function logouts(){   
@@ -228,3 +239,5 @@ class UserController extends Controller
     }
 
 }
+
+

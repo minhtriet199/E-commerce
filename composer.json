@@ -9,6 +9,7 @@
         "consoletvs/charts": "6.*",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
+        "laravel/passport": "^11.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",

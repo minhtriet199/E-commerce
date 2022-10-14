@@ -318,7 +318,7 @@ ol {
 
 .header {
 	width: 100%;
-	/* position: fixed; */
+	position: fixed;
     z-index: 99;
     background: #ffffff;
     margin-inline: auto;

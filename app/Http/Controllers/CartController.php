@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Services\CartServices;
 use App\Http\Services\User\UserService;
 use App\Http\Services\MailServices;
-use App\jobs\sendMail;
+use App\Jobs\sendMail;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Cart;
@@ -20,6 +20,7 @@ use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Cities;
 use App\Models\District;
+use Carbon\Carbon;
 
 use Session;
 
@@ -51,40 +52,6 @@ class CartController extends Controller
         }
        
     }
-
-    // public function userStore(){
-    //     if(Auth::check()){
-    //         $Cart = Cart::updateOrCreate([
-    //             'user_id' => Auth::id(),
-    //             'user_name' => Auth::user()->name,
-    //         ]);
-    //         if(Session::has('carts')){
-    //             foreach(Session::get('carts') as $product_id => $details){
-    //                 if(Cart_item::where('product_id',$details['product_id'])->first()){
-    //                     Cart_item::where('product_id',$details['product_id'])
-    //                         ->update([
-    //                             'cart_id' => $Cart->id,
-    //                             'product_id' => $details['product_id'],
-    //                             'name' => $details['name'],
-    //                             'thumb' => $details['thumb'],
-    //                             'quantity' => $details['quantity'],
-    //                             'price' => $details['price'],
-    //                         ]);
-    //                 }
-    //                 else{
-    //                     Cart_item::Create([
-    //                         'cart_id' => $Cart->id,
-    //                         'product_id' => $details['product_id'],
-    //                         'name' => $details['name'],
-    //                         'thumb' => $details['thumb'],
-    //                         'quantity' => $details['quantity'],
-    //                         'price' => $details['price'],
-    //                     ]);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 
     public function insert(Request $request){
         $product_id = $request->product_id;
@@ -164,8 +131,8 @@ class CartController extends Controller
     public function checkout(){    
         if(Auth::check()){
             $Cart= Cart::where('user_id', Auth::id())->first();
-            $Cart_item = Cart_item::where('cart_id', $Cart->id)->firstOrFail();
-            if($Cart_item){
+            if($Cart){
+                $Cart_item = Cart_item::where('cart_id', $Cart->id)->firstOrFail();
                 return view('block.user-checkout',[
                     'title' => 'Checkout',
                     'account' => $this->userServices->get(),
@@ -199,6 +166,8 @@ class CartController extends Controller
             'username' => $data['user_name'],
             'email' => $data['email'],
             'address' => $address,
+            'City' => $data['city_id'],
+            'district' => $data['distrcit'],
             'phone'=>$data['phone'],
         ]);
         if(Auth::check()){
@@ -215,8 +184,7 @@ class CartController extends Controller
                 $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
             }
         }
-        $this->mailServices->sendOrderMail($order);
-        // $sendmail = new sendMail($ordder);
+        dispatch(new sendMail($order));
         Session::forget('carts');
         Session::put('order',$order->id);
         return redirect('/finish');
