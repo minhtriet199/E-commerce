@@ -123,16 +123,48 @@
                 </div>
             </section>
         </div>
+
+        <canvas id="myChart" height="100px"></canvas>
     </div>
 </section>
 
-<canvas id="myChart"></canvas>
+@endsection
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-@endsection
+ <!-- Bí  -->
+ <script>
+    var month = <?php echo $month; ?>;
+    var order = <?php echo $order; ?>;
+    var barChartData = {
+        labels: month,
+        datasets: [{
+          label: 'order',
+          backgroundColor: 'blue',
+          borderColor: 'blue',
+          data: order,
+        }]
+    };
 
-<script type="text/javascript">
-  
-
-  
+    window.onload = function() {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        window.myBar = new Chart(ctx, {
+            type: 'line',
+            data: barChartData,
+            options: {
+                elements: {
+                    rectangle: {
+                        borderWidth: 2,
+                        borderColor: '#c1c1c1',
+                        borderSkipped: 'bottom'
+                    }
+                },
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'monthly order Joined'
+                }
+            }
+        });
+    };
 </script>
+

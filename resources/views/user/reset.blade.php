@@ -8,7 +8,7 @@
         <div class="mid-table">
             <form action="{{ url('user/link-reset') }}" method="POST" >
                 <h2>Quên mật khẩu</h2>
-                @include('user.alert')
+                @include('block.alert')
                 <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Email" id="input-formu" value="{!! old('email') !!}">
                 <input type="submit" value="Tiếp tục" id="btn-user">
                 @csrf

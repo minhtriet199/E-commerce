@@ -1,6 +1,7 @@
 @extends('main')
 
 @section('content')
+  
     <!-- Shop Details Section Begin -->
     <section class="shop-details">
         <div class="product__details__pic">
@@ -10,7 +11,7 @@
                         <div class="product__details__breadcrumb">
                             <a href="{{url('/shop')}}">Cửa hàng</a>
                             <a href="/shop/{{$products->menus->slug}}">{{ $products->menus->name}}</a>
-                            <span>{{ $products -> name}}</span>
+                            <span>{{ $products -> name}}  </span>
                         </div>
                     </div>
                 </div>
@@ -66,11 +67,14 @@
                             <h4>{{ $products -> name}}</h4>
 
                             {!! \App\Helpers\Helper::priceDetail($products,$products->price,$products->price_sale) !!}
-
+                            <a class="btn text-danger add-wishlist">
+                                <i class="fa fa-heart "></i> 
+                                Thêm vào danh sách ước
+                            </a>
                             <p>{{ $products -> description }}</p>
-
+                            
                             <div class="product__details__cart__option">
-
+                               
                                 <form action="/add-cart" method="POST">
                                     <div class="quantity">
                                         <div class="pro-qty">

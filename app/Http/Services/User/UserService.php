@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\User_attribute;
+use App\Models\District;
+use App\Models\Cities;
 use Illuminate\Support\facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -42,5 +44,32 @@ class UserService
 
     public function get_all(){
         return User::with('profile')->get();
+    }
+
+    public function get_user_id($id){
+        return User::where('id',$id)->with('profile')->firstOrFail();
+    }
+    public function updateUser($request,$id){
+        $user= User::where('id',$id)->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'role' => $request->input('role'),
+        ]);
+        $detail = User_attribute::where('user_id',$id)->update([
+            'name' => $request->input('name'),
+            'address' => $request->input('address'),
+            'district' => $request->input('district'),
+            'city' => $request->input('city'),
+        ]);
+    }
+    public function user_district($id){
+        $detail = User_attribute::where('user_id',$id)->first();
+        if($detail['district'] == 0){
+            return '0';
+        }
+        else{
+            $UserCity =  Cities::where('id',$detail['city'])->first();
+            return $UserDistrict =  District::where('city_id',$UserCity['id'])->get();
+        } 
     }
 }

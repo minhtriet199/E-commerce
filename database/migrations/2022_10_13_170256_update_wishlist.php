@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->integer('voucher')->nullable();
+        Schema::table('whistlists', function (Blueprint $table) {
+            $table->integer('quantity');
         });
     }
 

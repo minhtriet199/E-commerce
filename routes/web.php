@@ -20,6 +20,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\JobController;
 
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login_admin')->middleware('admin');
@@ -36,7 +37,9 @@ Route::middleware(['auth_admin'])->group(function (){
             Route::post('insert-delivery',[ShippingController::class,'insert_delivery']);
             Route::get('shipping',[ShippingController::class,'index']);
             Route::post('update-fee',[ShippingController::class,'update_fee']);
-            
+            Route::get('search_product',[AdminMainController::class,'search_product']);
+
+
             Route::prefix('revenue')->group(function(){
                 Route::get('month',[RevenueController::class,'index']);
                 Route::get('day',[RevenueController::class,'index2']);
@@ -80,6 +83,9 @@ Route::middleware(['auth_admin'])->group(function (){
                 });
                 Route::prefix('account')->group(function(){
                     Route::get('list',[AdminUserController::class,'index']);
+                    Route::get('edit/{id}',[AdminUserController::class,'show']);
+                    Route::post('edit/{id}',[AdminUserController::class,'update']);
+                    Route::delete('destroy',[AdminUserController::class,'destroy']);
 
                 });
             });
@@ -128,6 +134,9 @@ Route::get('product/{slug}',[ProductsController::class,'index']);
 Route::get('fetchcmt',[CommentController::class,'fetchcmt']);
 Route::post('add-cart',[CartController::class,'insert']);
 
+
+//whilist
+
 //Cart page
 Route::get('view-cart',[CartController::class,'index']);
 Route::patch('update-cart', [CartController::class, 'update']);
@@ -143,6 +152,9 @@ Route::get('finish',[OrderController::class,'show']);
 
 //User login
 Route::middleware(['auth'])->group(function (){
+    Route::get('wishlist',[WishlistController::class,'index']);
+    Route::post('add-wishlist',[WishlistController::class,'insert_wishlist']);
+
     Route::prefix('user')->group(function(){       
         Route::get('/logouts',[UserController::class,'logouts']);
         Route::get('cart',[CartController::class,'userStore']);
