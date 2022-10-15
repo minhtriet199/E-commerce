@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <section>
     <div class="container">
         <div class="mid-table">

@@ -336,25 +336,7 @@ $(document).ready(function(){
             }
         });
     });
-   
-    $('#voucher-btn').click(function(e){
-            e.preventDefault();
-            const voucher_code = $('input[name="voucher_code"]').val();
-            const _token = $('meta[name="csrf-token"]').attr('content');
 
-            $.ajax({
-                url: '/use-voucher',
-                method: 'get',
-                dataType:'json',
-                data: {
-                    _token:_token,
-                    voucher_code:voucher_code,
-                },
-                success: function(data){
-                }
-            })
-
-    });
    
     $('#search-box').keyup(function(){
         const search = $('input[name="search-box"]').val();
@@ -378,15 +360,13 @@ $(document).ready(function(){
         $.ajax({
             type: 'post',
             dataType: 'JSON',
-            url:'/use-voucher',
+            url:'/use_voucher',
             data:{
                 voucher:voucher,
                 token:token,
             },
-            success:function(data){
-                console.log(data);
-                $('#discount').html(data.result);
-                $("#cast").load(location.href + " #cast");
+            success: function(response){
+                alert(response.voucher);
             }
         })
     });

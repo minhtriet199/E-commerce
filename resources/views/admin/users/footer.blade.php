@@ -7,4 +7,8 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 <script src="/assets/admin/js/main.js"></script>
 
+<!-- pusher cdn -->
+<script src="https://js.pusher.com/7.2.0/pusher.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
 @yield('footer')

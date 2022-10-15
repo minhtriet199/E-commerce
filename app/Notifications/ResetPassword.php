@@ -5,12 +5,13 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Mail\Mailable;
 use Illuminate\Notifications\Notification;
 
 class ResetPassword extends Notification
 {
     use Queueable;
-    protected $token;
+    public $token;
 
     public function __construct($token)
     {
@@ -33,3 +34,5 @@ class ResetPassword extends Notification
     }
 
 }
+
+

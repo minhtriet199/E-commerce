@@ -11,17 +11,13 @@
                 <div class="user_info">
                     <div  style="text-align:left; margin-bottom:20px;" >
                         <div class="row" style="display:flex;">
-                            <div class="col-lg-8">
-                                <h4> Xin chào {{ $order ->username}} </h4>
-                            </div>
-                            <div class="col-lg-4">
-                                {!! \App\Helpers\Helper::orderStatus($order->status) !!}
-                            </div>
+                            <h4> Xin chào {{ $order ->username}} </h4>
                         </div>
+                        Tình trạng đơn hàng:<h5> {!! \App\Helpers\Helper::orderStatus($order->status) !!}</h5>
                         <h5><strong>{{ $order->email }}</strong></h5>
                         <h6>{{ $order->address}}</h6>
                         <h6>0{{ $order->phone}}</h6>
-                        <h4>Tổng tiền {{number_format($order->total,0,',',',')}} đ</h4>
+                        <h4>Tổng tiền: {{number_format($order->total,0,',',',')}} đ</h4>
                     </div>
                 </div>
                 <div class="shopping__cart__table">

@@ -22,6 +22,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\WishlistController;
 
+// test
+    use App\Http\Controllers\SendMessageController;
+//test
+
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login_admin')->middleware('admin');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
 Route::get('/logout',[AdminMainController::class,'logout']);
@@ -105,7 +109,7 @@ Route::post('/services/load-product',[MainController::class,'loadProduct']);
 Route::get('/search',[MainController::class,'search']);
 
 //Sign up
-Route::get('user/signup',[UserController::class,'signup']);
+Route::get('user/signup',[UserController::class,'signup'])->middleware('guest');;
 Route::post('user/signup/create',[UserController::class,'create']);
 
 //Login
@@ -113,7 +117,7 @@ Route::get('user/login',[UserController::class,'login'])->name('login')->middlew
 Route::post('user/login/store',[UserController::class,'store']);
 
 //Forget pass 
-Route::get('user/reset',[UserController::class,'reset']);
+Route::get('user/reset',[UserController::class,'reset'])->middleware('guest');;
 Route::post('user/link-reset',[UserController::class,'sendResetLink']);
 //Change pass
 Route::get('user/change_pass/{token}',[UserController::class,'passwordForm']);
@@ -141,7 +145,7 @@ Route::post('add-cart',[CartController::class,'insert']);
 Route::get('view-cart',[CartController::class,'index']);
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
-Route::post('use-voucher',[CartController::class,'use_voucher']); // still a mess
+Route::post('use_voucher',[CartController::class,'use_voucher']); // still a mess
 
 //Check out
 Route::get('checkout',[CartController::class,'checkout']);
@@ -167,3 +171,10 @@ Route::middleware(['auth'])->group(function (){
         });
     });
 });
+
+
+Route::get('/test', function () {
+    return view('test.welcome');
+});
+Route::get('/send', [SendMessageController::class,'index'])->name('send');
+Route::post('/postMessage', [SendMessageController::class,'sendMessage'])->name('postMessage');

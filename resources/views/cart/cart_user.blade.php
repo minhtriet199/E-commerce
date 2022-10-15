@@ -55,11 +55,8 @@
                     <div class="cart__total">
                         <h6>Tổng tiền</h6>
                         <ul id="cast">
-                            <li>Tạm tính <span>{{ number_format($total,0,',','.')}} đ</span></li>
-                            <li id="Sales">Giảm giá
-                                <span id="discount"></span>
-                            </li>
-                            <li>Tổng tiền<span>{{ number_format($total,0,',','.')}} đ</span></li>
+                            <li>Tạm tính: <span> {{ number_format($total,0,',','.')}} đ </span></li>
+                            <li>Tổng tiền: <span> {{ number_format($total,0,',','.')}} đ </span></li>
                         </ul>
                     <a href="{{ url('/checkout') }}" class="primary-btn">THANH TOÁN</a>
                 </div>
