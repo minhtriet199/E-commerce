@@ -71,7 +71,7 @@ class UserController extends Controller
     }
 
     public function login(){
-    session(['link' => url()->previous()]);
+        session(['link' => url()->previous()]);
 
         return view('user.login',[
             'title' => 'Đăng nhập'
@@ -194,8 +194,8 @@ class UserController extends Controller
             'token' => Str::random(60),
         ]);
         if($password){
-            $user->notify(new ResetPassword($password->token));
-        //    dispatch(new sendNotification($user,$password));
+           // $user->notify(new ResetPassword($password->token));
+           dispatch(new sendNotification($user,$password));
         }Session()->flash( 'success','Hãy kiểm tra email của bạn');
         return redirect()->back();
 
@@ -210,18 +210,19 @@ class UserController extends Controller
 
     public function change_pass(PasswordRequest $request){
         $data = $request->all();
-        $passwordReset = Password_reset::where('token',$data['token'])->firstOrFail();
+        $passwordReset = Password_reset::where('token',$data['token'])->first();
         if($passwordReset){
-            $user = User::where('email',$passwordReset->email)->firstOrFail();
+            $user = User::where('email',$passwordReset->email)->first();
             $user->update(['password' => Hash::make($data['password']) ]);
             $passwordReset->delete();
             Session()->flash( 'success','Đổi mật khẩu thành công');
             if(Auth::check()) $this->logouts();
-            return redirect('user/login');
+            Session::forget('link');
+            return redirect('user/login')->withInput();
         }
         else{
             Session()->flash('error','Bị lỗi');
-            return redirect()->back();
+            return redirect('user/reset');
         }
     }
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Services\Order\OrderService;
-use App\Http\Services\MailServices;
+use App\Jobs\sendMailOrder;
 use App\Models\Order;
 use App\Models\order_detail;
 
@@ -14,9 +14,8 @@ class AdminOrderController extends Controller
 
     protected $orderService;
 
-    public function __construct(OrderService $orderService,MailServices $mailServices){
+    public function __construct(OrderService $orderService){
         $this->orderService = $orderService;
-        $this->mailServices =$mailServices;
     }
 
     public function index($status)
@@ -47,7 +46,7 @@ class AdminOrderController extends Controller
         $result = $this->orderService->update($request);
         $order = Order::where('id',$request->input('id'))->first(); 
         if($result){
-            $this->mailServices->sendOrderMail($order);
+            dispatch(new sendMailOrder($order));
             return response()->json([
                 'error'=>false,
             ]);

@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Services\CartServices;
 use App\Http\Services\User\UserService;
-use App\Http\Services\MailServices;
-use App\Jobs\sendMail;
+use App\Jobs\sendMailOrder;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Cart;
@@ -20,6 +19,8 @@ use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Cities;
 use App\Models\District;
+use App\Models\Notification;
+
 use Carbon\Carbon;
 
 use Session;
@@ -30,10 +31,10 @@ class CartController extends Controller
     protected $mailServices;
     protected $mainController;
     
-    public function __construct(CartServices $cartServices,UserService $userServices,MailServices $mailServices){
+    public function __construct(CartServices $cartServices,UserService $userServices){
         $this->cartServices = $cartServices;
         $this->userServices =$userServices;
-        $this->mailServices =$mailServices;
+
     }
    
 
@@ -132,7 +133,7 @@ class CartController extends Controller
         if(Auth::check()){
             $Cart= Cart::where('user_id', Auth::id())->first();
             if($Cart){
-                $Cart_item = Cart_item::where('cart_id', $Cart->id)->firstOrFail();
+                $Cart_item = Cart_item::where('cart_id', $Cart->id)->first();
                 return view('block.user-checkout',[
                     'title' => 'Checkout',
                     'account' => $this->userServices->get(),
@@ -167,7 +168,7 @@ class CartController extends Controller
             'email' => $data['email'],
             'address' => $address,
             'City' => $data['city_id'],
-            'district' => $data['distrcit'],
+            'district' => $data['district'],
             'phone'=>$data['phone'],
         ]);
         if(Auth::check()){
@@ -184,27 +185,21 @@ class CartController extends Controller
                 $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
             }
         }
-        dispatch(new sendMail($order));
+        dispatch(new sendMailOrder($order));
+        Notification::create([
+            'order_id' => $order->id,
+            'content' => 'Đơn hàng mới',
+            'active' => '0',
+        ]);
         Session::forget('carts');
         Session::put('order',$order->id);
         return redirect('/finish');
     }
 
     public function use_voucher(Request $request){
-        $output= '';
         $voucher = Voucher::where('voucher_code',$request->voucher)->firstOrFail();
-        if($voucher){
-            $output.=  ' <span>'.number_format($voucher->discount,0,',',',').'đ<span>' ;
-            if(Auth::check()){
-                Cart::where('user_id',Auth::id())->update(['voucher'=>$voucher->discount]);
-            }
-        }
-        else{
-            Alert::warning('voucher không đúng', 'Warning Message');
-        }
-       
-        return response()->json(['result'=> $output]);
 
+        return view('block.cart',compact('voucher'));
     }
 
 }

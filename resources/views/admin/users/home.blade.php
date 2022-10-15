@@ -84,8 +84,14 @@
                 </div>
             </section>
             <section class="col-lg-6 connectedSortable ui-sortable">
-            <canvas id="myChart" height="100px"></canvas>
-               
+                <div class="card">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">Biểu đồ thu nhập hàng tháng</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <canvas id="myChart" height="100px"></canvas>
+                    </div>
+                </div>
             </section>
         </div>
         <div class="card">
@@ -133,9 +139,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  <!-- Bí  -->
  <script>
-    var month = {{ Js::from($month) }};
-    var order_chart = {{ Js::from($order_chart) }};
-    var barChartData = {
+    const month = {{ Js::from($month) }};
+    const order_chart = {{ Js::from($order_chart) }};
+    const barChartData = {
         labels: month,
         datasets: [{
           label: 'order',

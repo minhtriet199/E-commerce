@@ -12,7 +12,7 @@ use Mail;
 use App\Models\Order;
 use App\Mail\OrderMail;
 
-class sendMail implements ShouldQueue
+class sendMailOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

@@ -8,18 +8,22 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\Notifiable;
 use Mail;
 use App\Notifications\ResetPassword;
+use App\Models\Password_reset;
 use App\Models\User;
+
 
 
 class sendNotification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $password;
+    public Password_reset $password;
     public User $user;
 
-    public function __construct(User $user,$password)
+    public function __construct(User $user,Password_reset $password)
     {
         $this->password = $password;
         $this->user = $user;
@@ -29,6 +33,7 @@ class sendNotification implements ShouldQueue
     {
         $password = $this->password;
         $mail =new ResetPassword($password->token);
-        Mail::to($user->email)->send($mail);
+        Notification::route('mail',$this->user->email)->notify(new ResetPassword($password->token));
     }
 }
+
