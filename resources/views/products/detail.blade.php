@@ -66,7 +66,7 @@
                         <div class="product__details__text">
                             <h4>{{ $products -> name}}</h4>
 
-                            {!! \App\Helpers\Helper::priceDetail($products,$products->price,$products->price_sale) !!}
+                            {!! Helper::priceDetail($products,$products->price,$products->price_sale) !!}
                             <a class="btn text-danger add-wishlist">
                                 <i class="fa fa-heart "></i> 
                                 Thêm vào danh sách ước
@@ -83,7 +83,7 @@
                                         <input type="hidden" value="{{ $products -> id}}" name="product_id" id="product_id">
                                         <input type="hidden" value="{{ $products -> name}}" name="product_name">
                                         <input type="hidden" value="{{ $products -> thumb}}" name="product_thumb">
-                                        {!! \App\Helpers\Helper::formprice($products,$products->price,$products->price_sale) !!}
+                                        {!! Helper::formprice($products,$products->price,$products->price_sale) !!}
                                     </div>
                                     @if($products->amount <= 0 )
                                         <input type="button" class="primary-btn" value="Hết hàng">

@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\DailyRevenue as RevenueModel;
-use App\Http\Services\Order\OrderServices;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 

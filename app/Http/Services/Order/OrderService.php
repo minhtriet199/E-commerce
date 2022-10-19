@@ -34,8 +34,7 @@ class OrderService
             ->get();
     }
     
-    public function update($request)
-    {
+    public function update($request){
         $order = Order::where('id',$request->input('id'))->first(); 
         if($order){
             $order = Order::where('id',$request->input('id'))
@@ -47,7 +46,7 @@ class OrderService
 
     public function count_total(){ 
         return DB::table('Orders')
-            ->whereMonth('created_at',Carbon::now()->month())
+            ->whereMonth('created_at',Carbon::now()->month)
             ->sum('total');
     }
     public function daily_order_count(){
@@ -79,6 +78,15 @@ class OrderService
         return DB::table('Orders')
             ->where('status',3)
             ->count();
+    }
+
+    public function Top_selling_product(){
+        return DB::table('order_details')
+        ->select('*',DB::raw('sum(quantity) as total'))
+        ->groupBy('product_name')
+        ->orderBy('total','desc')
+        ->limit(4)
+        ->get();
     }
 
 }

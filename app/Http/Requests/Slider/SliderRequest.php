@@ -26,7 +26,7 @@ class SliderRequest extends FormRequest
         return [
             'name'=>'required|unique:sliders',
             'url'=>'required',
-            'thumb'=>'required',
+            'file'=>'required',
             'sort_by'=>'required',
             'active'=>'required',
         ];
@@ -38,7 +38,7 @@ class SliderRequest extends FormRequest
             'name.unique' =>  'Tiêu đề bị trùng',
             'url.required' => 'Vui lòng đường dẫn',
             'sort_by' => 'Vui lòng nhập đường dẫn',
-            'thumb.required' => 'Vui lòng chọn ảnh',
+            'file.required' => 'Vui lòng chọn ảnh',
         ];
     }
 }

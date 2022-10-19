@@ -5,27 +5,49 @@ $.ajaxSetup({
 });
 
 function removeRow(id,url){
-    $.ajax({
-        type:'DELETE',
-        datatype:'JSON',
-        data: { id },
-        url: url,
-        success: function (result){
-            if(result.error === false){
-                Swal.fire(
-                    'Deleted!',
-                    'Xóa thành công.',
-                    'success'
-                )
-                location.reload();
-            }else{
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oopsie woopsie',
-                    text: 'Có lỗi!',
-                    })
-            }
-        }
+    var token = $('meta[name="csrf-token"]').attr('content');
+    Swal.fire({
+        title: "Bạn có muốn xóa không?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Đồng ý!",
+        closeOnConfirm: false
+    }).then((WillDelete) =>{
+       if(WillDelete){
+            $.ajax({
+                type:'DELETE',
+                datatype:'JSON',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    id,
+                    token:token 
+                },
+                url: url,
+                success: function (result){
+                    if(result.error === false){
+                        Swal.fire(
+                            'Deleted!',
+                            'Xóa thành công.',
+                            'success'
+                        )
+                        location.reload();
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oopsie woopsie',
+                            text: 'Có lỗi!',
+                            })
+                    }
+                }
+            });  
+       }   
+       else {
+            Swal.fire({
+                title:'Hủy!',
+                icon:'info',
+            });
+       }
     });
 }
 
@@ -33,29 +55,26 @@ function removeRow(id,url){
 
 
 $(document).ready(function(){
-    $('#upload').change(function (){ 
-        const form = new FormData();
-        form.append('file',$(this)[0].files[0]);
+    $('#file').change(function(e){
+        e.preventDefault();
+        const thumb = URL.createObjectURL(e.target.files[0]);
+        $('#image_show').html('<img src="'+ thumb +'" width="100px"></a>');
+    });
     
+    $('.notify-button').click(function(){
+        var _token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
-            processData: false,
-            contentType: false,
-            type: 'POST',
-            dataType: 'JSON',
-            data: form,
-            url: '/admin/upload/services',
-            success: function(results){
-                if(results.error === false){
-                    $("#image_show").html('<a href="'+ results.url +'" target="_blank">' + '<img src="'+ results.url +'" width="100px"></a>');
-    
-                    $("#thumb").val(results.url);
-                } else {
-                    alert('Upload File lỗi');
-                }
+            url: '/admin/check_notify',
+            method:'POST',
+            data:{
+                _token:_token,
+            },
+            success:function(){
+                $('.display').text('0');
             }
         });
     });
-    
+
     $('.add-delivery').click(function(){
         var city = $('.city').val();
         var district = $('.district').val();
@@ -166,6 +185,7 @@ $(document).ready(function(){
         $.ajax({
             url: '/admin/order/update',
             type: 'POST',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data:{
                 id:id,
                 token,token
@@ -190,7 +210,8 @@ $(document).ready(function(){
                 location.reload();
             }
         })
-    })
+    });
+    
     $('.search-product').keyup(function(e){
         const search =$('input[name="search_product"]').val();
         const token = $('meta[name="csrf-token"]').attr('content');

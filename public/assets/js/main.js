@@ -215,8 +215,8 @@ $.ajaxSetup({
 
 
 
-$(document).ready(function() {
-    //update user ajax
+
+$(document).ready(function(){
     $('#btn-update-user').click(function(e){
         e.preventDefault();
         const user_id =$('input[name="user_id"]').val();
@@ -272,11 +272,6 @@ $(document).ready(function() {
             }
         });
     });
-});
-
-
-$(document).ready(function(){
-    
     $(".quantity-btn").change(function (e) {
         e.preventDefault();
         const ele = $(this).parents("tr").attr("data-id");
@@ -366,7 +361,16 @@ $(document).ready(function(){
                 token:token,
             },
             success: function(response){
-                alert(response.voucher);
+                if(response.error == true){
+                    $('.discount').html(response.discount + ' đ');
+                }
+                else{
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Sai voucher',
+                    });
+                }
+               
             }
         })
     });
@@ -404,6 +408,7 @@ $(document).ready(function(){
         const product_price = $('input[name="product_price"]').val();
         const product_quantity = $('input[name="product_quantity"]').val();
         const product_thumb = $('input[name="product_thumb"]').val();
+
         $.ajax({
             type:'POST',
             dataType:'JSON',
@@ -452,12 +457,3 @@ $(document).ready(function(){
 });
 
 
-// $(document).ready(function(){
-//     $(window).scroll(function() {
-//         if ($(this).scrollTop() > 100) {
-//             $('.btnScrolltop').show();
-//         } else {
-//             $('.btnScrolltop').hide();
-//         }
-//     });
-// });

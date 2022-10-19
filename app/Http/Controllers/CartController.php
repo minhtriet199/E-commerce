@@ -20,6 +20,8 @@ use App\Models\Order_detail;
 use App\Models\Cities;
 use App\Models\District;
 use App\Models\Notification;
+use Pusher\Pusher;
+
 
 use Carbon\Carbon;
 
@@ -86,6 +88,23 @@ class CartController extends Controller
         if(Auth::check()){
             $this->cartServices->userStore();
         }
+
+        $data['amount'] = $request->product_quantity;
+
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger('AddCart', 'addCart', $data);
+
         $data = [];
         $data['carts'] = Arr::exists($carts,$product_id) ?  Session::get('carts') : [];
         return response()->json($data);
@@ -120,6 +139,7 @@ class CartController extends Controller
                 }
             }
         }
+        
     }
 
     public function cart_update(Request $request){
@@ -186,20 +206,48 @@ class CartController extends Controller
             }
         }
         dispatch(new sendMailOrder($order));
-        Notification::create([
+        $notification = Notification::create([
             'order_id' => $order->id,
             'content' => 'Đơn hàng mới',
             'active' => '0',
         ]);
+
+
+        $data['title'] = $notification['order_id'];
+        $data['content'] = $notification['content'];
+        $data['created_at'] = $notification['created_at'];
+
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger('Notify', 'send-notify', $data);
+
         Session::forget('carts');
         Session::put('order',$order->id);
         return redirect('/finish');
     }
 
     public function use_voucher(Request $request){
-        $voucher = Voucher::where('voucher_code',$request->voucher)->firstOrFail();
-
-        return view('block.cart',compact('voucher'));
+        $voucher = Voucher::where('voucher_code',$request->voucher)->first();
+        if($voucher)
+            return response()->json([
+                'error' => true,
+                'discount' => $voucher->discount
+            ]);
+        else 
+        return response()->json([
+            'error' => false,
+        ]);
+       
     }
 
 }

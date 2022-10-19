@@ -40,8 +40,7 @@ Route::middleware(['auth_admin'])->group(function (){
             Route::post('insert-delivery',[ShippingController::class,'insert_delivery']);
             Route::get('shipping',[ShippingController::class,'index']);
             Route::post('update-fee',[ShippingController::class,'update_fee']);
-            Route::get('search_product',[AdminMainController::class,'search_product']);//Working on it
-
+            Route::post('check_notify',[AdminMainController::class,'check_notify']);
 
             Route::prefix('revenue')->group(function(){
                 Route::get('month',[RevenueController::class,'index']);
@@ -74,7 +73,6 @@ Route::middleware(['auth_admin'])->group(function (){
                 Route::post('edit/{id}',[ProductController::class,'update']);
                 Route::DELETE('destroy',[ProductController::class,'destroy']);
             });
-            Route::post('upload/services',[UploadController::class,'store']);
             
             Route::group(['middleware' => ['CheckOwner']],function (){
                 Route::prefix('sliders')->group(function(){
@@ -138,19 +136,19 @@ Route::get('product/{slug}',[ProductsController::class,'index']);
 Route::get('fetchcmt',[CommentController::class,'fetchcmt']);
 Route::post('add-cart',[CartController::class,'insert']);
 
-
-//whilist
-
 //Cart page
 Route::get('view-cart',[CartController::class,'index']);
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
-Route::post('use_voucher',[CartController::class,'use_voucher']); // still a mess
+Route::post('use_voucher',[CartController::class,'use_voucher']); // not working
 
-//Check out
+
+//Check out need a rework
 Route::get('checkout',[CartController::class,'checkout']);
-Route::post('select-delivery',[ShippingController::class,'select_delivery']); // not working
+Route::post('select-delivery',[ShippingController::class,'select_delivery']);
 Route::post('checkout',[CartController::class,'place_order']);
+
+
 //View purchase
 Route::get('finish',[OrderController::class,'show']);
 
@@ -171,10 +169,3 @@ Route::middleware(['auth'])->group(function (){
         });
     });
 });
-
-
-Route::get('/test', function () {
-    return view('test.welcome');
-});
-Route::get('/send', [SendMessageController::class,'index'])->name('send');
-Route::post('/postMessage', [SendMessageController::class,'sendMessage'])->name('postMessage');

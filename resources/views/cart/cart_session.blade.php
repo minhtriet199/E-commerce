@@ -56,7 +56,7 @@
                         <h6>Tổng tiền</h6>
                         <ul id="cast">
                             <li>Tạm tính <span>{{ number_format($total,0,',','.')}} đ</span></li>
-                            <li id="Sales">Giảm giá <span></span></li>
+                            <li>Giảm giá: <span class="discount">0 đ</span></li> 
                             <li>Tổng tiền<span>{{ number_format($total,0,',','.')}} đ</span></li>
                         </ul>
                         <a href="{{ url('/checkout') }}" class="primary-btn">THANH TOÁN</a>

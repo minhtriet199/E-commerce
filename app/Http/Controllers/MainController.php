@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Services\Slider\AdminSliderService;
 use App\Http\Services\Product\ProductService;
-use App\Http\Services\Menu\MenuService;
 
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -17,13 +16,11 @@ class MainController extends Controller
 {
     protected $sliderService;
     protected $product;
-    protected $menus;
 
-    public function __construct(AdminSliderService $sliderService,ProductService $product,MenuService $menus)
+    public function __construct(AdminSliderService $sliderService,ProductService $product)
     {
         $this->sliderService = $sliderService;
         $this->product = $product;
-        $this->menus = $menus;
     }
 
     public function index()

@@ -91,7 +91,10 @@ class UserController extends Controller
             Auth::login($findUser, true);
             $this->cartServices->userStore();
 
-            return redirect(url('user/account/profile/'));
+            if(!session('link')){
+                return redirect('/');
+            }
+             return redirect(session('link'));
         }
         else{
             $user = User::updateOrCreate([
@@ -109,7 +112,10 @@ class UserController extends Controller
         Auth::login($user);
         $this->cartServices->userStore();
 
-        return redirect('user/account/profile/');
+        if(!session('link')){
+            return redirect('/');
+        }
+         return redirect(session('link'));
         
     }
     //end facebook
@@ -131,6 +137,9 @@ class UserController extends Controller
             
             $this->cartServices->userStore();
 
+            if(!session('link')){
+                return redirect('/');
+            }
              return redirect(session('link'));
 
         }
@@ -150,8 +159,10 @@ class UserController extends Controller
         }
         Auth::login($user);
         $this->cartServices->userStore();
-
-         return redirect(session('link'));
+        if(!session('link')){
+            return redirect('/');
+        }
+        return redirect(session('link'));
     }
     //end google
 
@@ -194,7 +205,6 @@ class UserController extends Controller
             'token' => Str::random(60),
         ]);
         if($password){
-           // $user->notify(new ResetPassword($password->token));
            dispatch(new sendNotification($user,$password));
         }Session()->flash( 'success','Hãy kiểm tra email của bạn');
         return redirect()->back();
@@ -217,7 +227,7 @@ class UserController extends Controller
             $passwordReset->delete();
             Session()->flash( 'success','Đổi mật khẩu thành công');
             if(Auth::check()) $this->logouts();
-            Session::forget('link');
+             Session::forget('link');
             return redirect('user/login')->withInput();
         }
         else{

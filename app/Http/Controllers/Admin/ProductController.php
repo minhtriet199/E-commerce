@@ -5,16 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Product\ProductAdminService;
 use App\Http\Requests\Product\ProductRequest;
+use App\Http\Services\UploadServices;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use Illuminate\Http\Request;
-
 
 class ProductController extends Controller
 {
     protected $productService;
+    protected $upload;
 
-    public function __construct(ProductAdminService $productService){
+    public function __construct(ProductAdminService $productService,UploadServices $upload){
         $this->productService = $productService;
+        $this->upload =$upload;
     }
 
     public function index(){
@@ -31,9 +34,10 @@ class ProductController extends Controller
             'products' => $this->productService->getMenu()
         ]);
     }
+
     public function store(ProductRequest $request){
         $result = $this->productService->insert($request);
-        
+        $this->upload->store($request);
         if($result) return redirect('admin/products/list');
         else return redirect()->back()->withInput();
     }
@@ -48,13 +52,15 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $id){
         $result = $this->productService->update($request,$id);
-
+        $this->upload->store($request);
         if($result) return redirect('admin/products/list');
         else return redirect()->back();
     }
 
     public function destroy(Request $request){
-        $result = $this->productService->delete($request);
+        $product = Product::where('id',$request['id'])->first();
+        $result = $this->productService->delete($product);
+        unlink(public_path().$product->thumb);
         if($result){
             return response()->json([
                 'error'=>false,

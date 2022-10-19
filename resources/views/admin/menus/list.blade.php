@@ -31,7 +31,7 @@
                     <tr>
                         <td>{{$menu->id}} </td>
                         <td>{{$menu->name}}</td>
-                        <td >{!! \App\Helpers\Helper::active($menu->active) !!}</td>
+                        <td >{!! Helper::active($menu->active) !!}</td>
                         <td>{{ $menu->updated_at->format('d/m/y | H:i') }}</td>
                         <td>  
                             <a class="btn btn-primary btn-sm"  href="/admin/menus/edit/{{ $menu->id }} "><i class="fas fa-edit"></i></a>

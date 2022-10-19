@@ -25,7 +25,7 @@
                         0{{ $item->profile['phone'] }}
                     @endif
                 </th>
-                <th>{!! \App\Helpers\Helper::user_status($item['role']) !!}</th>
+                <th>{!! Helper::user_status($item['role']) !!}</th>
                 <th>{{ $item['created_at'] }}</th>
                 <th>
                     <a href="/admin/account/edit/{{ $item['id'] }}" class="btn btn-primary"> <i class="fas fa-edit"></i></a>

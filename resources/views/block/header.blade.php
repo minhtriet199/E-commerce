@@ -44,7 +44,7 @@
                         <li>
                             <a href="{{url('/view-cart')}}">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span class='badge badge-warning' id='lblCartCount'>{!! Helper::countCart() !!}</span>
+                                <span class='badge badge-warning CartCount display'>{!! Helper::countCart() !!}</span>
                             </a>
                         </li>
 
@@ -55,5 +55,24 @@
         <div class="canvas__open"><i class="fa fa-bars"></i></div>
     </div>
 </header>
+
+
+<script src="https://js.pusher.com/7.2.0/pusher.min.js"></script>
+<script type="text/javascript">
+
+    var notificationCount = $('.CartCount').text();
+    var notifyCount = parseInt(notificationCount);
+    var pusher = new Pusher('{{env('PUSHER_APP_KEY')}}', {
+        cluster: 'ap1',
+        encrypted: true
+    });
+    var channel = pusher.subscribe('AddCart');
+
+    channel.bind('addCart', function(data) {
+        var amount = parseInt(data.amount);
+        notifyCount += amount;
+        $('.display').text(notifyCount);
+    });
     
-<img src="" alt="">
+    
+</script>

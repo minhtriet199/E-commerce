@@ -17,9 +17,17 @@ class AdminSliderService
     }
     public function insert($request)
     {
+        $thumb = '/storage/uploads/'.date("Y/m/d").'/'.time().'.png';
         try{
             $request->except('_token');
-            Slider::create($request->input());
+            Slider::create([
+                'name' => $request->input('name'),
+                'url' => $request->input('url'),
+                'thumb' => $thumb,
+                'sort_by' => $request->input('name'),
+                'active' => $request->input('active'),
+                'description' => $request->input('description'),
+            ]);
 
             Session::flash('success','Thêm Slider thành công');
         } catch(\Exception $err){
@@ -44,11 +52,9 @@ class AdminSliderService
         }
         return true;
     }
-    public function delete($request){
-        $slider = Slider::where('id' , $request->input('id'))->first();
+    public function delete($slider){
         if($slider){
-            $path = str_replace('storage','public',$slider->thumb);
-            Storage::delete($path);
+            $path = str_replace('storage','public',$slider['thumb']);
             $slider-> delete();
             return true;
         }

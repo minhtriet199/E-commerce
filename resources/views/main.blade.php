@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	@php $menusHtml = \App\Helpers\Helper::menus($menus); @endphp
+	@php $menusHtml = Helper::menus($menus); @endphp
     @include('block.head')
 </head>
 
 <body > 
 	@include('sweetalert::alert')
 	@include('block.header')
-	<button class="btn-top btnScrolltop" title="Go to top">
+	<button class="btn-top btnScrolltop" id="btntop" title="Go to top">
 		<i class="fa fa-angle-double-up"></i>
 	</button>
 	
@@ -20,3 +20,16 @@
 
 </body>
 </html>
+<!-- <script type="text/javascript">
+
+$(document).ready(function(){
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 100) {
+			  $('#btntop').show();
+        } else {
+            $('#btntop').hide();
+        }
+    });
+});
+
+</script> -->
