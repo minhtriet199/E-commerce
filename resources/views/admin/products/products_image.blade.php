@@ -28,7 +28,7 @@
                     <tr>
                         <td><a href="/admin/products/image/{{ $product->id }}"><img src="{{ $product->thumb }}" class="admin-thumb"> </a></td>
                         <td>{{ $product->name }}</td>
-                        <td></td>
+                        <td>{{ Helper::count_image($product->id) }}</td>
                     </tr>    
                 @endforeach
             </tbody>
@@ -38,4 +38,5 @@
         </div>
     </div>
 </div>
+
 @endsection

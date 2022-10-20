@@ -21,16 +21,6 @@ class CartServices{
         return Cart::where('user_id',Auth::id())
         ->first();   
     }
-
-    public function insert_cart_detail($order,$cart){
-        return  order_detail::create([
-            'order_id' => $order->id,
-            'product_name' => $cart['name'],
-            'thumb' => $cart['thumb'],
-            'quantity'=> $cart['quantity'],
-            'price' => $cart['price'],
-        ]);
-    }
     
     public function userStore(){
         if(Auth::check()){

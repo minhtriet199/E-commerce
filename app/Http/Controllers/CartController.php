@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Services\CartServices;
 use App\Http\Services\User\UserService;
+use App\Http\Services\Order\OrderService;
+use App\Http\Requests\User\UserInfomationRequest;
 use App\Jobs\sendMailOrder;
 use App\Models\Product;
 use App\Models\User;
@@ -31,12 +33,12 @@ class CartController extends Controller
 {
     protected $cartServices;
     protected $mailServices;
-    protected $mainController;
+    protected $orderServices;
     
-    public function __construct(CartServices $cartServices,UserService $userServices){
+    public function __construct(CartServices $cartServices,UserService $userServices,OrderService $orderServices){
         $this->cartServices = $cartServices;
         $this->userServices =$userServices;
-
+        $this->orderServices = $orderServices;
     }
    
 
@@ -55,32 +57,27 @@ class CartController extends Controller
         }
        
     }
-
     public function insert(Request $request){
-        $product_id = $request->product_id;
-        $product_name = $request->product_name;
-        $product_price = $request->product_price;
-        $product_quantity =$request->product_quantity;
-        $product_thumb = $request->product_thumb;
+        $product = $request->all();
 
         $carts = Session::get('carts',[]);
-        $exist = Arr::exists($carts,$product_id);
+        $exist = Arr::exists($carts,$product['product_id']);
         if($exist){
-            $quantityNew = $carts[$product_id]['quantity'] + $product_quantity;
-            $carts[$product_id] =[
-                'product_id' => $product_id,
-                'name'=> $product_name,
-                'price' => $product_price,
+            $quantityNew = $carts[$product['product_id']]['quantity'] + $product['product_quantity'];
+            $carts[$product['product_id']] =[
+                'product_id' => $product['product_id'],
+                'name'=> $product['product_name'],
+                'price' => $product['product_price'],
                 'quantity'  => $quantityNew,
-                'thumb' => $product_thumb,
+                'thumb' => $product['product_thumb'],
             ];
         }else{
-            $carts[$product_id] = [
-                'product_id' => $product_id,
-                'name'=> $product_name,
-                'price' => $product_price,
-                'quantity' => $product_quantity,
-                'thumb' => $product_thumb,
+            $carts[$product['product_id']] = [
+                'product_id' => $product['product_id'],
+                'name'=> $product['product_name'],
+                'price' => $product['product_price'],
+                'quantity' => $product['product_quantity'],
+                'thumb' => $product['product_thumb'],
             ];
         }
         
@@ -88,12 +85,11 @@ class CartController extends Controller
         if(Auth::check()){
             $this->cartServices->userStore();
         }
-
-        $data['amount'] = $request->product_quantity;
-
+        //Insert cart pusher will update cart number
+        $data['amount'] = $product['product_quantity'];
         $options = array(
             'cluster' => 'ap1',
-            'encrypted' => true
+            'encrypted' => false
         );
 
         $pusher = new Pusher(
@@ -102,11 +98,10 @@ class CartController extends Controller
             env('PUSHER_APP_ID'),
             $options
         );
-
         $pusher->trigger('AddCart', 'addCart', $data);
 
         $data = [];
-        $data['carts'] = Arr::exists($carts,$product_id) ?  Session::get('carts') : [];
+        $data['carts'] = Arr::exists($carts,$product['product_id']) ?  Session::get('carts') : [];
         return response()->json($data);
         
     }
@@ -129,7 +124,8 @@ class CartController extends Controller
     public function remove(Request $request){
         if($request->id) {
             if(Auth::check()){
-                $carts = cart_item::where('product_id' , $request->input('id'))->delete();
+                $carts = cart_item::where('product_id' , $request->input('id'))->first();
+                $carts->delete();
             }
             else{
                 $carts = Session::get('carts',[]);
@@ -139,6 +135,19 @@ class CartController extends Controller
                 }
             }
         }
+
+        // $options = array(
+        //     'cluster' => 'ap1',
+        //     'encrypted' => true
+        // );
+
+        // $pusher = new Pusher(
+        //     env('PUSHER_APP_KEY'),
+        //     env('PUSHER_APP_SECRET'),
+        //     env('PUSHER_APP_ID'),
+        //     $options
+        // );
+        // $pusher->trigger('DecreasedCart', 'decreasedCart', $data);
         
     }
 
@@ -159,7 +168,6 @@ class CartController extends Controller
                     'account' => $this->userServices->get(),
                     'carts' => $this->cartServices->get(),
                     'cartid' => $this->cartServices->getCart(),
-                    'voucher' => Cart::select('voucher')->where('user_id',Auth::id())->first(),
                     'districts' => $this->userServices->user_district(Auth::id()),
                     'cities' => Cities::all(),
                 ]);
@@ -177,9 +185,9 @@ class CartController extends Controller
         }  
     }
 
-    public function place_order(Request $request){
+    public function place_order(UserInfomationRequest $request){
         $data = $request->all();
-        $address = $data['address'] . " ".$data['district'] ." ". $data['city_id'];
+        $address = $data['address'] . " ".$data['district'] ." ". $data['city'];
         $user = User::where('email', $data['email'])->firstOrFail();
         $order = Order::create([
             'user_id' => Auth::id(),
@@ -187,21 +195,21 @@ class CartController extends Controller
             'username' => $data['user_name'],
             'email' => $data['email'],
             'address' => $address,
-            'City' => $data['city_id'],
+            'City' => $data['city'],
             'district' => $data['district'],
             'phone'=>$data['phone'],
         ]);
         if(Auth::check()){
             $carts = Cart_item::where('cart_id',$data['cart_id'])->get();
             foreach($carts as $cart){
-                $detail = $this->cartServices->insert_cart_detail($order,$cart);
+                $detail = $this->orderServices->insertOrderDetail($order,$cart);
                 $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
             }
             Cart::where('user_id',Auth::id())->delete();
         }
         else{
             foreach(Session::get('carts') as $product_id => $cart){
-                $detail = $this->cartServices->insert_cart_detail($order,$cart);
+                $detail = $this->orderServices->insertOrderDetail($order,$cart);
                 $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
             }
         }
@@ -221,7 +229,6 @@ class CartController extends Controller
             'cluster' => 'ap1',
             'encrypted' => true
         );
-
         $pusher = new Pusher(
             env('PUSHER_APP_KEY'),
             env('PUSHER_APP_SECRET'),

@@ -7,6 +7,7 @@ use App\Models\Order_detail;
 use App\Models\Cart;
 use App\Models\Cart_item;
 use App\Models\Voucher;
+use App\Models\Product_image;
 
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -153,14 +154,12 @@ class Helper{
         if(Auth::check()){
             $cart = Cart::where('user_id',Auth::id())->first();
             if(!$cart){
-                $countCart = Cart_item::select('*')
-                ->where('cart_id',$cart['id'])
-                ->sum('quantity');
-                return $html.= $countCart;
-            }
-            else{
                 return $html .= '0';
             }
+            $countCart = Cart_item::select('*')
+            ->where('cart_id',$cart['id'])
+            ->sum('quantity');
+            return $html.= $countCart;
         }
         else {
             if(!Session::has('carts')){
@@ -181,6 +180,12 @@ class Helper{
         else
             $html .= '<i class="fas fa-envelope mr-2"></i> ';
 
+        echo $html;
+    }
+    public static function count_image($id){
+        $count = Product_image::where('product_id',$id)
+        ->count('*');
+        $html = $count;
         echo $html;
     }
 }

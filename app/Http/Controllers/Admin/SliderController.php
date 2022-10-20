@@ -34,8 +34,11 @@ class SliderController extends Controller
         ]);
     }
     public function store(SliderRequest $request){
-        $result = $this->sliderService->insert($request);
-        $this->upload->store($request);
+        $name = time().rand(1,100).'.png';
+        $thumb = '/storage/uploads/'.date("Y/m/d").'/'.$name;
+
+        $result = $this->sliderService->insert($request,$thumb);
+        $this->upload->store($request,$name);
         if($result) return redirect('admin/sliders/list');
         else return redirect()->back()->withInput();
     }
@@ -58,7 +61,7 @@ class SliderController extends Controller
     public function destroy(Request $request) {
         $slider = Slider::where('id' , $request->input('id'))->first();
         $result = $this->sliderService->delete($slider);
-        unlink(public_path().$slider->thumb);
+        unlink(public_path($slider->thumb));
         if($result){
             return response()->json([
                 'error'=>false,

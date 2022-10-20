@@ -68,6 +68,7 @@ Route::middleware(['auth_admin'])->group(function (){
                 Route::post('add',[ProductController::class,'store']);
                 Route::get('image',[ProductController::class,'products_image']);
                 Route::get('image/{id}',[ProductController::class,'product_image']);
+                Route::post('image/{id}',[ProductController::class,'store_image']);
 
                 Route::get('edit/{id}',[ProductController::class,'show']);
                 Route::post('edit/{id}',[ProductController::class,'update']);
@@ -103,6 +104,7 @@ Route::middleware(['auth_admin'])->group(function (){
 Route::get('/',[MainController::class,'index']);
 Route::post('/services/load-product',[MainController::class,'loadProduct']);
 
+Route::get('test',[MainController::class,'test']);
 //Search
 Route::get('/search',[MainController::class,'search']);
 
@@ -169,3 +171,6 @@ Route::middleware(['auth'])->group(function (){
         });
     });
 });
+
+
+Route::get('test',[MainController::Class,'test']);

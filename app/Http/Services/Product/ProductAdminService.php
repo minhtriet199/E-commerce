@@ -15,7 +15,7 @@ class ProductAdminService
     public function get(){
         return Product::orderby('id')
             ->with('menus')
-            ->paginate(9);
+            ->paginate(10);
     }
 
     protected function isValidPrice($request){
@@ -33,11 +33,9 @@ class ProductAdminService
         return true;
     }
 
-    public function insert($request){
+    public function insert($request,$thumb){
         $isValidPrice =$this->isValidPrice($request);
         if($isValidPrice === false) return false;
-
-        $thumb = '/storage/uploads/'.date("Y/m/d").'/'.time().'.png';
         try{
             $request->except('_token');
             Product::create([
