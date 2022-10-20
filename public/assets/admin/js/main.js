@@ -55,12 +55,6 @@ function removeRow(id,url){
 
 
 $(document).ready(function(){
-    $('#file').change(function(e){
-        e.preventDefault();
-        const thumb = URL.createObjectURL(e.target.files[0]);
-        $('#image_show').html('<img src="'+ thumb +'" width="100px"></a>');
-    });
-    
     $('.notify-button').click(function(){
         var _token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
@@ -230,5 +224,23 @@ $(document).ready(function(){
             }
         })
     });
+    
+    $('#file').change(function(e){
+        e.preventDefault();
+        const thumb = URL.createObjectURL(e.target.files[0]);
+        $('#image_show').html('<img src="'+ thumb +'" width="100px"></a>');
+    });
+    
+    $('.preview-image').sortable();
+    $('.upload_image_mul').change(function(e){
+        e.preventDefault();
+        var total_file= $(this)[0].files.length;
+        for(var i=0;i<total_file;i++)
+        {
+            $('.preview-image').append("<img src='"+URL.createObjectURL(e.target.files[i])+"' style='width:100px'><br>");
+        }
+    });
+
+    
 });
 

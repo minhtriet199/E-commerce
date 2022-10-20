@@ -15,9 +15,7 @@ class AdminSliderService
         ->where('active',1)
         ->get();
     }
-    public function insert($request)
-    {
-        $thumb = '/storage/uploads/'.date("Y/m/d").'/'.time().'.png';
+    public function insert($request,$thumb){
         try{
             $request->except('_token');
             Slider::create([

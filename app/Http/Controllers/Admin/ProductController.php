@@ -8,6 +8,7 @@ use App\Http\Requests\Product\ProductRequest;
 use App\Http\Services\UploadServices;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
+use App\Models\Product_image;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -36,8 +37,10 @@ class ProductController extends Controller
     }
 
     public function store(ProductRequest $request){
-        $result = $this->productService->insert($request);
-        $this->upload->store($request);
+        $name = time().rand(1,100).'.png';
+        $thumb = '/storage/uploads/'.date("Y/m/d").'/'.$name;
+        $result = $this->productService->insert($request,$thumb);
+        $this->upload->store($request,$name);
         if($result) return redirect('admin/products/list');
         else return redirect()->back()->withInput();
     }
@@ -51,6 +54,8 @@ class ProductController extends Controller
     }
 
     public function update(Request $request, Product $id){
+        $name = time().rand(1,100).'.png';
+        $thumb = '/storage/uploads/'.date("Y/m/d").'/'.$name;
         $result = $this->productService->update($request,$id);
         $this->upload->store($request);
         if($result) return redirect('admin/products/list');
@@ -60,7 +65,7 @@ class ProductController extends Controller
     public function destroy(Request $request){
         $product = Product::where('id',$request['id'])->first();
         $result = $this->productService->delete($product);
-        unlink(public_path().$product->thumb);
+        unlink(public_path($product->thumb));
         if($result){
             return response()->json([
                 'error'=>false,
@@ -82,7 +87,21 @@ class ProductController extends Controller
     public function product_image($id){
         return view('admin.products.product_image',[
             'title' => 'Thêm ảnh sản phẩm',
-            'product' => Product::where('id',$id)->firstOrFail(),
+            'id' => $id,
+            'product' => Product::where('id',$id)->first(),
         ]);
+    }
+    public function store_image(Request $request){
+        $file = $request->file('file');
+        foreach($file as $photo){
+            $name = time().rand(1,100).'.png';
+            $this->upload->store_multi($photo,$name);
+            Product_image::create([
+                'product_id' => $request->input('product_id'),
+                'image' => '/storage/uploads/'.date("Y/m/d").'/'.$name,
+            ]);
+        }
+        Session()->flash( 'success','Thành công');
+        return redirect()->back();
     }
 }

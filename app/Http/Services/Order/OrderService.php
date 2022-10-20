@@ -26,6 +26,15 @@ class OrderService
         ->with('order_details')
         ->get();  
     }
+    public function insertOrderDetail($order,$cart){
+        return  order_detail::create([
+            'order_id' => $order->id,
+            'product_name' => $cart['name'],
+            'thumb' => $cart['thumb'],
+            'quantity'=> $cart['quantity'],
+            'price' => $cart['price'],
+        ]);
+    }
 
     public function get(){
         return order::where('user_id',Auth::id())

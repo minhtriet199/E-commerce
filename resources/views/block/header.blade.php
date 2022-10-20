@@ -74,5 +74,10 @@
         $('.display').text(notifyCount);
     });
     
+    channel.bind('decreasedCart',function(data){
+        var amount = parseInt(data.amount);
+        notifyCount += amount;
+        $('.display').text(notifyCount);
+    });
     
 </script>

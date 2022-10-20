@@ -28,10 +28,11 @@
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="profile" role="tabpanel">
                         <div class="account-table">
+              @include('block.alert')
+
                             <h4>Hồ sơ</h4>
                             <div class="account-table-content">
                                 <form id="update" method="POST">
-                                    <p id="user-alert"></p>
                                     <div class="row"> 
                                         <div class="col-lg-6 ">
                                             <p>Họ tên</p>

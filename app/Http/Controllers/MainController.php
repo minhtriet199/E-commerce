@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Services\Slider\AdminSliderService;
 use App\Http\Services\Product\ProductService;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\Response;
 
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -47,7 +49,9 @@ class MainController extends Controller
         $data = $request->all();
         $output= '';
         $products = Product::where('name','Like','%'.$data['search'].'%')
-                ->orWhere('slug','Like','%'.$data['search'].'%')->get();
+                ->orWhere('slug','Like','%'.$data['search'].'%')
+                ->limit(5)
+                ->get();
         
         foreach($products as $product){
             $output.='
@@ -60,5 +64,15 @@ class MainController extends Controller
                 ';
         }
         return response()->json(['result'=>$output]);
+    }
+    
+    public function test(){
+        $response = Http::get('https://eldenring.fanapis.com/api/bosses?name=melina');
+        // $response = Http::get('http://127.0.0.1:8000/api/products/show/2');
+        $get = json_decode($response->getBody());
+        dd($get);
+        // return view('block.test',[
+        //     'title' => 'test',
+        // ],compact('get'));
     }
 }

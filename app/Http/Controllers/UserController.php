@@ -94,7 +94,7 @@ class UserController extends Controller
             if(!session('link')){
                 return redirect('/');
             }
-             return redirect(session('link'));
+             return redirect()->intended(session('link'));
         }
         else{
             $user = User::updateOrCreate([

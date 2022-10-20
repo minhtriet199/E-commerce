@@ -241,12 +241,16 @@ $(document).ready(function(){
             },
             success:function(response){
                 if(response.error !==false){
-                    $('#user-alert').html("Cập nhật thành công");
-                    $('#user-alert').css('color','green')
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Cập nhật thành công',
+                    });
                 }
                 else{
-                    $('#user-alert').html("Cập nhật Thất bại");
-                    $('#user-alert').css('color','red')
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Cập nhật bị lỗi',
+                    });
                 }
             }
         });
