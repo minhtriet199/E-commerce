@@ -31,7 +31,7 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__tags">
                                                 <a href="{{ url('/shop/all')}}">Tất cả</a>
-                                                {!! \App\Helpers\Helper::menus($menus) !!}
+                                                {!! Helper::menus($menus) !!}
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@
                     <div class="row" id="product-tab">
                         @foreach($products as $product)
                             <div class="col-lg-4 col-md-6 col-sm-6">
-                                {!! \App\Helpers\Helper::product($product,$product->price,$product->price_sale) !!}
+                                {!! Helper::product($product,$product->price,$product->price_sale) !!}
                             </div>
                         @endforeach
                     </div>

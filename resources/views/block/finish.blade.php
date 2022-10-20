@@ -13,7 +13,7 @@
                             <h4> Thông tin người nhận</h4>
                         </div>
                         <div class="col-lg-4">
-                            {!! \App\Helpers\Helper::orderStatus($order->status) !!}
+                            {!! Helper::orderStatus($order->status) !!}
                         </div>
                     </div>
                     <hr>

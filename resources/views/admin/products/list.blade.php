@@ -38,7 +38,7 @@
                         <td>{{ $product->amount }}</td>
                         <td>{{ number_format($product->price,0,',','.')}} đ</td>
                         <td>{{ number_format($product->price_sale,0,',','.')}} đ</td>
-                        <td>{!! \App\Helpers\Helper::active($product->active) !!}</td>
+                        <td>{!! Helper::active($product->active) !!}</td>
                         <td>{{ $product->updated_at }}</td>
                         <td>  
                             <a class="btn btn-primary btn-sm"  href="/admin/products/edit/{{ $product->id }}"><i class="fas fa-edit"></i></a>

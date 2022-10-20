@@ -8,30 +8,32 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\Product;
 use App\Http\Services\Order\OrderService;
+use App\Http\Services\NotificationServices;
 use Carbon\Carbon;
 use App\Charts\RevenueChart;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 
 use Auth;
 
 class AdminMainController extends Controller
 {
-    public function __construct(OrderService $orderService){
+    protected $notificationServices;
+    protected $orderService;
+    public function __construct(OrderService $orderService,NotificationServices $notificationServices){
         $this->orderService = $orderService;
+        $this->notificationServices = $notificationServices;
     }
     public function index(){
         $month = ['1','2','3','4','5','6','7','8','9','10','11','12'];
-        $order_chart = [];
+        $revenue_chart = [];
         foreach ($month as $key => $value) {
-            $order_chart[] = Order::select('*')
-        ->whereMonth('created_at',$value)
-        ->count();
+            $revenue_chart[] =  DB::table('Orders')
+            ->whereMonth('created_at',$value)
+            ->sum('total');
         }
-
-        // $revenue = Order::select(DB::raw("sum(total) as earnings,date_format(created_at, '%m') as month"))
-        // ->groupBy('created_at')
-        // ->get();
         
+
         return view('admin.users.home', [
             'title' => 'Dashboard',
             'orders' => Order::whereDate('created_at', Carbon::today())->get(),
@@ -43,10 +45,15 @@ class AdminMainController extends Controller
             'shipping_order' => $this->orderService->count_shipping_order(),
             'success_order' => $this->orderService->count_success_order(),
             'refund_order' => $this->orderService->count_refund_order(),
-        ])->with('month',$month)->with('order_chart',$order_chart);
+            'top_sell' => $this->orderService->top_selling_product(),
+        ])->with('month',$month)->with('revenue_chart',$revenue_chart);
     }
     public function logout(){   
         Auth::logout();
         return redirect('admin/users/login');
+    }
+    public function check_notify(){
+        return Notification::where('active',0)
+            ->update(['active' => '1']);
     }
 }

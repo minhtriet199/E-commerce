@@ -9,19 +9,16 @@ use Illuminate\Support\Facades\Session;
 
 class ProductAdminService
 {
-    public function getMenu()
-    {
+    public function getMenu(){
         return Menus::where('active',1) ->get();
     }
-    public function get()
-    {
+    public function get(){
         return Product::orderby('id')
             ->with('menus')
             ->paginate(9);
     }
 
-    protected function isValidPrice($request)
-    {
+    protected function isValidPrice($request){
         if($request->input('prices_sale') >= $request->input('price')
         ){
             Session::flash('error','Giá giảm phải nhỏ hơn giá gốc');
@@ -36,11 +33,11 @@ class ProductAdminService
         return true;
     }
 
-    public function insert($request)
-    {
+    public function insert($request){
         $isValidPrice =$this->isValidPrice($request);
         if($isValidPrice === false) return false;
 
+        $thumb = '/storage/uploads/'.date("Y/m/d").'/'.time().'.png';
         try{
             $request->except('_token');
             Product::create([
@@ -49,7 +46,7 @@ class ProductAdminService
                 'price' => $request->input('price'),
                 'price_sale' =>$request->input('price_sale'),
                 'amount' => $request->input('amount'),
-                'thumb' => $request->input('thumb'),
+                'thumb' => $thumb,
                 'description' => $request->input('description'),
                 'content' =>$request->input('content'),
                 'active' => $request->input('active'),
@@ -82,13 +79,14 @@ class ProductAdminService
         }
         return true;
     }
-    public function delete($request){
-        $product = Product::where('id' , $request->input('id'))->first();
+
+    public function delete($product){
         if($product){
             $product -> delete();
             return true;
         }
         return false;
     }
+    
 }
 

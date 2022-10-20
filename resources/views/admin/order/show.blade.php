@@ -18,8 +18,8 @@
                 <th>{{ $order->username }}</th>
                 <th>0{{ $order->phone }}</th>
                 <th>{{ number_format($order->total,0,',','.') }} đ</th>
-                <th>{!! \App\Helpers\Helper::orderStatus($order->status) !!}</th>
-                <th>{!! \App\Helpers\Helper::order_button($order,$order->status) !!} <input type="hidden" value="{{ $order->id}}" class="order_id"></th>
+                <th>{!! Helper::orderStatus($order->status) !!}</th>
+                <th>{!! Helper::order_button($order,$order->status) !!} <input type="hidden" value="{{ $order->id}}" class="order_id"></th>
             </tr> 
         @endforeach
     </tbody>

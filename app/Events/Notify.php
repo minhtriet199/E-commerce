@@ -15,14 +15,16 @@ class Notify implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $title;
-    public $message;
+    public $content;
+    public $created_at;
     public function __construct($data)
     {
         $this->title = $data['title'];
-        $this->message  = $data['content'];
+        $this->content  = $data['content'];
+        $this->created_at = $data['created_at'];
     }
     public function broadcastOn()
     {
-        return new PrivateChannel('send-message');
+        return new PrivateChannel('send-notify');
     }
 }

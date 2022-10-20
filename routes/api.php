@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\userController;
 use App\Http\Controllers\Api\productController;
 use App\Http\Controllers\Api\AuthController;
 
-Route::middleware(['throttle:api'])->group(function () {
+Route::middleware(['throttle:api','throttle:30,1'])->group(function () {
 
     Route::middleware('auth:api')->get('/user', function (Request $request) {
         return $request->user();

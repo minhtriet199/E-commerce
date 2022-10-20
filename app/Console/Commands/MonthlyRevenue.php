@@ -3,8 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\MonthlyRevenue as RevenueModel;
-use App\Http\Services\Order\OrderServices;
+use App\Models\MonthRevenue as RevenueModel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -17,11 +16,11 @@ class MonthlyRevenue extends Command
     public function handle()
     {
         RevenueModel::create([
-            'revenue' => DB::table('Orders')
-                ->whereDate('created_at', Carbon::now()->month)
+            'Revenue' => DB::table('Orders')
+                ->whereMonth('created_at', Carbon::now()->month)
                 ->sum('total'),
-            'order' => DB::table('Orders')
-                ->whereDate('created_at', Carbon::now()->month)
+            'Order' => DB::table('Orders')
+                ->whereMonth('created_at', Carbon::now()->month)
                 ->count(),
         ]);
     }

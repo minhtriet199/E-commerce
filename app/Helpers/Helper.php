@@ -6,8 +6,10 @@ use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Cart;
 use App\Models\Cart_item;
+use App\Models\Voucher;
 
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 
 
@@ -150,10 +152,10 @@ class Helper{
         $html ='';
         if(Auth::check()){
             $cart = Cart::where('user_id',Auth::id())->first();
-            if($cart){
+            if(!$cart){
                 $countCart = Cart_item::select('*')
                 ->where('cart_id',$cart['id'])
-                ->count();
+                ->sum('quantity');
                 return $html.= $countCart;
             }
             else{
@@ -161,27 +163,24 @@ class Helper{
             }
         }
         else {
-            if(Session::has('carts')){
-                $countCart = count(Session('carts'));
-                return $html.= $countCart;
-            }
-            else{
+            if(!Session::has('carts')){
                 return $html.= '0';
             }
+            $sum =0 ;
+            foreach(Session::get('carts') as $product_id => $details){
+                $sum += $details['quantity'];
+            }
+            return $html.= $sum; 
         }
     }
-    
-    public static function check_comment($product_id,$user_id){
-        $order = Order::where('user_id',$user_id)->get();
-        $order_detail = Order_detail::where(
-            ['order_id',$order['id']],
-            ['product_id',$product_id],
-            )->get();
-        if($order_detail){
-            return $html .= 'mua';
-        }
-        else{
-            return $html .= 'chua';
-        }
+
+    public static function notify_status($active){
+        $html = '';
+        if($active == 0)
+            $html .= '<i class="fas fa-circle mr-2" style="color:red;"></i>';
+        else
+            $html .= '<i class="fas fa-envelope mr-2"></i> ';
+
+        echo $html;
     }
 }

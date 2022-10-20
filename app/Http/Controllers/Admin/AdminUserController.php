@@ -18,25 +18,13 @@ class AdminUserController extends Controller
     public function __construct(UserService $userServices){
         $this->userServices = $userServices;
     }
-    public function index()
-    {
+    public function index(){
         return view('admin.account.list',[
             'title' => 'Quản lý tài khoản',
             'accounts' => $this->userServices->get_all(),
         ]);
     }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-    public function show($id)
-    {
+    public function show($id){
         return view('admin.account.edit',[
             'title' => 'Cập nhật tài khoản',
             'account' => $this->userServices->get_user_id($id),
@@ -44,18 +32,12 @@ class AdminUserController extends Controller
             'cities' => Cities::all(),
         ]);
     }
-    public function edit(Request $request,$id)
-    {
-        
-    }
-    public function update(UpdateUserRequest $request, $id)
-    {
+    public function update(UpdateUserRequest $request, $id){
         $this->userServices->updateUser($request,$id);
         return redirect('/admin/account/list');
     }
 
-    public function destroy(Request $request)
-    {
+    public function destroy(Request $request){
         $carts = User::where('id' , $request->input('id'))->delete();
         return redirect()->back();
     }

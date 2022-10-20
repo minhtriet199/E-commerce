@@ -11,6 +11,7 @@ class MenuService
 {
     public function get()
     {
+        // return Menus::withTrashed()->get();
         return Menus::all();
     }
     public function create($request)
