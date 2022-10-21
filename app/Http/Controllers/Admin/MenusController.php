@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Menu\CreateFormRequest;
 use App\Http\Requests\Menu\UpdateRequest;
 use App\Http\Services\Menu\MenuService;
-use Carbon\Carbon;
 use App\Models\Menus;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use Carbon\Carbon;
 
 class MenusController extends Controller
 {
@@ -51,7 +51,6 @@ class MenusController extends Controller
     public function update(Menus $id, UpdateRequest $request)
     {
         $this->MenuService->update($request, $id);
-
         return redirect('/admin/menus/list');
     }
 

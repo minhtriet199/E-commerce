@@ -174,7 +174,12 @@
               </li>
             </ul>
           </li>
-          
+
+          <li class="nav-item">
+            <a href="/admin/comment/list" class="nav-link">
+              <i class="nav-icon fa fa-comment"></i><p>Bình luận</p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="/admin/shipping" class="nav-link">
               <i class="nav-icon fa fa-truck"></i><p> Giá giao hàng</p>
@@ -185,6 +190,8 @@
               <i class="nav-icon fa fa-ticket-alt"></i><p> Voucher</p>
             </a>
           </li>
+
+          
           <li class="nav-item ">
             <a href="/" class="nav-link active">
             <i class="nav-icon fas fa-home"></i><p> Về shop</p>

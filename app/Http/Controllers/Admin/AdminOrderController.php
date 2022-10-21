@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Services\Order\OrderService;
-use App\Jobs\sendMailOrder;
 use App\Models\Order;
 use App\Models\order_detail;
+use App\Jobs\sendMailOrder;
 
 class AdminOrderController extends Controller
 {
@@ -42,10 +42,14 @@ class AdminOrderController extends Controller
         ]);
     }
 
+    // Using ajax to update order status
+    // More in public/assets/admin/main.js and find .btn-update-order
     public function update(Request $request){
         $result = $this->orderService->update($request);
         $order = Order::where('id',$request->input('id'))->first(); 
         if($result){
+            // Putting sending orderEmail to Queue
+            // More in Jobs\SendMailOrder.php
             dispatch(new sendMailOrder($order));
             return response()->json([
                 'error'=>false,

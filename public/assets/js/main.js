@@ -390,7 +390,6 @@ $(document).ready(function(){
         const url = (window.location).href;
         var last_url = url.substring(url.lastIndexOf('/') + 1).split('?')[0] ;
         const orderby = $('.orderby-price').find(':selected').val();
-
         $.ajax({
             url:'/orderby',
             method: 'POST',

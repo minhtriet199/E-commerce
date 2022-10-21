@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Services\Voucher\VoucherService;
 use App\Http\Requests\Voucher\VoucherRequest;
 use App\Models\Voucher;

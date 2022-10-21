@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Menus;
 use App\Models\Product_image;
+use App\Models\Comment;
 
 class Product extends Model
 {
@@ -34,5 +35,8 @@ class Product extends Model
     }
     public function product_image(){
         return $this->hasMany(Product_image::class);
+    }
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 }

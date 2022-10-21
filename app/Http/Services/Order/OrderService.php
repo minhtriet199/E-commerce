@@ -58,34 +58,15 @@ class OrderService
             ->whereMonth('created_at',Carbon::now()->month)
             ->sum('total');
     }
-    public function daily_order_count(){
+
+    public function get_daily_order(){
         return DB::table('Orders')
-            ->whereDate('created_at', Carbon::today())
-            ->count();
+            ->whereDate('created_at', Carbon::today());
     }
-    public function count_today_total(){ 
+
+    public function count_order_byStatus($status){
         return DB::table('Orders')
-            ->whereDate('created_at', Carbon::today())
-            ->sum('total');
-    }
-    public function count_pending(){
-        return DB::table('Orders')
-            ->where('status',0)
-            ->count();
-    }
-    public function count_shipping_order(){
-        return DB::table('Orders')
-            ->where('status',1)
-            ->count();
-    }
-    public function count_success_order(){
-        return DB::table('Orders')
-            ->where('status',2)
-            ->count();
-    }
-    public function count_refund_order(){
-        return DB::table('Orders')
-            ->where('status',3)
+            ->where('status',$status)
             ->count();
     }
 
@@ -99,4 +80,3 @@ class OrderService
     }
 
 }
-

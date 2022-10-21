@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Services\Product\ProductAdminService;
-use App\Http\Requests\Product\ProductRequest;
-use App\Http\Services\UploadServices;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\ProductImageRequest;
+use App\Http\Services\UploadServices;
+use App\Http\Services\Product\ProductAdminService;
 use App\Models\Product;
 use App\Models\Product_image;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -65,7 +66,7 @@ class ProductController extends Controller
     public function destroy(Request $request){
         $product = Product::where('id',$request['id'])->first();
         $result = $this->productService->delete($product);
-        unlink(public_path($product->thumb));
+        unlink(public_path($product->thumb)); //Remove image after delete product
         if($result){
             return response()->json([
                 'error'=>false,
@@ -91,7 +92,7 @@ class ProductController extends Controller
             'product' => Product::where('id',$id)->first(),
         ]);
     }
-    public function store_image(Request $request){
+    public function store_image(ProductImageRequest $request){
         $file = $request->file('file');
         foreach($file as $photo){
             $name = time().rand(1,100).'.png';

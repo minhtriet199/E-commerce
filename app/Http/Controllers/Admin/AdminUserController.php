@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\User\UserService;
+use App\Http\Requests\updateUser\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Cities;
 use App\Models\District;
-use App\Http\Requests\updateUser\UpdateUserRequest;
-use Illuminate\Http\Request;
+
+
 
 class AdminUserController extends Controller
 {

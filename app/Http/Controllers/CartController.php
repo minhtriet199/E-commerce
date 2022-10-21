@@ -23,10 +23,7 @@ use App\Models\Cities;
 use App\Models\District;
 use App\Models\Notification;
 use Pusher\Pusher;
-
-
 use Carbon\Carbon;
-
 use Session;
 
 class CartController extends Controller
@@ -40,7 +37,6 @@ class CartController extends Controller
         $this->userServices =$userServices;
         $this->orderServices = $orderServices;
     }
-   
 
     public function index(){
         if(Auth::check()) {
@@ -62,6 +58,7 @@ class CartController extends Controller
 
         $carts = Session::get('carts',[]);
         $exist = Arr::exists($carts,$product['product_id']);
+        // If cart exist to add more instead of add more row
         if($exist){
             $quantityNew = $carts[$product['product_id']]['quantity'] + $product['product_quantity'];
             $carts[$product['product_id']] =[
@@ -72,6 +69,7 @@ class CartController extends Controller
                 'thumb' => $product['product_thumb'],
             ];
         }else{
+            // Insert into cart
             $carts[$product['product_id']] = [
                 'product_id' => $product['product_id'],
                 'name'=> $product['product_name'],
@@ -83,9 +81,9 @@ class CartController extends Controller
         
         $request ->session()->put('carts', $carts);
         if(Auth::check()){
-            $this->cartServices->userStore();
+            $this->cartServices->userStore(); // Too lazy to write for Login user so i do this
         }
-        //Insert cart pusher will update cart number
+        //Insert cart pusher will update cart number realtime
         $data['amount'] = $product['product_quantity'];
         $options = array(
             'cluster' => 'ap1',
@@ -93,12 +91,12 @@ class CartController extends Controller
         );
 
         $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_KEY'), // Sometime this line will bug and i don't know why
             env('PUSHER_APP_SECRET'),
             env('PUSHER_APP_ID'),
             $options
         );
-        $pusher->trigger('AddCart', 'addCart', $data);
+        $pusher->trigger('AddCart', 'addCart', $data); // More in app\events\AddCart.php
 
         $data = [];
         $data['carts'] = Arr::exists($carts,$product['product_id']) ?  Session::get('carts') : [];
@@ -106,6 +104,8 @@ class CartController extends Controller
         
     }
 
+    // Using ajax to update quantiy 
+    // Check public/assets/js/main.js and find .quantity-btn
     public function update(Request $request){
         if($request->id && $request->quantity){
             if(Auth::check()){
@@ -135,27 +135,7 @@ class CartController extends Controller
                 }
             }
         }
-
-        // $options = array(
-        //     'cluster' => 'ap1',
-        //     'encrypted' => true
-        // );
-
-        // $pusher = new Pusher(
-        //     env('PUSHER_APP_KEY'),
-        //     env('PUSHER_APP_SECRET'),
-        //     env('PUSHER_APP_ID'),
-        //     $options
-        // );
-        // $pusher->trigger('DecreasedCart', 'decreasedCart', $data);
         
-    }
-
-    public function cart_update(Request $request){
-        $data = $request->all();
-        $cart_item = cart_item::where('product_id',$data['id'])
-            ->update(['fee' => $cart_item['cart_item']]);
-        return $cart_item;
     }
     
     public function checkout(){    
@@ -213,14 +193,17 @@ class CartController extends Controller
                 $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
             }
         }
-        dispatch(new sendMailOrder($order));
+        // This will putting Sendsing Mail to queue
+        // More in App\Jobs\sendMailOrder
+        // Use php artisan schedule:work in terminal for it to work
+        dispatch(new sendMailOrder($order)); 
         $notification = Notification::create([
             'order_id' => $order->id,
             'content' => 'Đơn hàng mới',
             'active' => '0',
         ]);
 
-
+        // This will sending an notification to Admin in realtime
         $data['title'] = $notification['order_id'];
         $data['content'] = $notification['content'];
         $data['created_at'] = $notification['created_at'];
@@ -230,13 +213,13 @@ class CartController extends Controller
             'encrypted' => true
         );
         $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_KEY'), // Sometime this line will bug and i don't know why
             env('PUSHER_APP_SECRET'),
             env('PUSHER_APP_ID'),
             $options
         );
 
-        $pusher->trigger('Notify', 'send-notify', $data);
+        $pusher->trigger('Notify', 'send-notify', $data); // More in app\events\Notify
 
         Session::forget('carts');
         Session::put('order',$order->id);

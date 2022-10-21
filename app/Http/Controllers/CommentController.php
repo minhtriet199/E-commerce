@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\facades\Auth;
+use App\Http\Requests\CommentRequest;
 use App\Models\Product;
 use App\Models\Comment;
-use App\Http\Requests\CommentRequest;
 use Helper; 
 
 class CommentController extends Controller
@@ -20,6 +20,8 @@ class CommentController extends Controller
         ]);
         return response()->json();
     }
+    // Using ajax to print out comment
+    // More in views/products/detail.blade.php and find at the end page
     public function fetchcmt(Request $request){
         $product_id = $request->product_id;
         $output= '';
@@ -27,8 +29,7 @@ class CommentController extends Controller
         $comments = Comment::where('product_id',$product_id)
         ->with('users')
         ->orderBy('created_at','desc')
-        ->get();
-        // '.  \App\Helpers\Helper::check_comment($comment->product_id,$comment->user_id) .'       
+        ->get();    
         foreach($comments as $comment){
             $output.= '
                 <div class="product__details__tab__content">

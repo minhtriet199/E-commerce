@@ -17,8 +17,8 @@ class MenuService
     {
         try{
             Menus::create([
-                'name' =>(string) $request->input('name'),
-                'active' =>(int) $request->input('active'),
+                'name' =>$request->input('name'),
+                'active' =>$request->input('active'),
                 'slug' =>Str::slug($request->input('name'),'-')
             ]);
 
@@ -33,8 +33,8 @@ class MenuService
 
     public function update($request, $menus) : bool
     {   
-        $menus->name = (string) $request->input('name');
-        $menus->active = (int) $request->input('active');
+        $menus->name = $request->input('name');
+        $menus->active = $request->input('active');
         $menus->slug = Str::slug($request->input('name'),'-');
         $menus->save();
         
@@ -55,20 +55,6 @@ class MenuService
     public function getSlug($slug)
     {
         return Menus::where('slug',$slug)->firstOrFail();
-    }
-
-    public function getProduct($menu, $request)
-    {
-        $query = $menu->products()
-            ->select('id', 'name','slug' , 'thumb','price', 'price_sale')
-            ->where('active', 1);
-        if($request->input('price')){
-            $query->orderBy('price',$request->input('price'));
-        }
-        return $query
-            ->orderByDesc('id')
-            ->paginate(8);
-      
     }
 }
 

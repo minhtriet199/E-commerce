@@ -105,7 +105,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            url: '/admin/select-delivery' ,
+            url: '/select-delivery' ,
             method: 'POST',
             data:{
                 action : action,
@@ -117,7 +117,6 @@ $(document).ready(function(){
             }
         });
     });
-
 
     $('.fee_edit').blur(function(){
             var id = $(this).data('id');
@@ -241,6 +240,39 @@ $(document).ready(function(){
         }
     });
 
+    $(".remove-comment").click(function (e) {
+        e.preventDefault();
+        const ele = $(this);
+        const id = ele.parents("tr").attr("data-id");
+        const _token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: '/admin/comment/destroy',
+            method: "DELETE",
+            // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                _token: _token, 
+                id: id, 
+            },
+            success: function (response) {
+                $('#comment'+id).remove();
+            }
+        });
+    });
+
+    $('.switch-comment').change(function(e){
+        e.preventDefault();
+        const ele = $(this);
+        const id = ele.parents("tr").attr("data-id");
+        const _token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: '/admin/comment/edit',
+            method: 'patch',
+            data:{
+                _token:_token,
+                id:id,
+            },
+        })
+    });
     
 });
 

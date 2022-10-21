@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Order\OrderService;
+use App\Http\Services\NotificationServices;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Product;
-use App\Http\Services\Order\OrderService;
-use App\Http\Services\NotificationServices;
-use Carbon\Carbon;
-use App\Charts\RevenueChart;
 use App\Models\Notification;
-use Illuminate\Support\Facades\DB;
-
+use App\Models\Comment;
+use App\Charts\RevenueChart;
+use Carbon\Carbon;
 use Auth;
 
 class AdminMainController extends Controller
@@ -32,21 +32,28 @@ class AdminMainController extends Controller
             ->whereMonth('created_at',$value)
             ->sum('total');
         }
-        
+        $comment = DB::table('comments')
+        ->select('comments.*','products.name','products.thumb')
+        ->join('products','comments.user_id','=','products.id')
+        ->where('status',0)
+        ->get();
 
         return view('admin.users.home', [
             'title' => 'Dashboard',
             'orders' => Order::whereDate('created_at', Carbon::today())->get(),
             'order_total' => Order::count(),
             'month_total' => $this->orderService->count_total(),
-            'today_total' => $this->orderService->count_today_total(),
-            'user_total' => User::count(),
-            'pending_order' => $this->orderService->count_pending(),
-            'shipping_order' => $this->orderService->count_shipping_order(),
-            'success_order' => $this->orderService->count_success_order(),
-            'refund_order' => $this->orderService->count_refund_order(),
+            'today_total' => $this->orderService->get_daily_order()->sum('total'),
+            'user_total' => $this->orderService->get_daily_order()->count(),
+            'pending_order' => $this->orderService->count_order_byStatus(0), 
+            'shipping_order' => $this->orderService->count_order_byStatus(1),
+            'success_order' => $this->orderService->count_order_byStatus(2),
+            'refund_order' => $this->orderService->count_order_byStatus(3),
             'top_sell' => $this->orderService->top_selling_product(),
-        ])->with('month',$month)->with('revenue_chart',$revenue_chart);
+            'pending_comments' => $comment,
+            'month' => $month,
+            'revenue_chart' => $revenue_chart,
+        ]);
     }
     public function logout(){   
         Auth::logout();

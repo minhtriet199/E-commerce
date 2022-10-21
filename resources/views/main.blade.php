@@ -8,6 +8,7 @@
 <body > 
 	@include('sweetalert::alert')
 	@include('block.header')
+	<!-- Check ViewServiceProvider for more info -->
 	<button class="btn-top btnScrolltop" id="btntop" title="Go to top">
 		<i class="fa fa-angle-double-up"></i>
 	</button>
@@ -20,16 +21,3 @@
 
 </body>
 </html>
-<!-- <script type="text/javascript">
-
-$(document).ready(function(){
-    $(window).scroll(function() {
-        if ($(this).scrollTop() > 100) {
-			  $('#btntop').show();
-        } else {
-            $('#btntop').hide();
-        }
-    });
-});
-
-</script> -->
