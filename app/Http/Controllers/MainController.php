@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Services\Slider\AdminSliderService;
-use App\Http\Services\Product\ProductService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Response;
-
 use Illuminate\Support\Facades\Auth;
-use Session;
+use App\Http\Services\Slider\AdminSliderService;
+use App\Http\Services\Product\ProductService;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Cart_item;
+use Session;
+
 
 class MainController extends Controller
 {
@@ -33,6 +33,8 @@ class MainController extends Controller
             'products' => $this->product->get(),
         ]);
     }
+    // Using ajax to load more product in main page
+    // More in assets/js/main.js and find #loadmore
     public function loadProduct(Request $request){
         $page = $request ->input('page',0);
         $result = $this->product->get($page);
@@ -44,7 +46,8 @@ class MainController extends Controller
         return response()->json(['html' => '']);
     }
 
-
+    // Using ajax to load searching result 
+    // More in assets/js/main.js and find #search-box
     public function search(Request $request){
         $data = $request->all();
         $output= '';

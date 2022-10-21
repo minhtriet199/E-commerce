@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Order\OrderService;
 use App\Models\MonthRevenue;
 use App\Models\DailyRevenue;
-use App\Http\Services\Order\OrderService;
 
 class RevenueController extends Controller
 {
@@ -29,7 +30,7 @@ class RevenueController extends Controller
         ]);
     }
     public function store_daily(){
-        $day_total = $this->orderServices->count_today_total();
+        $day_total = $this->orderServices->get_daily_order()->sum('total');;
         DailyRevenue::create('revenue',$day_total);
         return redirect()->back();
     }

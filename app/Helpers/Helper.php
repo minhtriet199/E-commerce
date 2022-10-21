@@ -33,7 +33,7 @@ class Helper{
         }
         return $html;
     }
-
+    // For views/products/detail
     public static function formprice($Product,$price =0,$price_sale=0){
         $html ='';
         if($price_sale != 0) {
@@ -46,8 +46,7 @@ class Helper{
                 <input type="hidden" value=" '.$Product -> price.' " name="product_price">
             ';
         }
-    } 
-
+    }
     public static function priceDetail($Product,$price =0,$price_sale=0){
         $html= '';
         if($price_sale != 0) {
@@ -182,6 +181,7 @@ class Helper{
 
         echo $html;
     }
+    
     public static function count_image($id){
         $count = Product_image::where('product_id',$id)
         ->count('*');

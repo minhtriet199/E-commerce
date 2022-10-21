@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Slider;
+use App\Http\Controllers\Controller;
 use App\Http\Services\Slider\AdminSliderService;
 use App\Http\Services\UploadServices;
 use App\Http\Requests\Slider\SliderRequest;
-
+use App\Models\Slider;
 
 class SliderController extends Controller
 {

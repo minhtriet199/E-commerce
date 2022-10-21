@@ -44,8 +44,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>{{$user_total}}</h3>
-                        <p>Tổng số user</p>
+                        <h3>{{$user_total}} Đơn</h3>
+                        <p>Tổng số đơn hàng nay</p>
                     </div>
                 </div>
             </div>
@@ -158,6 +158,46 @@
                         </table>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header ui-sortable-handle">
+                        <h3 class="card-title">Bình luận chờ được duyệt</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover">
+                            <thead class="table-dark ">
+                                <tr>
+                                    <th scope="col">Ảnh</th>
+                                    <th scope="col">Tên sản phẩm</th>
+                                    <th scope="col">Bình luận</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i=0 @endphp
+                                @foreach($pending_comments as $item)
+                                    @php $i +=1 @endphp
+                                    <tr data-id='{{ $item->id }}'>
+                                        <th>
+                                            <a href="/admin/comment/product/{{ $item->product_id }}">
+                                            <img src="{{ $item->thumb }}" style="width:100px">
+                                            </a>
+                                        </th>
+                                        <th class="col-lg-2">{{ $item->name }}</th>
+                                        <th class="col-lg-4">{{ $item->Content }}</th>
+                                        <th>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input switch-comment" id="customSwitch{{$i}}"   {{ $item -> status == 1 ? 'checked ="" ': '' }}>
+                                                <label class="custom-control-label" for="customSwitch{{$i}}"></label>
+                                            </div>    
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
         </div>
        
@@ -202,4 +242,3 @@
         });
     };
 </script>
-

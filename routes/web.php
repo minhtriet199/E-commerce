@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Admin\RevenueController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminCommentController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductsController;
@@ -22,21 +23,22 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\WishlistController;
 
-// test
-    use App\Http\Controllers\SendMessageController;
-//test
 
+// Middleware custom in kernel.php
+// Name is for after middleware'admin' check user is login or not will redirect to route('login_admin)
+// Middleware/RedirectIfAuthenticated_admin
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login_admin')->middleware('admin');
 Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
 Route::get('/logout',[AdminMainController::class,'logout']);
 Route::post('select-delivery',[ShippingController::class,'select_delivery']);
 Route::middleware(['auth_admin'])->group(function (){
+    //Check if login user have the permission
+    // Middleware/CheckAdmin
     Route::group(['middleware' => ['CheckAdmin']],function (){
         Route::prefix('admin')->group(function(){
             Route::get( '/',[AdminMainController::class, 'index'] )->name('admin');
             Route::get( 'main',[AdminMainController::class, 'index'] )->name('admin');
             Route::get('create',[ShippingController::class,'shippinglist']);
-            Route::post('select-delivery',[ShippingController::class,'select_delivery']);
             Route::post('insert-delivery',[ShippingController::class,'insert_delivery']);
             Route::get('shipping',[ShippingController::class,'index']);
             Route::post('update-fee',[ShippingController::class,'update_fee']);
@@ -75,6 +77,8 @@ Route::middleware(['auth_admin'])->group(function (){
                 Route::DELETE('destroy',[ProductController::class,'destroy']);
             });
             
+            // Check if user have permission
+            // Middeleware/CheckOwner
             Route::group(['middleware' => ['CheckOwner']],function (){
                 Route::prefix('sliders')->group(function(){
                     Route::get('list',[SliderController::class,'index']);
@@ -97,6 +101,13 @@ Route::middleware(['auth_admin'])->group(function (){
                 Route::get('edit/{id}',[AdminOrderController::class,'show']);
                 Route::post('update',[AdminOrderController::class,'update']);
             });
+
+            Route::prefix('comment')->group(function(){
+                Route::get('list',[AdminCommentController::class,'index']);
+                Route::get('product/{id}',[AdminCommentController::class,'show']);
+                Route::delete('destroy',[AdminCommentController::class,'destroy']);
+                Route::patch('edit',[AdminCommentController::class,'edit']);
+            });
         }); 
     });
 });
@@ -107,6 +118,10 @@ Route::post('/services/load-product',[MainController::class,'loadProduct']);
 Route::get('test',[MainController::class,'test']);
 //Search
 Route::get('/search',[MainController::class,'search']);
+
+
+// If user is login will direct them back to home page ( ->middleware('guest') )
+// Middleware/RedirectIfAuthenticated
 
 //Sign up
 Route::get('user/signup',[UserController::class,'signup'])->middleware('guest');;
@@ -147,7 +162,6 @@ Route::post('use_voucher',[CartController::class,'use_voucher']); // not working
 
 //Check out need a rework
 Route::get('checkout',[CartController::class,'checkout']);
-Route::post('select-delivery',[ShippingController::class,'select_delivery']);
 Route::post('checkout',[CartController::class,'place_order']);
 
 
@@ -162,7 +176,6 @@ Route::middleware(['auth'])->group(function (){
     Route::prefix('user')->group(function(){       
         Route::get('/logouts',[UserController::class,'logouts']);
         Route::get('cart',[CartController::class,'userStore']);
-        Route::patch('update-carts',[CartController::class,'cart_update']);
         Route::post('comment',[CommentController::class,'store']);
         //User profile
         Route::prefix('account')->group(function(){
@@ -171,6 +184,3 @@ Route::middleware(['auth'])->group(function (){
         });
     });
 });
-
-
-Route::get('test',[MainController::Class,'test']);

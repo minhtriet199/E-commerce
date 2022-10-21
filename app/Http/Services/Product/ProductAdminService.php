@@ -15,7 +15,7 @@ class ProductAdminService
     public function get(){
         return Product::orderby('id')
             ->with('menus')
-            ->paginate(10);
+            ->paginate(9);
     }
 
     protected function isValidPrice($request){
@@ -63,8 +63,6 @@ class ProductAdminService
     public function update($request, $product){
         $isValidPrice =$this->isValidPrice($request);
         if($isValidPrice === false) return false;
-
-
         try{
             $product->fill($request->input());
             $product->save();

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\Order\OrderService;
-use Session;
 use App\Mail\OrderMail;
+use Session;
 
 class OrderController extends Controller
 {

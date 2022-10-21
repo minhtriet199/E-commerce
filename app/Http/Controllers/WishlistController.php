@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\facades\Auth;
-use App\Models\whistlist;
 use App\Http\Services\WishlistServices;
+use App\Models\whistlist;
 
 class WishlistController extends Controller
 {
@@ -20,6 +20,9 @@ class WishlistController extends Controller
             'list' => $this->wishlistServices->get(),
         ]);
     }
+
+    // Using ajax to add to wishlist
+    // More in assets/js/main.js and find .add-wishlist
     public function insert_wishlist(Request $request){
         if(Auth::check()){
             $find = whistlist::where('user_id','=',Auth::id())

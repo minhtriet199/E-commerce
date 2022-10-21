@@ -13,6 +13,7 @@ class UploadServices{
 
         return '/storage/' . $pathFull . '/' . $name;
     }
+
     public function store_multi($photo,$name){
         $pathFull = 'uploads/' . date("Y/m/d");
 

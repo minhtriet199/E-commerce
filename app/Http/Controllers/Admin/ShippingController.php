@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Shipping\ShippingRequest;
 use App\Models\Cities;
 use App\Models\District;
@@ -28,6 +28,9 @@ class ShippingController extends Controller
             'citys' => $city,
         ]);
     }
+
+    // Using ajax to print out the district of user selected city
+    // More in public\assets\admin\js\main.js and find .choose
     public function select_delivery(Request $request){
         $data = $request->all();
         $output= '';
