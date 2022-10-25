@@ -40,4 +40,8 @@ class ProductService
             ->orderby('current_price', $request->orderby)
             ->get();
     }
+
+    public function decreaseAmount($detail){
+        return Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
+    }
 }

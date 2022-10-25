@@ -2,7 +2,6 @@
 
 namespace App\Http\Services\Order;
 
-use App\Http\Requests\order\UpdateRequest;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\facades\Auth;
@@ -25,6 +24,9 @@ class OrderService
         return Order::where('id', session('order'))
         ->with('order_details')
         ->get();  
+    }
+    public function getOrderId($request){
+        return Order::where('id',$request->input('id'))->first();
     }
     public function insertOrderDetail($order,$cart){
         return  order_detail::create([

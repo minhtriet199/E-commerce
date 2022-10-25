@@ -50,9 +50,10 @@ class CartServices{
                             'quantity' => $details['quantity'],
                             'price' => $details['price'],
                         ]);
-                    }
-                }
-            }
-        }
-    }
-}
+                    }//End final if else
+                }//End foreach LOOP
+            }//End second if else
+        }//End first if else
+    }//End Function
+
+}//This class end
