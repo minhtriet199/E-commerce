@@ -5,7 +5,7 @@
     <section>
         <div class="container">
             <div class="mid-table">
-                <form action="{{ url('/user/change_pass') }}" method="POST" >
+                <form method="POST" >
                     <h2>Đổi mật khẩu</h2>
                     @include('block.alert')
                     <input type="hidden" name="token" value=" {{ $token }}">

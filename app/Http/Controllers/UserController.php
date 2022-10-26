@@ -12,6 +12,7 @@ use App\Http\Requests\User\UserRequest;
 use App\Http\Requests\Password\PasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\User\UserInfomationRequest;
+use App\Http\Requests\loginRequest;
 use App\Http\Services\User\UserService;
 use App\Http\Services\Order\OrderService;
 use App\Http\Services\Voucher\VoucherService;
@@ -71,7 +72,8 @@ class UserController extends Controller
 
     public function login(){
         // This will save previous page for after login and redirect back to the page
-        session(['link' => url()->previous()]);
+        if( url()->previous() == 'http://127.0.0.1:8000/user/signup')  session::forget('link');
+        else session(['link' => url()->previous()]);
         return view('user.login',[
             'title' => 'Đăng nhập'
         ]);
@@ -98,7 +100,6 @@ class UserController extends Controller
         else{
             $user = User::updateOrCreate([
                 'facebook_id' => $User->id,
-            ], [
                 'name' => $User->name,
                 'email' => $User->email,
                 'password'=> Hash::make(Str::random(11)),
@@ -146,7 +147,6 @@ class UserController extends Controller
         else{
             $user = User::updateOrCreate([
                 'google_id' => $User->id,
-            ], [
                 'name' => $User->name,
                 'email' => $User->email,
                 'email_verified_at' => now(),
@@ -168,17 +168,12 @@ class UserController extends Controller
     //end google
 
     
-    public function store(Request $request){
-        $this->validate($request, [
-            'email' => 'required|email:filter',
-            'password' => 'required'
-        ]);
-
+    public function store(loginRequest $request){
         if(Auth::attempt([
             'email' => $request->input('email'),
             'password' => $request->input( 'password'),
         ])){
-            // If user have cart session this will uploadd cart to database
+            // If user have cart session this will upload cart to database
             $this->cartServices->userStore();
             return redirect(session('link'));
         }

@@ -92,7 +92,7 @@ Route::middleware(['auth_admin'])->group(function (){
                     Route::get('list',[AdminUserController::class,'index']);
                     Route::get('edit/{id}',[AdminUserController::class,'show']);
                     Route::post('edit/{id}',[AdminUserController::class,'update']);
-                    Route::delete('destroy',[AdminUserController::class,'destroy']);
+                    Route::DELETE('destroy',[AdminUserController::class,'destroy']);
 
                 });
             });
@@ -100,6 +100,9 @@ Route::middleware(['auth_admin'])->group(function (){
                 Route::get('list/{status}',[AdminOrderController::class,'index']);
                 Route::get('edit/{id}',[AdminOrderController::class,'show']);
                 Route::post('update',[AdminOrderController::class,'update']);
+
+                Route::get('month/{month}-{year}',[AdminOrderController::class,'month']);
+                Route::get('day/{day}-{month}-{year}',[AdminOrderController::class,'day']);
             });
 
             Route::prefix('comment')->group(function(){
@@ -124,7 +127,7 @@ Route::get('/search',[MainController::class,'search']);
 // Middleware/RedirectIfAuthenticated
 
 //Sign up
-Route::get('user/signup',[UserController::class,'signup'])->middleware('guest');;
+Route::get('user/signup',[UserController::class,'signup'])->middleware('guest')->name('signup');
 Route::post('user/signup',[UserController::class,'create']);
 
 //Login
@@ -136,7 +139,7 @@ Route::get('user/reset',[UserController::class,'reset'])->middleware('guest');;
 Route::post('user/link-reset',[UserController::class,'sendResetLink']);
 //Change pass
 Route::get('user/change_pass/{token}',[UserController::class,'passwordForm']);
-Route::post('user/change_pass',[UserController::class,'change_pass']);
+Route::post('user/change_pass/{token}',[UserController::class,'change_pass']);
 
 //Api login
 Route::get('login/google', [UserController::class, 'loginGoogle']);
@@ -168,7 +171,7 @@ Route::post('checkout',[CartController::class,'place_order']);
 
 
 //View purchase
-Route::get('finish',[OrderController::class,'show'])->name('confimation');
+Route::get('purchase/{id}',[OrderController::class,'show'])->name('confimation');
 
 //User login Auth::check()
 Route::middleware(['auth'])->group(function (){
@@ -186,3 +189,6 @@ Route::middleware(['auth'])->group(function (){
         });
     });
 });
+
+
+

@@ -46,7 +46,6 @@
                                     <p>Địa chỉ</p>
                                     <input type="text" name="address" value="{{ $account->profile->address}}">
                                     @include('block.cd')
-                                    <!-- <input type="hidden" name="user_id" value="{{$account->profile->id}}" data-id="{{$account->profile->id}}"> -->
                                     <button type="button"  id="btn-update-user">Cập nhật</button>
                                     @csrf
                                 </form>

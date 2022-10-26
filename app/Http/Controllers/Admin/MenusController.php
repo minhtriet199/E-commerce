@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Menu\CreateFormRequest;
-use App\Http\Requests\Menu\UpdateRequest;
 use App\Http\Services\Menu\MenuService;
 use App\Models\Menus;
 use Carbon\Carbon;
@@ -48,13 +47,14 @@ class MenusController extends Controller
             'Menus' => $id,
         ]);
     }
-    public function update(Menus $id, UpdateRequest $request)
+
+    public function update(Menus $id, CreateFormRequest $request)
     {
         $this->MenuService->update($request, $id);
         return redirect('/admin/menus/list');
     }
 
-    public function destroy(Request $request): JsonResponse
+    public function destroy(Request $request)
     {
         $result = $this->MenuService->destroy($request);
         if($result){

@@ -118,7 +118,7 @@ $(document).ready(function(){
         });
     });
 
-    $('.fee_edit').blur(function(){
+    $('.fee_edit').keyup(function(){
             var id = $(this).data('id');
             var fee = $(this).text();
             
@@ -142,7 +142,7 @@ $(document).ready(function(){
             });
     });
 
-    $('.discount-edit').blur(function(){
+    $('.discount-edit').keyup(function(){
             var id = $(this).data('id');
             var discount = $(this).text();
             
@@ -195,6 +195,7 @@ $(document).ready(function(){
         $.ajax({
             url: '/admin/account/destroy',
             type: 'DELETE',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data:{
                 id:id,
                 token,token

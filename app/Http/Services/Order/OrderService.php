@@ -11,14 +11,15 @@ use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Product;
 use Carbon\Carbon;
+use Helper;
 
 class OrderService
 {
-    public function getOrder(){
-        return Order::where('id',session('order'))->first();
+    public function getOrder($id){
+        return Order::where('id',$id)->first();
     }
-    public function getDetail(){
-        return Order_detail::where('order_id',session('order'))->get();
+    public function getDetail($id){
+        return Order_detail::where('order_id',$id)->get();
     }
     public function getOrderDetail(){
         return Order::where('id', session('order'))
@@ -46,9 +47,9 @@ class OrderService
     }
     
     public function update($request){
-        $order = Order::where('id',$request->input('id'))->first(); 
+        $order = Order::where('id',$request->id)->first(); 
         if($order){
-            $order = Order::where('id',$request->input('id'))
+            $order = Order::where('id',$request->id)
                 ->increment('status',1);
             return true;
         }
@@ -83,5 +84,21 @@ class OrderService
 
     public function decreaseAmount($detail){
         return Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
+    }
+    public function get_month_order($month,$year){
+        return Order::whereYear('created_at',$year)
+        ->whereMonth('created_at',$month)
+        ->paginate(6);
+    }
+    public function get_day_order($day,$month,$year){
+        return Order::whereYear('created_at',$year)
+        ->whereMonth('created_at',$month)
+        ->whereDay('created_at',$day)
+        ->paginate(6);
+    }
+
+    public function not_selling_product(){
+        $item = Order_Detail::whereMonth('created_at',Carbon::now()->month)->pluck('product_name')->all();
+        return Product::whereNotIn('name',$item)->get();
     }
 }

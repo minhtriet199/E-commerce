@@ -120,9 +120,9 @@
             e.preventDefault();
             fetch_delivery();
         });
-        fetch_delivery();
-        // $.when( fetch_voucher() ).done(function() {
-        //     fetch_delivery();
-        // });
+        // fetch_delivery();
+        $.when( fetch_voucher() ).done(function() {
+            fetch_delivery();
+        });
     });
 </script>

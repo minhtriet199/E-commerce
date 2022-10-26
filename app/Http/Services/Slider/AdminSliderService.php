@@ -11,7 +11,7 @@ class AdminSliderService
 {
     public function get()
     {
-        return Slider::orderby('id')
+        return Slider::orderby('sort_by')
         ->where('active',1)
         ->get();
     }

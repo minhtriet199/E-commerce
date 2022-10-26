@@ -25,7 +25,7 @@ class CreateFormRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:menuses',
-            'active' => 'required','in:0,1'
+            'active' => 'required',
         ];
     }
 

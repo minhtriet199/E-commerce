@@ -37,7 +37,6 @@ class ProductAdminService
         $isValidPrice =$this->isValidPrice($request);
         if($isValidPrice === false) return false;
         try{
-            $request->except('_token');
             Product::create([
                 'name' => $request->input('name'),
                 'menu_id' =>$request->input('menu_id'),
