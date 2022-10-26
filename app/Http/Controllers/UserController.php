@@ -11,11 +11,11 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\User\UserRequest;
 use App\Http\Requests\Password\PasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\User\UserInfomationRequest;
 use App\Http\Services\User\UserService;
 use App\Http\Services\Order\OrderService;
 use App\Http\Services\Voucher\VoucherService;
 use App\Http\Services\CartServices;
-use App\Http\Services\MailServices;
 use App\Models\User;
 use App\Models\User_attribute;
 use App\Models\Cities;
@@ -249,11 +249,20 @@ class UserController extends Controller
 
     // Using ajax to update user profile 
     // More in Assets/js/main.js and find btn-update-order
-    public function update(Request $request){
-        $User_attribute = User_attribute::find($request->user_id);
-        $User_attribute->update($request->input());
-        $User = User::where('id',Auth::id())->update(['name' => $request->input('name')]);
-        return response()->json($User_attribute);
+    public function update(UserInfomationRequest $request){
+        $data = $request->all();
+        $User_attribute = User_attribute::find(Auth::id());
+        $User_attribute->update([
+            'name' => $data['user_name'],
+            'address' => $data['address'],
+            'city' => $data['city'],
+            'district' => $data['district'],
+            'phone' => $data['phone'],
+        ]);
+        $User = User::where('id',Auth::id())->update(['name' => $data['user_name'],]);
+        return response()->json([
+            'error' == true
+        ]);
     }
 
 }

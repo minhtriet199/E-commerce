@@ -24,30 +24,23 @@ class WishlistController extends Controller
     // Using ajax to add to wishlist
     // More in assets/js/main.js and find .add-wishlist
     public function insert_wishlist(Request $request){
-        if(Auth::check()){
-            $find = whistlist::where('user_id','=',Auth::id())
-            ->where(['product_id','=', $request['product_id']])
-                ->first();
-            if($find){
-                $quantityNew = $find['quantity'] + $request['quantity'];
-                whistlist::where('user_id',Auth::id())
-                ->update(['quantity', $quantityNew,]);
-            }
-            else{
-                $whistlist = whistlist::create([
-                    'user_id' => Auth::id(),
-                    'product_id' => $request['product_id'],
-                    'product_id' => $request['quantity'],
-                ]);
-            }
-            return response()->json([
-                'error' => true
-            ]);
+        $find = whistlist::where('user_id','=',Auth::id())
+        ->where(['product_id','=', $request['product_id']])
+            ->first();
+        if($find){
+            $quantityNew = $find['quantity'] + $request['quantity'];
+            whistlist::where('user_id',Auth::id())
+            ->update(['quantity', $quantityNew,]);
         }
         else{
-            return response()->json([
-                'error' => false
+            $whistlist = whistlist::create([
+                'user_id' => Auth::id(),
+                'product_id' => $request['product_id'],
+                'product_id' => $request['quantity'],
             ]);
         }
+        return response()->json([
+            'error' => true
+        ]);
     }
 }

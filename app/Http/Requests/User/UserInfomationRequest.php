@@ -16,7 +16,7 @@ class UserInfomationRequest extends FormRequest
             'address' => 'required',
             'city' => 'required',
             'district' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|numeric|digits:10',
         ];
     }
     public function messages() : array 
@@ -28,6 +28,8 @@ class UserInfomationRequest extends FormRequest
             'district.required' => 'Chưa chọn Quận',
             'city.required' => 'Chưa chọn Thành phố',
             'phone.required' => 'Chưa nhập số điện thoại',
+            'phone.numeric' => 'Nhập số',
+            'phone.digit' => 'Số điện thoại có 10 chữ số',
         ];
     }
 }

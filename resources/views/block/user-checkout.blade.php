@@ -33,7 +33,6 @@
                             <div class="checkout__order">
                                 <h4 class="order__title">Chi tiết đơn hàng</h4>
                                 <div class="checkout__order__products">Sản phẩm <span>Thành tiền</span></div>
-                                <input type="hidden" name="cart_id" value="{{ $cartid->id }}">
                                 <ul class="checkout__total__products">
                                     @php $total = 0 @endphp
                                     @foreach($carts as $key => $cart)
@@ -47,10 +46,11 @@
                                     @endforeach
                                 </ul>
                                 <ul class="checkout__total__all">
+                                    <input type="hidden" class="voucher" value="{!! old('discount') !!}" name="voucher">
                                     <li>Tạm tính <span>{{ number_format($total,0,',','.')}} đ</span></li>
-                                    <li>Tiền vận chuyển <span>0</span></li>
-                                    <li>Tổng tiền<span>{{ number_format($total,0,',','.')}} đ</span></li>
-                                    <input type="hidden" name="total" value="{{ $total }}">
+                                    <li>Giảm giá <span class="discount"> 0 đ</span></li>
+                                    <li>Tiền vận chuyển <span class="fee"> 0</span> </li>
+                                    <li>Tổng tiền <span> đ </span> <span class="grand-total"> {{ number_format($total,0,',','.')}}  </span></li>
                                 </ul>
                                 <button type="submit" class="site-btn">Thanh toán</button>
                             </div>
@@ -62,3 +62,68 @@
         </div>
     </section>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        const token = $('meta[name="csrf-token"]').attr('content');
+        const gtotal = $('.grand-total').text();
+        const grand_total = parseInt(gtotal);
+        
+        function fetch_voucher(){
+            const voucher =$('.voucher').val();
+            if(voucher != ''){
+                $.ajax({
+                        type: 'post',
+                        url:'/use_voucher',
+                        data:{
+                            voucher:voucher,
+                            token:token,
+                        },
+                    success: function(response){
+                        if(response.error == true){
+                            const total = (grand_total*1000) - parseInt(response.discount);
+                            $('.discount').html(response.discount + ' đ');
+                            $('.grand-total').html(total);
+                        }
+                    }
+                });
+            }      
+        }
+       
+           
+        function fetch_delivery(){
+           const district = $('.district').val();
+
+            if(district != ''){
+                $.ajax({
+                    type: 'post',
+                    url:'/delivery_price',
+                    data:{
+                        district:district,
+                        token:token,
+                    },
+                    success: function(response){
+                        if(response.error == true){
+                            const total = grand_total * 1000 + parseInt(response.fee);
+                            $('.fee').html(response.fee + ' đ');
+                            $('.grand-total').text(total);
+                        }
+                        if(response.error == false){
+                            const total = grand_total * 1000 + 40000;
+                            $('.fee').html(response.fee + ' đ');
+                            $('.grand-total').text(total);
+                        }
+                    }
+                });
+            }
+        }
+        $('.district').change(function(e){
+            e.preventDefault();
+            fetch_delivery();
+        });
+        $.when( fetch_voucher() ).done(function() {
+            fetch_delivery();
+        });
+    });
+</script>

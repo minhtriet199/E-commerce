@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('user_attributes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name',255)->nullable()->default(0);
-            $table->string('address',255)->nullable()->default(0);
-            $table->string('district',255)->nullable()->default(0);
-            $table->string('city',255)->nullable()->default(0);
-            $table->integer('phone')->nullable()->default(0);
+            $table->string('name',255)->default(0);
+            $table->string('address',255)->default(0);
+            $table->string('district',255)->default(0);
+            $table->string('city',255)->default(0);
+            $table->integer('phone')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });

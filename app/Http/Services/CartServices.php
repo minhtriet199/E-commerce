@@ -22,6 +22,10 @@ class CartServices{
         ->first();   
     }
     
+    public function sumTotal($cart){
+        return $cart['quantity'] * $cart['price'];
+    }
+
     public function userStore(){
         if(Auth::check()){
             $Cart = Cart::updateOrCreate([

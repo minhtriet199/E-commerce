@@ -81,4 +81,7 @@ class OrderService
         ->get();
     }
 
+    public function decreaseAmount($detail){
+        return Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
+    }
 }

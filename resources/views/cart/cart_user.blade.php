@@ -50,7 +50,6 @@
                         <form>
                             <input type="text" name="voucher_code" placeholder="Coupon code">
                             <button type="button" id="voucher-btn">Xác nhận</button>
-                            <input type="hidden" name="discount" class="discount_voucher">
                             @csrf
                         </form>
                     </div>
@@ -61,7 +60,12 @@
                             <li>Giảm giá: <span class="discount">0 đ</span></li>             
                             <li>Tổng tiền:  <span> đ </span> <span class="grand-total"> {{ number_format($total,0,',','.')}}  </span></li>
                         </ul>
-                    <a href="{{ url('/checkout') }}" class="primary-btn">THANH TOÁN</a>
+                        <form method="post">
+                            @csrf
+                            <input type="hidden" name="discount" class="discount_voucher">
+                            <input type="submit" class="btn primary-btn" value="Thanh Toán">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

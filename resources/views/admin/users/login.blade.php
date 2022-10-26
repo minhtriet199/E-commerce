@@ -12,7 +12,7 @@
   <div class="card">
     <div class="card-body login-card-body">
       @include('block.alert')
-      <form action="/admin/users/login/store" method="post">
+      <form method="post">
         <div class="input-group mb-3">
           <input type="email" name="email"  class="form-control" placeholder="Email">
           <div class="input-group-append">

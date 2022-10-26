@@ -203,6 +203,10 @@
                 },
                 success:function(data){
                     fetchcmt();
+                    Swal.fire({
+                        type:'info',
+                        title: 'Bình luận của bạn đang được lọc!',
+                    }); 
                 }
             });
         });

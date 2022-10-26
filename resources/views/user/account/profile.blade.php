@@ -28,8 +28,6 @@
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="profile" role="tabpanel">
                         <div class="account-table">
-              @include('block.alert')
-
                             <h4>Hồ sơ</h4>
                             <div class="account-table-content">
                                 <form id="update" method="POST">
@@ -43,10 +41,12 @@
                                             <input type="number" name="phone" value="0{{ $account->profile->phone}}">
                                         </div>
                                     </div>
+                                    <p>Email</p>
+                                    <input type="text" name="email" value="{{ $account->email}}" disabled>
                                     <p>Địa chỉ</p>
                                     <input type="text" name="address" value="{{ $account->profile->address}}">
                                     @include('block.cd')
-                                    <input type="hidden" name="user_id" value="{{$account->profile->id}}" data-id="{{$account->profile->id}}">
+                                    <!-- <input type="hidden" name="user_id" value="{{$account->profile->id}}" data-id="{{$account->profile->id}}"> -->
                                     <button type="button"  id="btn-update-user">Cập nhật</button>
                                     @csrf
                                 </form>
@@ -76,7 +76,7 @@
                                 @foreach($orders as $order)
                                     <div class="order-card" >
                                         <div class="head row" > 
-                                            <div class="col-lg-9">{!! \App\Helpers\Helper::orderStatus($order->status) !!}</div>
+                                            <div class="col-lg-9">{!! Helper::orderStatus($order->status) !!}</div>
                                             <span class="col-lg-3">Tổng tiền: <label class="total-order">{{ number_format($order->total,0,',','.') }} đ</label></span>
                                         </div>
                                         <hr>

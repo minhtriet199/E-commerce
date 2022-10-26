@@ -229,8 +229,7 @@ $(document).ready(function(){
         const thumb = URL.createObjectURL(e.target.files[0]);
         $('#image_show').html('<img src="'+ thumb +'" width="100px"></a>');
     });
-    
-    $('.preview-image').sortable();
+
     $('.upload_image_mul').change(function(e){
         e.preventDefault();
         var total_file= $(this)[0].files.length;
@@ -248,7 +247,7 @@ $(document).ready(function(){
         $.ajax({
             url: '/admin/comment/destroy',
             method: "DELETE",
-            // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data: {
                 _token: _token, 
                 id: id, 
