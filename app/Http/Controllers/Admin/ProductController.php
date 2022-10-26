@@ -57,8 +57,10 @@ class ProductController extends Controller
     public function update(Request $request, Product $id){
         $name = time().rand(1,100).'.png';
         $thumb = '/storage/uploads/'.date("Y/m/d").'/'.$name;
+        if($request->input('file') != ''){
+            $this->upload->store($request,$name);
+        }
         $result = $this->productService->update($request,$id);
-        $this->upload->store($request);
         if($result) return redirect('admin/products/list');
         else return redirect()->back();
     }

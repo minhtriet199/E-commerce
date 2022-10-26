@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Services\CartServices;
 use App\Http\Services\User\UserService;
 use App\Http\Services\Order\OrderService;
+use App\Http\Services\Product\ProductService;
 use App\Http\Requests\User\UserInfomationRequest;
 use App\Jobs\sendMailOrder;
 use App\Models\Product;
@@ -31,11 +32,13 @@ class CartController extends Controller
     protected $cartServices;
     protected $mailServices;
     protected $orderServices;
+    protected $productService;
     
-    public function __construct(CartServices $cartServices,UserService $userServices,OrderService $orderServices){
+    public function __construct(CartServices $cartServices,UserService $userServices,OrderService $orderServices,ProductService $productService){
         $this->cartServices = $cartServices;
         $this->userServices =$userServices;
         $this->orderServices = $orderServices;
+        $this->productService = $productService;
     }
 
     public function index(){
@@ -90,7 +93,7 @@ class CartController extends Controller
             'encrypted' => false
         );
 
-        $pusher = new Pusher(
+         $pusher = new Pusher(
             env('PUSHER_APP_KEY'), // Sometime this line will bug and i don't know why
             env('PUSHER_APP_SECRET'),
             env('PUSHER_APP_ID'),
@@ -183,14 +186,15 @@ class CartController extends Controller
             $carts = Cart_item::where('cart_id',$data['cart_id'])->get();
             foreach($carts as $cart){
                 $detail = $this->orderServices->insertOrderDetail($order,$cart);
-                $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
+                // $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
+                $product = $this->decreaseAmount($detail);
             }
             Cart::where('user_id',Auth::id())->delete();
         }
         else{
             foreach(Session::get('carts') as $product_id => $cart){
                 $detail = $this->orderServices->insertOrderDetail($order,$cart);
-                $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
+                $product = $this->decreaseAmount($detail);
             }
         }
         // This will putting Sendsing Mail to queue

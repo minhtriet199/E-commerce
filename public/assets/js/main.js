@@ -354,6 +354,8 @@ $(document).ready(function(){
     });
 
     $('#voucher-btn').click(function(){
+        var gtotal = $('.grand-total').text();
+        var grand_total = parseInt(gtotal);
         const voucher =$('input[name="voucher_code"]').val();
         const token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
@@ -366,7 +368,10 @@ $(document).ready(function(){
             },
             success: function(response){
                 if(response.error == true){
+                    const total = (grand_total*1000) - parseInt(response.discount);
                     $('.discount').html(response.discount + ' đ');
+                    $('.grand-total').text(total);
+                    $('.discount_voucher').val(voucher);
                 }
                 else{
                     Swal.fire({

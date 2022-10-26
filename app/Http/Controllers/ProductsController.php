@@ -38,12 +38,12 @@ class ProductsController extends Controller
         }
         else{
             $menu = Menus::where('slug',$request->url)->first();
-            // $products = Product::select('*')
-            // ->addSelect(DB::raw('if(price_sale=0,price, price_sale) AS current_price'))
-            // ->where('menu_id',$menu->id)
-            // ->orderby('current_price', $request->orderby)
-            // ->get();
-            $products = $this->productServices->orderBy($request);
+            $products = Product::select('*')
+            ->addSelect(DB::raw('if(price_sale=0,price, price_sale) AS current_price'))
+            ->where('menu_id',$menu->id)
+            ->orderby('current_price', $request->orderby)
+            ->get();
+            // $products = $this->productServices->orderBy($request);
             $products->where('menu_id',$menu->id);
         }
         foreach($products as $product){

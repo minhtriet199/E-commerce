@@ -46,7 +46,7 @@ class AdminOrderController extends Controller
     // More in public/assets/admin/main.js and find .btn-update-order
     public function update(Request $request){
         $result = $this->orderService->update($request);
-        $order = Order::where('id',$request->input('id'))->first(); 
+        $order = $this->orderServices->getOrderId($request); 
         if($result){
             // Putting sending orderEmail to Queue
             // More in Jobs\SendMailOrder.php

@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\facades\Auth;
 use App\Http\Requests\CommentRequest;
+use App\Http\Services\CommentServices;
 use App\Models\Product;
 use App\Models\Comment;
+use Carbon\Carbon;
 use Helper; 
 
 class CommentController extends Controller
 {
+    protected $commentServies;
+
+    public function __construct(CommentServices $commentServies){
+        $this->commentServices = $commentServies;
+    }
     public function store(CommentRequest $request){
         $data = $request->all();
         $comment = Comment::create([
@@ -26,10 +33,7 @@ class CommentController extends Controller
         $product_id = $request->product_id;
         $output= '';
         $product = Product::where('id',$product_id)->first();
-        $comments = Comment::where('product_id',$product_id)
-        ->with('users')
-        ->orderBy('created_at','desc')
-        ->get();    
+        $comments = $this->commentServices->get_with_user($product_id);    
         foreach($comments as $comment){
             $output.= '
                 <div class="product__details__tab__content">
@@ -38,8 +42,8 @@ class CommentController extends Controller
                             <img src="/assets/img/user.png" >
                         </div>
                         <div class="col-lg-11">
-                            <div><span class="user_name">'. $comment->users->name.' </span> 
-                            '. $comment->updated_at->diffForHumans().'
+                            <div><span class="user_name">'. $comment->name.' </span> 
+                            '. Carbon::parse($comment->updated_at)->diffForHumans().'
                             <div>
                                 '.$comment->Content.'
                             </div>

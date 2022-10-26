@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Order\OrderService;
 use App\Http\Services\NotificationServices;
+use App\Http\Services\CommentServices;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Product;
@@ -20,9 +21,11 @@ class AdminMainController extends Controller
 {
     protected $notificationServices;
     protected $orderService;
-    public function __construct(OrderService $orderService,NotificationServices $notificationServices){
+    protected $commentServices;
+    public function __construct(OrderService $orderService,NotificationServices $notificationServices,CommentServices $commentServices){
         $this->orderService = $orderService;
         $this->notificationServices = $notificationServices;
+        $this->commentServices = $commentServices;
     }
     public function index(){
         $month = ['1','2','3','4','5','6','7','8','9','10','11','12'];
@@ -32,11 +35,6 @@ class AdminMainController extends Controller
             ->whereMonth('created_at',$value)
             ->sum('total');
         }
-        $comment = DB::table('comments')
-        ->select('comments.*','products.name','products.thumb')
-        ->join('products','comments.user_id','=','products.id')
-        ->where('status',0)
-        ->get();
 
         return view('admin.users.home', [
             'title' => 'Dashboard',
@@ -50,7 +48,7 @@ class AdminMainController extends Controller
             'success_order' => $this->orderService->count_order_byStatus(2),
             'refund_order' => $this->orderService->count_order_byStatus(3),
             'top_sell' => $this->orderService->top_selling_product(),
-            'pending_comments' => $comment,
+            'pending_comments' => $this->commentServices->get_pending_comment(),
             'month' => $month,
             'revenue_chart' => $revenue_chart,
         ]);

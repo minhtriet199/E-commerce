@@ -59,7 +59,7 @@ return [
             'strict' => false,
             'engine' => null,
             'dump' =>[
-                'dump_binary_path' => 'D:/xampp/mysql/bin/',
+                'dump_binary_path' => 'E:/xampp/mysql/bin/',
             ],
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),

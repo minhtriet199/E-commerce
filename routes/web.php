@@ -106,7 +106,7 @@ Route::middleware(['auth_admin'])->group(function (){
                 Route::get('list',[AdminCommentController::class,'index']);
                 Route::get('product/{id}',[AdminCommentController::class,'show']);
                 Route::delete('destroy',[AdminCommentController::class,'destroy']);
-                Route::patch('edit',[AdminCommentController::class,'edit']);
+                Route::patch('edit',[AdminCommentController::class,'update']);
             });
         }); 
     });
