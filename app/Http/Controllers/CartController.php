@@ -23,6 +23,7 @@ use App\Models\Order_detail;
 use App\Models\Cities;
 use App\Models\District;
 use App\Models\Notification;
+use App\Models\fee;
 use Pusher\Pusher;
 use Carbon\Carbon;
 use Session;
@@ -141,7 +142,8 @@ class CartController extends Controller
         
     }
     
-    public function checkout(){    
+    public function checkout(){  
+
         if(Auth::check()){
             $Cart= Cart::where('user_id', Auth::id())->first();
             if($Cart){
@@ -150,7 +152,6 @@ class CartController extends Controller
                     'title' => 'Checkout',
                     'account' => $this->userServices->get(),
                     'carts' => $this->cartServices->get(),
-                    'cartid' => $this->cartServices->getCart(),
                     'districts' => $this->userServices->user_district(Auth::id()),
                     'cities' => Cities::all(),
                 ]);
@@ -167,34 +168,61 @@ class CartController extends Controller
             else return redirect()->back();
         }  
     }
+    public function move(Request $request){
+        return redirect('checkout')->withInput();
+    }
 
     public function place_order(UserInfomationRequest $request){
         $data = $request->all();
+        $total =0;
         $address = $data['address'] . " ".$data['district'] ." ". $data['city'];
-        $user = User::where('email', $data['email'])->firstOrFail();
+        $fee = fee::where('district_id',$data['district'])->first();
+
+        // Count total price of all product and quantity 
+        if(Auth::check()){
+            $cartid = Cart::where('user_id',Auth::id())->first();
+            $carts = Cart_item::where('cart_id',$cartid->id)->get();
+            foreach($carts as $cart){
+                $total += $this->cartServices->sumTotal($cart);
+            }
+        }
+        else{
+            foreach(Session::get('carts') as $product_id => $cart){
+                $total += $this->cartServices->sumTotal($cart);
+            }
+        }
+        // Total with shipping fee
+        if($fee)    $total = $total + $fee['fee'];
+        else    $total = $total + 40000 ;
+
+        // Total with voucher
+        if($data['voucher'] != ''){
+            $voucher = Voucher::where('voucher_code',$data['voucher'])->first();
+            $total = $total - $voucher['discount'];
+        }
+        else $total = $total;
+
+        // Create new order column
         $order = Order::create([
             'user_id' => Auth::id(),
-            'total' => $data['total'],
+            'total' => $total,
             'username' => $data['user_name'],
             'email' => $data['email'],
             'address' => $address,
-            'City' => $data['city'],
-            'district' => $data['district'],
             'phone'=>$data['phone'],
         ]);
+        // Insert into order detail
         if(Auth::check()){
-            $carts = Cart_item::where('cart_id',$data['cart_id'])->get();
             foreach($carts as $cart){
                 $detail = $this->orderServices->insertOrderDetail($order,$cart);
-                // $product = Product::where('name',$detail->product_name)->decrement('amount',$detail->quantity);
-                $product = $this->decreaseAmount($detail);
+                $product = $this->orderServices->decreaseAmount($detail);
             }
             Cart::where('user_id',Auth::id())->delete();
         }
         else{
             foreach(Session::get('carts') as $product_id => $cart){
                 $detail = $this->orderServices->insertOrderDetail($order,$cart);
-                $product = $this->decreaseAmount($detail);
+                $product = $this->orderServices->decreaseAmount($detail);
             }
         }
         // This will putting Sendsing Mail to queue
@@ -226,22 +254,35 @@ class CartController extends Controller
         $pusher->trigger('Notify', 'send-notify', $data); // More in app\events\Notify
 
         Session::forget('carts');
-        Session::put('order',$order->id);
         return redirect('/finish');
+        // return redirect()->route('confimation',['order',$order->id]);
     }
 
     public function use_voucher(Request $request){
         $voucher = Voucher::where('voucher_code',$request->voucher)->first();
-        if($voucher)
+        if($voucher){
             return response()->json([
                 'error' => true,
                 'discount' => $voucher->discount
             ]);
-        else 
-        return response()->json([
-            'error' => false,
-        ]);
-       
+        }   
+        else {
+            return response()->json([
+                'error' => false,
+            ]);
+        }
+    }
+    public function delivery_price(Request $request){
+        $shipping =  fee::where('district_id',$request->district)->first();
+        if($shipping){
+            return response()->json([
+                'error' =>true,
+                'fee' => $shipping->fee,
+            ]);
+            return response()->json([
+                'error' => false,
+            ]);
+        }
     }
 
 }

@@ -219,39 +219,40 @@ $.ajaxSetup({
 $(document).ready(function(){
     $('#btn-update-user').click(function(e){
         e.preventDefault();
-        const user_id =$('input[name="user_id"]').val();
         const name = $('input[name="name"]').val();
         const phone =$('input[name="phone"]').val();
         const address =$('input[name="address"]').val();
+        const email = $('input[name="email"]').val();
         const city =$('#city :selected').val();
         const district =$('#district :selected').val();
-
+        const token = $('meta[name="csrf-token"]').attr('content');
+        
         $.ajax({
-            type: 'POST',
+            type: 'PATCH',
             dataType:'JSON',
             url:'profile/update',
             data:{
-                user_id:user_id,
-                name:name,
+                user_name:name,
                 phone:phone,
                 address:address,
+                email:email,
                 city:city,
-                district,district,
-                _token: $('meta[name="csrf-token"]').attr('content')
+                district:district,
+                token: token,
             },
             success:function(response){
-                if(response.error !==false){
+                if(response.error != false){
                     Swal.fire({
                         type: 'success',
                         title: 'Cập nhật thành công',
                     });
                 }
-                else{
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Cập nhật bị lỗi',
-                    });
-                }
+            },
+            error:function(err){
+                Swal.fire({
+                    type: 'error',
+                    title: 'Có lỗi',
+                })
             }
         });
     });
@@ -368,7 +369,8 @@ $(document).ready(function(){
             },
             success: function(response){
                 if(response.error == true){
-                    const total = (grand_total*1000) - parseInt(response.discount);
+                    const stotal = (grand_total*1000) - parseInt(response.discount);
+                    const total = stotal;
                     $('.discount').html(response.discount + ' đ');
                     $('.grand-total').text(total);
                     $('.discount_voucher').val(voucher);
@@ -432,6 +434,7 @@ $(document).ready(function(){
                 Swal.fire({
                     type: 'success',
                     title: 'Thêm giỏ hàng thành công',
+                    backdrop:false,
                 });
             }
         });

@@ -28,7 +28,7 @@ use App\Http\Controllers\WishlistController;
 // Name is for after middleware'admin' check user is login or not will redirect to route('login_admin)
 // Middleware/RedirectIfAuthenticated_admin
 Route::get( 'admin/users/login', [LoginController::class, 'index'])->name('login_admin')->middleware('admin');
-Route::post( 'admin/users/login/store', [LoginController::class, 'store']);
+Route::post( 'admin/users/login', [LoginController::class, 'store']);
 Route::get('/logout',[AdminMainController::class,'logout']);
 Route::post('select-delivery',[ShippingController::class,'select_delivery']);
 Route::middleware(['auth_admin'])->group(function (){
@@ -125,11 +125,11 @@ Route::get('/search',[MainController::class,'search']);
 
 //Sign up
 Route::get('user/signup',[UserController::class,'signup'])->middleware('guest');;
-Route::post('user/signup/create',[UserController::class,'create']);
+Route::post('user/signup',[UserController::class,'create']);
 
 //Login
 Route::get('user/login',[UserController::class,'login'])->name('login')->middleware('guest');
-Route::post('user/login/store',[UserController::class,'store']);
+Route::post('user/login',[UserController::class,'store']);
 
 //Forget pass 
 Route::get('user/reset',[UserController::class,'reset'])->middleware('guest');;
@@ -155,20 +155,22 @@ Route::post('add-cart',[CartController::class,'insert']);
 
 //Cart page
 Route::get('view-cart',[CartController::class,'index']);
+Route::post('view-cart',[CartController::class,'move']);
 Route::patch('update-cart', [CartController::class, 'update']);
 Route::delete('remove-cart', [CartController::class, 'remove']);
-Route::post('use_voucher',[CartController::class,'use_voucher']); // not working
+Route::post('use_voucher',[CartController::class,'use_voucher']); 
 
 
-//Check out need a rework
+//Check Out
 Route::get('checkout',[CartController::class,'checkout']);
+Route::post('delivery_price',[CartController::class,'delivery_price']);
 Route::post('checkout',[CartController::class,'place_order']);
 
 
 //View purchase
-Route::get('finish',[OrderController::class,'show']);
+Route::get('finish',[OrderController::class,'show'])->name('confimation');
 
-//User login
+//User login Auth::check()
 Route::middleware(['auth'])->group(function (){
     Route::get('wishlist',[WishlistController::class,'index']);
     Route::post('add-wishlist',[WishlistController::class,'insert_wishlist']);
@@ -180,7 +182,7 @@ Route::middleware(['auth'])->group(function (){
         //User profile
         Route::prefix('account')->group(function(){
             Route::get('profile',[UserController::class,'index']);
-            Route::post('profile/update',[UserController::class,'update']);
+            Route::PATCH('profile/update',[UserController::class,'update']);
         });
     });
 });

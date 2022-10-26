@@ -5,7 +5,7 @@
 <section>
     <div class="container">
         <div class="mid-table">
-            <form id="validate-signup" action="{{ url('/user/signup/create') }}" method="POST" >
+            <form id="validate-signup" method="POST" >
                 <h2>Đăng ký</h2>
                 @include('block.alert')
                 <input type="text" name="name" placeholder="Họ và tên" id="input-formu" value="{!! old('name') !!}">

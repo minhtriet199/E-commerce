@@ -22,6 +22,7 @@ class CommentServices{
                 ->select('comments.*','users.name')
                 ->join('users','comments.user_id','=','users.id')
                 ->where('comments.product_id',$product_id)
+                ->where('status',1)
                 ->where('deleted_at',NULL)
                 ->get();
     }

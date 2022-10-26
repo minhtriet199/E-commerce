@@ -53,7 +53,7 @@
         </div>
 
         <div class="row">
-            <section class="col-lg-6 connectedSortable ui-sortable">
+            <section class="col-lg-6 connectedSortable ui-sortable ">
                 <!-- Thông tin đơn hàng -->
                 <div class="card">
                     <div class="card-header ui-sortable-handle">
