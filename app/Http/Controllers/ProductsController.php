@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Services\Product\ProductService;
-use App\Http\Controllers\CommentController;
+use App\Http\Services\CommentServices;
 use App\Models\Product;
 use App\Models\Menus;
 use Carbon\carbon;
@@ -14,11 +14,11 @@ use Helper;
 class ProductsController extends Controller
 {
     protected $productServices;
-    protected $commentController;
+    protected $commentServices;
 
-    public function __construct(ProductService $productServices,CommentController $commentController){
+    public function __construct(ProductService $productServices,CommentServices $commentServices){
         $this ->productServices = $productServices;
-        $this ->commentController = $commentController;
+        $this ->commentServices = $commentServices;
     }
     public function index($slug){
         $product = $this->productServices->show($slug);       
@@ -26,6 +26,7 @@ class ProductsController extends Controller
             'title' => $product->name,
             'products' =>$product,
             'more' => $this->productServices->more($slug),
+            'comments' => $this->commentServices->get_with_user($product->id),
         ]);
     }
 

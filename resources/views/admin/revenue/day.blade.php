@@ -15,7 +15,11 @@
             <tbody>
                 @foreach($revenues as $revenue)
                     <tr>
-                        <th>{{ $revenue->created_at->format('d/m/y') }}</th>
+                        <th>
+                            <a href="/admin/order/day/{!! \Carbon\Carbon::now()->day !!}-{!! \Carbon\Carbon::now()->month !!}-{!! \Carbon\Carbon::now()->year !!}">
+                                {{ $revenue->created_at->format('d/m/y') }}
+                            </a>
+                        </th>
                         <th>{{ number_format($revenue->revenue,0,',',',')}} đ</th>
                         <th>{{ $revenue->order}}</th>
                     </tr>

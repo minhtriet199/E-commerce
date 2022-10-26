@@ -359,6 +359,16 @@ $(document).ready(function(){
         var grand_total = parseInt(gtotal);
         const voucher =$('input[name="voucher_code"]').val();
         const token = $('meta[name="csrf-token"]').attr('content');
+
+        const hid = $('input[name="discount"]').val();
+        if(hid != ''){
+            Swal.fire({
+                type : 'error',
+                title: 'Bạn đã sử dụng voucher',
+            });
+            return;
+        }
+
         $.ajax({
             type: 'post',
             dataType: 'JSON',
@@ -419,6 +429,14 @@ $(document).ready(function(){
         const product_quantity = $('input[name="product_quantity"]').val();
         const product_thumb = $('input[name="product_thumb"]').val();
 
+        if(product_quantity == 0){
+            Swal.fire({
+                type: 'error',
+                title: '????',
+            });
+            return;
+        }
+
         $.ajax({
             type:'POST',
             dataType:'JSON',
@@ -441,6 +459,7 @@ $(document).ready(function(){
     });
 
     $('.add-wishlist').click(function(e){
+        e.preventDefault();
         const product_id = $('input[name="product_id"]').val();
         const quantity = $('input[name="product_quantity"]').val();
 
@@ -462,6 +481,32 @@ $(document).ready(function(){
                     title: 'Thêm danh sách ước thành công',
                 });
                }
+            }
+        });
+    });
+
+    $('#btn-comment').click(function(e){
+        e.preventDefault();
+        const user_id=$('input[name="user_id"]').val();
+        const product_id =$('input[name="product_id"]').val();
+        const content = $('#content').val();
+        const token = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            type: 'POST',
+            dataType:'JSON',
+            url:'/user/comment',
+            data:{
+                user_id:user_id,
+                product_id:product_id,
+                content:content,
+                token:token,
+            },
+            success:function(data){
+                Swal.fire({
+                    type:'info',
+                    title: 'Bình luận của bạn đang được lọc!',
+                }); 
             }
         });
     });

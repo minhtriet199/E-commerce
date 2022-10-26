@@ -17,14 +17,13 @@ class UserService
     public function get(){
         $id = Auth::id();
         $name = Auth::user()->name;
-        return User::where('id',$id)
+        return User::where('id',Auth::id())
             ->with('profile')
-            ->firstOrFail();
+            ->first();
     }
 
     public function insert($request){
         try{
-            $request->except('_token');
             $user =User::create([
                 'name' =>$request->input('name'),
                 'email' =>$request->input('email'),
@@ -47,7 +46,7 @@ class UserService
     }
 
     public function get_user_id($id){
-        return User::where('id',$id)->with('profile')->firstOrFail();
+        return User::where('id',$id)->with('profile')->first();
     }
     public function updateUser($request,$id){
         $user= User::where('id',$id)->update([
@@ -69,7 +68,8 @@ class UserService
         }
         else{
             $UserCity =  Cities::where('id',$detail['city'])->first();
-            return $UserDistrict =  District::where('city_id',$UserCity['id'])->get();
+            return $UserDistrict =  District::where('city_id',$UserCity['id'])
+            ->get();
         } 
     }
 }

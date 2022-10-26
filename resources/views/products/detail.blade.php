@@ -66,24 +66,39 @@
                         <div class="product__details__text">
                             <h4>{{ $products -> name}}</h4>
 
-                            {!! Helper::priceDetail($products,$products->price,$products->price_sale) !!}
+                            {!! Helper::priceDetail($products) !!}
                             <a class="btn text-danger add-wishlist">
                                 <i class="fa fa-heart "></i> 
                                 Thêm vào danh sách ước
                             </a>
                             <p>{{ $products -> description }}</p>
-                            
+                            <div class="product__details__option__size">
+                                <span>Size:</span>
+                                <label for="xxl">xxl
+                                    <input type="radio" id="xxl">
+                                </label>
+                                <label class="active" for="xl">xl
+                                    <input type="radio" id="xl">
+                                </label>
+                                <label for="l">l
+                                    <input type="radio" id="l">
+                                </label>
+                                <label for="sm">s
+                                    <input type="radio" id="sm">
+                                </label>
+                            </div>
                             <div class="product__details__cart__option">
                                
-                                <form action="/add-cart" method="POST">
+                                <p class="text-danger">{!! Helper::check_product($products->amount) !!}</p>
+                                <form action="" method="POST">
                                     <div class="quantity">
                                         <div class="pro-qty">
-                                            <input type="number" value="1" class="quanity-btn" name="product_quantity">
+                                            <input type="number" value="1" class="quanity-btn" name="product_quantity" >
                                         </div>
                                         <input type="hidden" value="{{ $products -> id}}" name="product_id" id="product_id">
                                         <input type="hidden" value="{{ $products -> name}}" name="product_name">
                                         <input type="hidden" value="{{ $products -> thumb}}" name="product_thumb">
-                                        {!! Helper::formprice($products,$products->price,$products->price_sale) !!}
+                                        {!! Helper::formprice($products) !!}
                                     </div>
                                     @if($products->amount <= 0 )
                                         <input type="button" class="primary-btn" value="Hết hàng">
@@ -134,8 +149,28 @@
                                         </div>
                                     @endif
                                     <div id="comment">
+                                        <div id="user-comment">
+
+                                        </div>
                                         <div id="comment-section">
                                         <!-- Using Fetchcomment at the bottom page-->
+                                            @foreach($comments as $comment)
+                                                <div class="product__details__tab__content">
+                                                    <div class="row">
+                                                        <div class="col-lg-1">
+                                                            <img src="/assets/img/user.png" >
+                                                        </div>
+                                                        <div class="col-lg-11">
+                                                            <div><span class="user_name"> {{ $comment->name }} </span> 
+                                                                {!! \Carbon\Carbon::parse($comment->updated_at)->diffForHumans() !!}
+                                                            <div>
+                                                                {{ $comment->Content }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            @endforeach
                                         </div>   
                                     </div>
                                 </div>
@@ -159,7 +194,7 @@
             <div class="row">
             @foreach($more as $more)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    {!! \App\Helpers\Helper::product($more,$more->price,$more->price_sale) !!}
+                    {!! Helper::product($more,$more->price,$more->price_sale) !!}
                 </div>
             @endforeach
                 
@@ -168,49 +203,3 @@
     </section>
     <!-- Related Section End -->
 @endsection
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        function fetchcmt(){
-            const product_id = $('#product_id').val();
-            $.ajax({
-                type: 'get',
-                url: '/fetchcmt/',
-                data:{product_id:product_id},
-                success: function(data) {
-                    $('#comment-section').html(data.result);
-                },
-            });
-        }
-        fetchcmt();
-
-        $('#btn-comment').click(function(e){
-            const user_id=$('input[name="user_id"]').val();
-            const product_id =$('input[name="product_id"]').val();
-            const content = $('#content').val();
-            const token = $('meta[name="csrf-token"]').attr('content');
-
-            $.ajax({
-                type: 'POST',
-                dataType:'JSON',
-                url:'/user/comment',
-                data:{
-                    user_id:user_id,
-                    product_id:product_id,
-                    content:content,
-                    token:token,
-                },
-                success:function(data){
-                    fetchcmt();
-                    Swal.fire({
-                        type:'info',
-                        title: 'Bình luận của bạn đang được lọc!',
-                    }); 
-                }
-            });
-        });
-
-      
-    });
-</script>

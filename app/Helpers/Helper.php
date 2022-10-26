@@ -25,36 +25,39 @@ class Helper{
         $html = '';
         foreach ($Menus as $key => $menu) {
                 $html .= ' 
-                    <a href="/shop/'. $menu-> slug. '">
-                        ' . $menu->name . '
-                    </a>';
+                    <li>
+                        <a href="/shop/'. $menu-> slug. '">
+                            ' . $menu->name . '
+                        </a>
+                    </li>'
+                        ;
                 unset($Menus[$key]);
                 $html .= '';
         }
         return $html;
     }
     // For views/products/detail
-    public static function formprice($Product,$price =0,$price_sale=0){
+    public static function formprice($Product){
         $html ='';
-        if($price_sale != 0) {
+        if($Product->price_sale != 0) {
             return $html .='
                 <input type="hidden" value="'.$Product -> price_sale.'" name="product_price">
             ';
         }
-        if($price !=0 ) {
+        if($Product->price !=0 ) {
             return $html .='
                 <input type="hidden" value=" '.$Product -> price.' " name="product_price">
             ';
         }
     }
-    public static function priceDetail($Product,$price =0,$price_sale=0){
+    public static function priceDetail($Product){
         $html= '';
-        if($price_sale != 0) {
+        if($Product->price_sale != 0) {
             return  $html .='
                 <h3>'. number_format($Product->price_sale,0,',','.') .' đ<span> '. number_format($Product->price,0,',','.') .' đ</span></h3>
             ';
         }
-        if($price !=0 ) {
+        if($Product->price !=0 ) {
             return  $html .='
                 <h3>'. number_format($Product->price,0,',','.') .' đ </span></h3>
             ';
@@ -76,13 +79,13 @@ class Helper{
         }
     }
 
-    public static function product($product,$price =0,$price_sale=0){
+    public static function product($product){
         $html= '';
-        if($price_sale != 0) {
+        if($product->price_sale != 0) {
             $html = ' 
                 <div class="product__item">
                     <a href="/product/'. $product->slug .'">
-                        <div class="product__item__pic set-bg" data-setbg="'. $product->thumb .'" style="background-image: url('. $product->thumb. ')">
+                        <div class="product__item__pic set-bg " data-setbg="'. $product->thumb .'" style="background-image: url('. $product->thumb. ')">
                             <span class="label" style="width:150px;border:none">Giảm giá</span>
                             <ul class="product__hover">
                                 <span class="label" class="product__hover"><h6>'. $product->name .'</h6></span>
@@ -98,7 +101,7 @@ class Helper{
             ';
             return $html;
         }
-        if($price !=0 ) {
+        if($product->price !=0 ) {
             $html = ' 
                 <div class="product__item">
                     <a href="/product/'. $product->slug .'">
@@ -119,9 +122,9 @@ class Helper{
         }
     }
     
-    public static function order_button($order,$status =0){
+    public static function order_button($order){
         $html ='';
-        switch($status){
+        switch($order->status){
             case "1":
                 return $html .= ' <a class="btn btn-primary btn-lg btn-update-order" data-id="'. $order->id .'"> Giao hàng</a> ';
             case "2":
@@ -186,6 +189,14 @@ class Helper{
         $count = Product_image::where('product_id',$id)
         ->count('*');
         $html = $count;
+        echo $html;
+    }
+
+    public static function check_product($amount){
+        $html= '';
+        if($amount <= 10){
+            $html = 'Còn lại '. $amount .' sản phẩm';
+        }
         echo $html;
     }
 }

@@ -24,6 +24,7 @@ class CommentServices{
                 ->where('comments.product_id',$product_id)
                 ->where('status',1)
                 ->where('deleted_at',NULL)
+                ->orderBy('updated_at','desc')
                 ->get();
     }
     public function get_pending_comment(){

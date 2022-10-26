@@ -26,7 +26,7 @@ class SliderRequest extends FormRequest
         return [
             'name'=>'required|unique:sliders',
             'url'=>'required',
-            'file'=>'required',
+            'file'=>'required|image|mimes:jpeg,jpg,png,gif|max:10240',
             'sort_by'=>'required',
             'active'=>'required',
         ];
@@ -39,6 +39,9 @@ class SliderRequest extends FormRequest
             'url.required' => 'Vui lòng đường dẫn',
             'sort_by' => 'Vui lòng nhập đường dẫn',
             'file.required' => 'Vui lòng chọn ảnh',
+            'file.image' => 'Đây không phải là hình',
+            'file.mimes' => 'Đây không phải là hình',
+            'file.max' => 'File quá lớn, Phải dưới 10MB',
         ];
     }
 }

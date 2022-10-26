@@ -45,8 +45,9 @@ class AdminOrderController extends Controller
     // Using ajax to update order status
     // More in public/assets/admin/main.js and find .btn-update-order
     public function update(Request $request){
+        // dd($request);
         $result = $this->orderService->update($request);
-        $order = $this->orderServices->getOrderId($request); 
+        $order = $this->orderService->getOrderId($request); 
         if($result){
             // Putting sending orderEmail to Queue
             // More in Jobs\SendMailOrder.php
@@ -57,6 +58,19 @@ class AdminOrderController extends Controller
         }
         return response()->json([
             'error' => true
+        ]);
+    }
+
+    public function month($month,$year){
+        return view('admin.order.list',[
+            'title' => 'Danh sách đơn tháng '. $month ,
+            'orders' => $this->orderService->get_month_order($month,$year),
+        ]);
+    }
+    public function day($day,$month,$year){
+        return view('admin.order.list',[
+            'title' => 'Danh sách đơn ngày ' . $day.'/'. $month.'/'.$year,
+            'orders' => $this->orderService->get_day_order($day,$month,$year),
         ]);
     }
 }

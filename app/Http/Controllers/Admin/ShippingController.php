@@ -45,7 +45,7 @@ class ShippingController extends Controller
             echo $output;
         }
     }
-    public function insert_delivery(Request $request){
+    public function insert_delivery(ShippingRequest $request){
         $data = $request->all();
         $fee = fee::create([
             'city_id' => $data['city'],
@@ -63,7 +63,7 @@ class ShippingController extends Controller
     public function remove_row(Request $request){
         $data = $request->all();
         fee::where('id',$data['id'])
-            ->dump();
+            ->delete();
         return response()->json();
     }
 }

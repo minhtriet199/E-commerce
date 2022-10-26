@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Order\OrderService;
-use App\Http\Services\NotificationServices;
 use App\Http\Services\CommentServices;
 use App\Models\Order;
 use App\Models\User;
@@ -22,9 +21,8 @@ class AdminMainController extends Controller
     protected $notificationServices;
     protected $orderService;
     protected $commentServices;
-    public function __construct(OrderService $orderService,NotificationServices $notificationServices,CommentServices $commentServices){
+    public function __construct(OrderService $orderService,CommentServices $commentServices){
         $this->orderService = $orderService;
-        $this->notificationServices = $notificationServices;
         $this->commentServices = $commentServices;
     }
     public function index(){
@@ -35,7 +33,7 @@ class AdminMainController extends Controller
             ->whereMonth('created_at',$value)
             ->sum('total');
         }
-
+        // dd($this->orderService->not_selling_product());
         return view('admin.users.home', [
             'title' => 'Dashboard',
             'orders' => Order::whereDate('created_at', Carbon::today())->get(),
@@ -43,11 +41,12 @@ class AdminMainController extends Controller
             'month_total' => $this->orderService->count_total(),
             'today_total' => $this->orderService->get_daily_order()->sum('total'),
             'user_total' => $this->orderService->get_daily_order()->count(),
-            'pending_order' => $this->orderService->count_order_byStatus(0), 
-            'shipping_order' => $this->orderService->count_order_byStatus(1),
-            'success_order' => $this->orderService->count_order_byStatus(2),
-            'refund_order' => $this->orderService->count_order_byStatus(3),
+            'pending_order' => $this->orderService->count_order_byStatus(1), 
+            'shipping_order' => $this->orderService->count_order_byStatus(2),
+            'success_order' => $this->orderService->count_order_byStatus(3),
+            'refund_order' => $this->orderService->count_order_byStatus(4),
             'top_sell' => $this->orderService->top_selling_product(),
+            'not_sell' => $this->orderService->not_selling_product(),
             'pending_comments' => $this->commentServices->get_pending_comment(),
             'month' => $month,
             'revenue_chart' => $revenue_chart,

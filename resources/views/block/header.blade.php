@@ -42,7 +42,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="{{url('/view-cart')}}">
+                            <a href="/view-cart">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span class='badge badge-warning CartCount display'>{!! Helper::countCart() !!}</span>
                             </a>

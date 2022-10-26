@@ -19,11 +19,11 @@ class OrderController extends Controller
     public function senOrderMail($order){
         Mail::to($order->email)->send(new OrderMail($order));
     }
-    public function show(){
-        return view('block.finish',[
+    public function show($id){
+        return view('block.purchase',[
             'title' => 'Thông tin đơn hàng',
-            'order' => $this->orderService->getOrder(),
-            'details' => $this->orderService->getOrderDetail(),
+            'order' => $this->orderService->getOrder($id),
+            'details' => $this->orderService->getDetail($id),
         ]);
         
     }

@@ -30,8 +30,10 @@
                                     <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__tags">
-                                                <a href="{{ url('/shop/all')}}">Tất cả</a>
-                                                {!! Helper::menus($menus) !!}
+                                                <ul>
+                                                    <li><a href="{{ url('/shop/all')}}">Tất cả</a></li>
+                                                    {!! Helper::menus($menus) !!}
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +62,7 @@
                     <div class="row" id="product-tab">
                         @foreach($products as $product)
                             <div class="col-lg-4 col-md-6 col-sm-6">
-                                {!! Helper::product($product,$product->price,$product->price_sale) !!}
+                                {!! Helper::product($product) !!}
                             </div>
                         @endforeach
                     </div>

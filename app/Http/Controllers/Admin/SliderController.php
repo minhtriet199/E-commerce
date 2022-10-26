@@ -51,8 +51,12 @@ class SliderController extends Controller
 
 
     public function update(Request $request, Slider $id){
+        $name = time().rand(1,100).'.png';
+        $thumb = '/storage/uploads/'.date("Y/m/d").'/'.$name;
+        if($request->input('file') != ''){
+            $this->upload->store($request,$thumb);
+        }
         $result = $this->sliderService->update($request,$id);
-        $this->upload->store($request);
         if($result) return redirect('admin/sliders/list');
         else return redirect()->back();
     }

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 use App\Http\Services\CartServices;
 use App\Http\Services\User\UserService;
@@ -174,8 +175,9 @@ class CartController extends Controller
 
     public function place_order(UserInfomationRequest $request){
         $data = $request->all();
-        $total =0;
-        $address = $data['address'] . " ".$data['district'] ." ". $data['city'];
+        $district = District::where('id',$data['district'])->first();
+        $city = Cities::where('id',$data['city'])->first();
+        $address = $data['address'] . " ".$city->name ." ". $district->name;
         $fee = fee::where('district_id',$data['district'])->first();
 
         // Count total price of all product and quantity 
@@ -228,6 +230,7 @@ class CartController extends Controller
         // This will putting Sendsing Mail to queue
         // More in App\Jobs\sendMailOrder
         // Use php artisan schedule:work in terminal for it to work
+        
         dispatch(new sendMailOrder($order)); 
         $notification = Notification::create([
             'order_id' => $order->id,
@@ -254,7 +257,7 @@ class CartController extends Controller
         $pusher->trigger('Notify', 'send-notify', $data); // More in app\events\Notify
 
         Session::forget('carts');
-        return redirect('/finish');
+        return redirect('purchase/'.$order->id);
         // return redirect()->route('confimation',['order',$order->id]);
     }
 
