@@ -44,6 +44,9 @@ class CartController extends Controller
     }
 
     public function index(){
+        if(!session::has('carts')){
+            Session::put('carts',[]);
+        }
         if(Auth::check()) {
             return view('block.cart',[
                 'title'=> 'Giỏ hàng',
@@ -175,6 +178,7 @@ class CartController extends Controller
 
     public function place_order(UserInfomationRequest $request){
         $data = $request->all();
+        $total = 0;
         $district = District::where('id',$data['district'])->first();
         $city = Cities::where('id',$data['city'])->first();
         $address = $data['address'] . " ".$city->name ." ". $district->name;

@@ -56,5 +56,18 @@ class MenuService
     {
         return Menus::where('slug',$slug)->firstOrFail();
     }
+    public function getProduct($menu, $request)
+    {
+        $query = $menu->products()
+            ->select('id', 'name','slug' , 'thumb','price', 'price_sale')
+            ->where('active', 1);
+        if($request->input('price')){
+            $query->orderBy('price',$request->input('price'));
+        }
+        return $query
+            ->orderByDesc('id')
+            ->paginate(8);
+      
+    }
 }
 
