@@ -359,8 +359,14 @@ $(document).ready(function(){
         var grand_total = parseInt(gtotal);
         const voucher =$('input[name="voucher_code"]').val();
         const token = $('meta[name="csrf-token"]').attr('content');
-
         const hid = $('input[name="discount"]').val();
+        if(gtotal == 0){
+            Swal.fire({
+                type : 'error',
+                title: 'Hiện tại giỏ hàng rỗng',
+            });
+            return;
+        }
         if(hid != ''){
             Swal.fire({
                 type : 'error',
@@ -368,6 +374,8 @@ $(document).ready(function(){
             });
             return;
         }
+
+
 
         $.ajax({
             type: 'post',
