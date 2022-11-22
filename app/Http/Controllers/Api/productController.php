@@ -24,7 +24,7 @@ class productController extends Controller
 
     public function show($id)
     {
-        $product =product::Where('id',$id)->first();
+        $product =product::where('id',$id)->first();
         return response()->json($product);
     }
     public function update(Request $request, $id)
